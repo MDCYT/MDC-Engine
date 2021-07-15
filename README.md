@@ -4,84 +4,59 @@
 
 ![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/MDCYT/FNF-MDC-Engine/latest) ![GitHub repo size](https://img.shields.io/github/repo-size/MDCYT/FNF-MDC-Engine) ![Lines of code](https://img.shields.io/tokei/lines/github/MDCYT/FNF-MDC-Engine) ![Supported platforms](https://img.shields.io/badge/supported%20platforms-windows%2C%20macOS%2C%20linux%2C%20html5-blue) ![GitHub all releases](https://img.shields.io/github/downloads/MDCYT/FNF-MDC-Engine/total) ![GitHub](https://img.shields.io/github/license/MDCYT/FNF-MDC-Engine) ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/MDCYT/FNF-MDC-Engine?include_prereleases&label=latest%20version) 
 
-This is the repository for Friday Night Funkin, a game originally made for Ludum Dare 47 "Stuck In a Loop".
+Este repositorio, es una moficacion del codigo fuente de [Friday Night Funkin](https://github.com/ninjamuffin99/Funkin)
 
-Play the Ludum Dare prototype here: https://ninja-muffin24.itch.io/friday-night-funkin
-Play the Newgrounds one here: https://www.newgrounds.com/portal/view/770371
-Support the project on the itch.io page: https://ninja-muffin24.itch.io/funkin
+## Creditos
 
-IF YOU MAKE A MOD AND DISTRIBUTE A MODIFIED / RECOMIPLED VERSION, YOU MUST OPEN SOURCE YOUR MOD AS WELL
+- [ninjamuffin99](https://twitter.com/ninja_muffin99) - Programador de la base
+- [PhantomArcade3K](https://twitter.com/phantomarcade3k) and [Evilsk8r](https://twitter.com/evilsk8r) - Artista de la base
+- [Kawaisprite](https://twitter.com/kawaisprite) - Musico de la base
+- [MDC (Yo)](https://twitter.com/fridayproblems) - Programador que modifico el codigo
 
-## Credits / shoutouts
+## Descarga
+Si simplemente quieres descargar la version exportada, puedes hacerlo dandole click a la parte de releases de GitHub
 
-- [ninjamuffin99 (me!)](https://twitter.com/ninja_muffin99) - Programmer
-- [PhantomArcade3K](https://twitter.com/phantomarcade3k) and [Evilsk8r](https://twitter.com/evilsk8r) - Art
-- [Kawaisprite](https://twitter.com/kawaisprite) - Musician
+## Instrucciones de Compilacion
 
-This game was made with love to Newgrounds and it's community. Extra love to Tom Fulp.
+Esto es solo por si quieres compilar el juego.
 
-## Build instructions
+### Instalando los programas necesarios
 
-THESE INSTRUCTIONS ARE FOR COMPILING THE GAME'S SOURCE CODE!!!
+Primero que nada, deberas instalar algunas cosas necesarias para esto.
+- [Instalar Haxe 4.1.5](https://haxe.org/download/version/4.1.5/) 
 
-IF YOU WANT TO JUST DOWNLOAD AND INSTALL AND PLAY THE GAME NORMALLY, GO TO ITCH.IO TO DOWNLOAD THE GAME FOR PC, MAC, AND LINUX!!
-
-https://ninja-muffin24.itch.io/funkin
-
-IF YOU WANT TO COMPILE THE GAME YOURSELF, CONTINUE READING!!!
-
-### Installing the Required Programs
-
-First you need to install Haxe and HaxeFlixel. I'm too lazy to write and keep updated with that setup (which is pretty simple). 
-1. [Install Haxe 4.1.5](https://haxe.org/download/version/4.1.5/) (Download 4.1.5 instead of 4.2.0 because 4.2.0 is broken and is not working with gits properly...)
-2. [Install HaxeFlixel](https://haxeflixel.com/documentation/install-haxeflixel/) after downloading Haxe
-
-Other installations you'd need is the additional libraries, a fully updated list will be in `Project.xml` in the project root. Currently, these are all of the things you need to install:
+Otras weas para instalar se encuentran en el `Project.xml`, y estos serian los comandos de instalacion:
 ```
-flixel
-flixel-addons
-flixel-ui
-hscript
-newgrounds
-```
-So for each of those type `haxelib install [library]` so shit like `haxelib install newgrounds`
-
-You'll also need to install a couple things that involve Gits. To do this, you need to do a few things first.
-1. Download [git-scm](https://git-scm.com/downloads). Works for Windows, Mac, and Linux, just select your build.
-2. Follow instructions to install the application properly.
-3. Run `haxelib git polymod https://github.com/larsiusprime/polymod.git` to install Polymod.
-4. Run `haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc` to install Discord RPC.
-
-You should have everything ready for compiling the game! Follow the guide below to continue!
-
-At the moment, you can optionally fix the transition bug in songs with zoomed out cameras.
-- Run `haxelib git flixel-addons https://github.com/HaxeFlixel/flixel-addons` in the terminal/command-prompt.
-
-### Ignored files
-
-I gitignore the API keys for the game, so that no one can nab them and post fake highscores on the leaderboards. But because of that the game
-doesn't compile without it.
-
-Just make a file in `/source` and call it `APIStuff.hx`, and copy paste this into it
-
-```haxe
-package;
-
-class APIStuff
-{
-	public static var API:String = "";
-	public static var EncKey:String = "";
-}
-
+haxelib install lime
+haxelib install openfl
+haxelib install flixel
+haxelib run lime setup flixel
+haxelib run lime setup
+haxelib install flixel-tools
+haxelib run flixel-tools setup
+haxelib update flixel
+haxelib install flixel-ui
+haxelib install hscript
+haxelib install newgrounds
+haxelib install actuate
 ```
 
-and you should be good to go there.
+Para instalar algunas librerias adicionnales, necesitaras seguir estos pasos:
+1. Descargar [git-scm](https://git-scm.com/downloads). 
+2. Seguir las instrucciones correctas de instalacion (Marcar la opcion de PATH)
+3. Poner en el CMD `haxelib git polymod https://github.com/larsiusprime/polymod.git` para instalar Polymod.
+4. Poner en el CMD `haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc` Para instalar Discord RPC.
+5. Poner en el CMD `haxelib git extension-webm https://github.com/GrowtopiaFli/extension-webm` Para instalar Extension Webm.
+6. Poner en el CMD `lime rebuild extension-webm [windows/mac/linux]`(Poner dependiedo de tu sistema operativo, ejemplo: `lime rebuild extension-webm windows`) para tener correctamete instalado Extension Webm.
+7. Poner en el CMD `haxelib git flixel-addons https://github.com/HaxeFlixel/flixel-addons` para instalar Flixel Addons.
 
-### Compiling game
+Listo, tienes todo lo necesario para empezar a compilar el juego!
 
-Once you have all those installed, it's pretty easy to compile the game. You just need to run 'lime test html5 -debug' in the root of the project to build and run the HTML5 version. (command prompt navigation guide can be found here: [https://ninjamuffin99.newgrounds.com/news/post/1090480](https://ninjamuffin99.newgrounds.com/news/post/1090480))
+### Compilando el juego
 
-To run it from your desktop (Windows, Mac, Linux) it can be a bit more involved. For Linux, you only need to open a terminal in the project directory and run 'lime test linux -debug' and then run the executable file in export/release/linux/bin. For Windows, you need to install Visual Studio Community 2019. While installing VSC, don't click on any of the options to install workloads. Instead, go to the individual components tab and choose the following:
+Una vez hallas instalado, probarlo sera facilisimo, para probarlo en tu navegador y ver que todo funcione, puedes usar `lime test html5 -debug`
+
+Para correrlo en tu computadora(Mac, Linux, Windows) puede ser un poco mas dificil. En Linux, solo abres una terminal, te vas a la ruta de tu proyecto y ejecutas `lime test linux -debug` o `lime build linux -final` y ejecutarlo en `export/release/linux/bin`. Para Windows, neecsitas instalar Visual Studio Community 2019. Una vez tengas instalado el VSC, no clickees ninguna de las opciones principales. Ve a componentes individuales y selecciona las siguientes opciones:
 * MSVC v142 - VS 2019 C++ x64/x86 build tools
 * Windows SDK (10.0.17763.0)
 * C++ Profiling tools
@@ -96,9 +71,5 @@ To run it from your desktop (Windows, Mac, Linux) it can be a bit more involved.
 * MSVC v141 - VS 2017 C++ x64/x86 build tools
 * MSVC v140 - VS 2015 C++ build tools (v14.00)
 
-This will install about 22GB of crap, but once that is done you can open up a command line in the project's directory and run `lime test windows -debug`. Once that command finishes (it takes forever even on a higher end PC), you can run FNF from the .exe file under export\release\windows\bin
-As for Mac, 'lime test mac -debug' should work, if not the internet surely has a guide on how to compile Haxe stuff for Mac.
-
-### Additional guides
-
-- [Command line basics](https://ninjamuffin99.newgrounds.com/news/post/1090480)
+Esto te instala 22GB de muchas cosas basura, Pero, una vez hallas acabado, abres una terminal y te diriges al directorio de tu proyecto y ejecutas `lime test windows -debug`. Y, una vez halla fializado el comando (Esto demora entre 1 y 2 horas la primera vez, luego tarda menos tiempo, entre 5 y 10 minutos), podras ejecutar FNF, para poder tener el ejecutable, ejecutamos el comando de `lime build windows -final` y nos dirigimos a `export/release/windows/bin` donde encontrarias el ejecutable.
+En una Mac, deberia funcionar el comando de `lime test mac -debug`, pero si no funciona, puedes buscar una guia en internet, no se, nunca he usado una Mac.
