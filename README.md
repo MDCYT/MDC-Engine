@@ -1,4 +1,8 @@
-# Friday Night Funkin MDC ENgine
+# Friday Night Funkin MDC Engine
+
+[![Discord](https://img.shields.io/discord/778038568680554497?label=discord)](https://discord.gg/fpheq7JYt3) [![GitHub issues](https://img.shields.io/github/issues/MDCYT/FNF-MDC-Engine)](https://github.com/MDCYT/FNF-MDC-Engine/issues) [![GitHub pull requests](https://img.shields.io/github/issues-pr/MDCYT/FNF-MDC-Engine)](https://github.com/MDCYT/FNF-MDC-Engine/pulls) []() []()
+
+![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/MDCYT/FNF-MDC-Engine/latest) ![GitHub repo size](https://img.shields.io/github/repo-size/MDCYT/FNF-MDC-Engine) ![Lines of code](https://img.shields.io/tokei/lines/github/MDCYT/FNF-MDC-Engine) ![Supported platforms](https://img.shields.io/badge/supported%20platforms-windows%2C%20macOS%2C%20linux%2C%20html5-blue) ![GitHub all releases](https://img.shields.io/github/downloads/MDCYT/FNF-MDC-Engine/total) ![GitHub](https://img.shields.io/github/license/MDCYT/FNF-MDC-Engine) ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/MDCYT/FNF-MDC-Engine?include_prereleases&label=latest%20version) 
 
 This is the repository for Friday Night Funkin, a game originally made for Ludum Dare 47 "Stuck In a Loop".
 
