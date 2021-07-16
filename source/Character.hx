@@ -503,18 +503,15 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWN', 'spooky DOWN note', 24, false);
 				animation.addByPrefix('singLEFT', 'note sing left', 24, false);
 				animation.addByPrefix('singRIGHT', 'spooky sing right', 24, false);
-				animation.addByIndices('danceLeft', 'spooky dance idle', [0, 2, 6], "", 12, false);
-				animation.addByIndices('danceRight', 'spooky dance idle', [8, 10, 12, 14], "", 12, false);
+				animation.addByPrefix('idle', 'spooky dance idle', 24, true);
 
-				addOffset('danceLeft');
-				addOffset('danceRight');
-
+				addOffset('idle');
 				addOffset("singUP", -20, 26);
 				addOffset("singRIGHT", -130, -14);
 				addOffset("singLEFT", 130, -10);
 				addOffset("singDOWN", -50, -130);
 
-				playAnim('danceRight');
+				playAnim('idle');
 				case 'ch2':
 				tex = Paths.getSparrowAtlas('ch2_assets');
 				frames = tex;
@@ -522,18 +519,15 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWN', 'spooky DOWN note', 24, false);
 				animation.addByPrefix('singLEFT', 'note sing left', 24, false);
 				animation.addByPrefix('singRIGHT', 'spooky sing right', 24, false);
-				animation.addByIndices('danceLeft', 'spooky dance idle', [0, 2, 6], "", 12, false);
-				animation.addByIndices('danceRight', 'spooky dance idle', [8, 10, 12, 14], "", 12, false);
+				animation.addByPrefix('idle', 'spooky dance idle', 24, true);
 
-				addOffset('danceLeft');
-				addOffset('danceRight');
-
+				addOffset('idle');
 				addOffset("singUP", -20, 26);
 				addOffset("singRIGHT", -130, -14);
 				addOffset("singLEFT", 130, -10);
 				addOffset("singDOWN", -50, -130);
 
-				playAnim('danceRight');
+				playAnim('idle');
 				case 'ch3':
 				tex = Paths.getSparrowAtlas('ch3_assets');
 				frames = tex;
@@ -541,17 +535,15 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWN', 'spooky DOWN note', 24, false);
 				animation.addByPrefix('singLEFT', 'note sing left', 24, false);
 				animation.addByPrefix('singRIGHT', 'spooky sing right', 24, false);
-				animation.addByIndices('danceLeft', 'spooky dance idle', [0, 2, 6], "", 12, false);
-				animation.addByIndices('danceRight', 'spooky dance idle', [8, 10, 12, 14], "", 12, false);
+				animation.addByPrefix('idle', 'spooky dance idle', 24, true);
 
-				addOffset('danceLeft');
-				addOffset('danceRight');
-
+				addOffset('idle');
 				addOffset("singUP", -20, 26);
 				addOffset("singRIGHT", -130, -14);
 				addOffset("singLEFT", 130, -10);
 				addOffset("singDOWN", -50, -130);
-				playAnim('danceRight');
+
+				playAnim('idle');
 		}
 
 		dance();

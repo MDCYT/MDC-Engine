@@ -14,6 +14,7 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+import haxe.Json;
 import lime.net.curl.CURLCode;
 
 using StringTools;
@@ -23,15 +24,16 @@ class StoryMenuState extends MusicBeatState
 	var scoreText:FlxText;
 
 	var weekData:Array<Dynamic> = [
-		['Tutorial'],
-		['Bopeebo', 'Fresh', 'Dadbattle'],
-		['Spookeez', 'South', "Monster"],
-		['Pico', 'Philly', "Blammed"],
-		['Satin-Panties', "High", "Milf"],
-		['Cocoa', 'Eggnog', 'Winter-Horrorland'],
-		['Senpai', 'Roses', 'Thorns'],
-		['Track1', 'Track2', 'Track3']
+		["Tutorial"],
+		["Bopeebo", "Fresh", "Dadbattle"],
+		["Spookeez", "South", "Monster"],
+		["Pico", "Philly", "Blammed"],
+		["Satin-Panties", "High", "Milf"],
+		["Cocoa", "Eggnog", "Winter-Horrorland"],
+		["Senpai", "Roses", "Thorns"],
+		["Track1", "Track2", "Track3"]
 	];
+
 	var curDifficulty:Int = 1;
 
 	public static var weekUnlocked:Array<Bool> = [true, true, true, true, true, true, true, true];
@@ -47,17 +49,18 @@ class StoryMenuState extends MusicBeatState
 		['ejemplo', 'bf', 'gf']
 	];
 
-	var weekNames:Array<String> = [
-		"",
-		"Daddy Dearest",
-		"Spooky Month",
-		"PICO",
-		"MOMMY MUST MURDER",
-		"RED SNOW",
-		"hating simulator ft. moawling",
-		"Another extra-ordinary week ft. BF"
-	];
+	var weekNames:Array<String> = CoolUtil.coolTextFile(Paths.txt('weeknames'));
 
+	// [
+	// 	"",
+	// 	"Daddy Dearest",
+	// 	"Spooky Month",
+	// 	"PICO",
+	// 	"MOMMY MUST MURDER",
+	// 	"RED SNOW",
+	// 	"hating simulator ft. moawling",
+	// 	"Another extra-ordinary week ft. BF"
+	// ];
 	var txtWeekTitle:FlxText;
 
 	var curWeek:Int = 0;
@@ -115,7 +118,7 @@ class StoryMenuState extends MusicBeatState
 		add(grpLocks);
 
 		trace("Line 70");
-		
+
 		#if desktop
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
@@ -328,7 +331,14 @@ class StoryMenuState extends MusicBeatState
 			PlayState.campaignScore = 0;
 			new FlxTimer().start(1, function(tmr:FlxTimer)
 			{
-				LoadingState.loadAndSwitchState(new PlayState(), true);
+				if (curWeek == 7)
+				{
+					LoadingState.loadAndSwitchState(new VideoState('assets/videos/cinematic1.webm', new PlayState()), true);
+				}
+				else
+				{
+					LoadingState.loadAndSwitchState(new PlayState(), true);
+				}
 			});
 		}
 	}
