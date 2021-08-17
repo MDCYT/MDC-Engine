@@ -11,20 +11,38 @@ class OutdatedSubState extends MusicBeatState
 {
 	public static var leftState:Bool = false;
 
+	public static var needVer:String = "IDK, la verdad, no se";
+	public static var currChanges:String = "-Si";
+
+	private var bgColors:Array<String> = [
+		'#314d7f',
+		'#4e7093',
+		'#70526e',
+		'#594465'
+	];
+	private var colorRotation:Int = 1;
+
 	override function create()
 	{
 		super.create();
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		add(bg);
-		var ver = "v" + Application.current.meta.get('version');
+
 		var txt:FlxText = new FlxText(0, 0, FlxG.width,
-			"HEY! You're running an outdated version of the game!\nCurrent version is "
-			+ ver
-			+ " while the most recent version is "
-			+ NGio.GAME_VER
-			+ "! Press Space to go to itch.io, or ESCAPE to ignore this!!",
+			"Tu MDC Engine esta desactualizado!\nEstas en la version "
+			+ MainMenuState.mdcEngineVer
+			+ "\nLa version mas reciente es: " + needVer + "."
+			+ "\n\nLo nuevo:\n\n"
+			+ currChanges
+			+ "\nY mas cambios en el Changelog"
+			+ "\n\nPresiona espacio para descargar la nueva version\no presiona escape para continuar.",
 			32);
-		txt.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER);
+
+		
+		txt.setFormat("VCR OSD Mono", 32, FlxColor.fromRGB(200, 200, 200), CENTER);
+		txt.borderColor = FlxColor.BLACK;
+		txt.borderSize = 3;
+		txt.borderStyle = FlxTextBorderStyle.OUTLINE;
 		txt.screenCenter();
 		add(txt);
 	}
@@ -33,7 +51,7 @@ class OutdatedSubState extends MusicBeatState
 	{
 		if (controls.ACCEPT)
 		{
-			FlxG.openURL("https://ninja-muffin24.itch.io/funkin");
+			FlxG.openURL("https://github.com/MDCYT/FNF-MDC-Engine");
 		}
 		if (controls.BACK)
 		{

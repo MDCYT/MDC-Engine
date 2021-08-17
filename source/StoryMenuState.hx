@@ -329,15 +329,23 @@ class StoryMenuState extends MusicBeatState
 			PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + diffic, PlayState.storyPlaylist[0].toLowerCase());
 			PlayState.storyWeek = curWeek;
 			PlayState.campaignScore = 0;
+
+			var isCinematic:Array<String> = CoolUtil.coolTextFile(Paths.txt('cinematics'));
+
 			new FlxTimer().start(1, function(tmr:FlxTimer)
 			{
-				if (curWeek == 7)
-				{
-					LoadingState.loadAndSwitchState(new VideoState('assets/videos/cinematic1.webm', new PlayState()), true);
-				}
-				else
-				{
-					LoadingState.loadAndSwitchState(new PlayState(), true);
+				switch(curWeek){
+					case 7:
+						switch(Std.parseInt(isCinematic[0])){
+							case 1:
+								LoadingState.loadAndSwitchState(new VideoState('assets/videos/cinematic1.webm', new PlayState()), true);
+							case 0:
+								LoadingState.loadAndSwitchState(new PlayState(), true);
+							default:
+								LoadingState.loadAndSwitchState(new PlayState(), true);
+						}
+					default:
+						LoadingState.loadAndSwitchState(new PlayState(), true);
 				}
 			});
 		}

@@ -183,6 +183,8 @@ class PlayState extends MusicBeatState
 				dialogue = CoolUtil.coolTextFile(Paths.txt('roses/rosesDialogue'));
 			case 'thorns':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('thorns/thornsDialogue'));
+			case 'track1':
+				dialogue = CoolUtil.coolTextFile(Paths.txt('track1/track1Dialogue'));
 		}
 
 		#if desktop
@@ -824,6 +826,8 @@ class PlayState extends MusicBeatState
 
 		if (isStoryMode)
 		{
+			var dialogues:Array<String> = CoolUtil.coolTextFile(Paths.txt('dialogues'));
+
 			switch (curSong.toLowerCase())
 			{
 				case "winter-horrorland":
@@ -861,6 +865,24 @@ class PlayState extends MusicBeatState
 					schoolIntro(doof);
 				case 'thorns':
 					schoolIntro(doof);
+				case 'track1':
+					if(dialogues[0] == "1"){
+						schoolIntro(doof);
+					} else{
+						startCountdown();
+					}
+				case 'track2':
+					if(dialogues[1] == "1"){
+						schoolIntro(doof);
+					} else{
+						startCountdown();
+					}
+				case 'track3':
+					if(dialogues[2] == "1"){
+						schoolIntro(doof);
+					} else{
+						startCountdown();
+					}
 				default:
 					startCountdown();
 			}
@@ -1830,25 +1852,44 @@ class PlayState extends MusicBeatState
 				FlxTransitionableState.skipNextTransOut = true;
 				prevCamFollow = camFollow;
 
+				var isCinematic:Array<String> = CoolUtil.coolTextFile(Paths.txt('cinematics'));
+
 				PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + difficulty, PlayState.storyPlaylist[0]);
 				FlxG.sound.music.stop();
 				{
-					if (curSong.toLowerCase() == "track1")
-					{
-						LoadingState.loadAndSwitchState(new VideoState('assets/videos/cinematic2.webm', new PlayState()), true);
+					if (curSong.toLowerCase() == "track1"){
+							switch(Std.parseInt(isCinematic[1])){
+								case 1:
+									LoadingState.loadAndSwitchState(new VideoState('assets/videos/cinematic2.webm', new PlayState()), true);
+								case 0:
+									LoadingState.loadAndSwitchState(new PlayState());
+								default:
+									LoadingState.loadAndSwitchState(new PlayState());
+									}}
+					else if(curSong.toLowerCase() == "track2"){
+							switch(Std.parseInt(isCinematic[2])){
+								case 1:
+									LoadingState.loadAndSwitchState(new VideoState('assets/videos/cinematic3.webm', new PlayState()), true);
+								case 0:
+									LoadingState.loadAndSwitchState(new PlayState());
+								default:
+									LoadingState.loadAndSwitchState(new PlayState());
+									}
 					}
-					else if (curSong.toLowerCase() == "track2")
-					{
-						LoadingState.loadAndSwitchState(new VideoState('assets/videos/cinematic3.webm', new PlayState()), true);
-					}
-					else if (curSong.toLowerCase() == "track3")
-					{
-						LoadingState.loadAndSwitchState(new VideoState('assets/videos/cinematic4.webm', new PlayState()), true);
-					}
-					else
-					{
+					else if(curSong.toLowerCase() == "track3"){
+							switch(Std.parseInt(isCinematic[2])){
+								case 1:
+									LoadingState.loadAndSwitchState(new VideoState('assets/videos/cinematic4.webm', new PlayState()), true);
+								case 0:
+									LoadingState.loadAndSwitchState(new PlayState());
+								default:
+									LoadingState.loadAndSwitchState(new PlayState());
+									}
+					} else {
 						LoadingState.loadAndSwitchState(new PlayState());
 					}
+	
+
 				}
 			}
 		}
