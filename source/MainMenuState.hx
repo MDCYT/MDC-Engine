@@ -34,7 +34,7 @@ class MainMenuState extends MusicBeatState
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
 
-	public static var mdcEngineVer:String = "1.2.0";
+	public static var mdcEngineVer:String = "1.2.1";
 	public static var gameVer:String = "0.2.7.1";
 
 	override function create()
