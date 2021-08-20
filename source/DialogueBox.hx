@@ -96,6 +96,18 @@ class DialogueBox extends FlxSpriteGroup
 				newbox.frames = Paths.getSparrowAtlas('speech_bubble_talking');
 				newbox.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
 				newbox.animation.addByPrefix('normal', 'speech bubble normal', 24, false);
+
+			case 'track2':
+				hasDialog = true;
+				newbox.frames = Paths.getSparrowAtlas('speech_bubble_talking');
+				newbox.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
+				newbox.animation.addByPrefix('normal', 'speech bubble normal', 24, false);
+
+			case 'track3':
+				hasDialog = true;
+				newbox.frames = Paths.getSparrowAtlas('speech_bubble_talking');
+				newbox.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
+				newbox.animation.addByPrefix('normal', 'speech bubble normal', 24, false);
 		}
 
 		this.dialogueList = dialogueList;
@@ -156,9 +168,7 @@ class DialogueBox extends FlxSpriteGroup
 			// dialogue.x = 90;
 			// add(dialogue);
 		}
-		else if (PlayState.SONG.song.toLowerCase() == 'track1'
-			|| PlayState.SONG.song.toLowerCase() == 'track2'
-			|| PlayState.SONG.song.toLowerCase() == 'track3')
+		else if (PlayState.SONG.song.toLowerCase() == 'track1' || PlayState.SONG.song.toLowerCase() == 'track2' || PlayState.SONG.song.toLowerCase() == 'track3')
 		{
 			portraitLeft = new FlxSprite(-100, 185);
 			portraitLeft.frames = Paths.getSparrowAtlas("dialogue/" + PlayState.SONG.song.toLowerCase() + '/ch1Potrait');
