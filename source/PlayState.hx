@@ -73,6 +73,7 @@ class PlayState extends MusicBeatState
 
 	private var strumLineNotes:FlxTypedGroup<FlxSprite>;
 	private var playerStrums:FlxTypedGroup<FlxSprite>;
+	private var enemyStrums:FlxTypedGroup<FlxSprite>;
 
 	private var camZooming:Bool = false;
 	private var curSong:String = "";
@@ -1316,6 +1317,10 @@ class PlayState extends MusicBeatState
 			{
 				playerStrums.add(babyArrow);
 			}
+			else
+			{
+				enemyStrums.add(babyArrow);
+			}
 
 			babyArrow.animation.play('static');
 			babyArrow.x += 50;
@@ -1748,7 +1753,16 @@ class PlayState extends MusicBeatState
 						case 3:
 							dad.playAnim('singRIGHT' + altAnim, true);
 					}
-
+                                         enemyStrums.forEach(function(spr:FlxSprite)
+						{
+							if (Math.abs(daNote.noteData) == spr.ID)
+								{
+									spr.animation.play('confirm', true);
+									spr.centerOffsets();
+									spr.offset.x -=13;
+									spr.offset.y -=13;
+								}
+							});
 					dad.holdTimer = 0;
 
 					if (SONG.needsVoices)
@@ -1779,7 +1793,15 @@ class PlayState extends MusicBeatState
 				}
 			});
 		}
-
+		
+enemyStrums.forEach(function(spr:FlxSprite)
+            {
+                if (spr.animation.curAnim.finished){
+					spr.animation.play('static', true);
+					spr.centerOffsets();
+				}
+			});
+		
 		if (!inCutscene)
 			keyShit();
 
