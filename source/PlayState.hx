@@ -1,7 +1,7 @@
 package;
 
 #if desktop
-import AmsStates.Discord.DiscordClient;
+import Discord.DiscordClient;
 #end
 import Section.SwagSection;
 import Song.SwagSong;
