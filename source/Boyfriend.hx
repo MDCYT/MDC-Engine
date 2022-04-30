@@ -20,6 +20,10 @@ class Boyfriend extends Character
 	{
 		if (!debugMode)
 		{
+			if(
+				animation.getByName('singUP') != null && animation.getByName('singLEFT') != null && animation.getByName('singRIGHT') != null &&animation.getByName('singDOWN') != null &&
+				animation.getByName('singUPmiss') != null && animation.getByName('singUPmiss') != null && animation.getByName('singUPmiss') != null &&animation.getByName('singUPmiss') != null
+				){
 			if (animation.curAnim.name.startsWith('sing'))
 			{
 				holdTimer += elapsed;
@@ -36,6 +40,7 @@ class Boyfriend extends Character
 			{
 				playAnim('deathLoop');
 			}
+		}
 		}
 
 		super.update(elapsed);
