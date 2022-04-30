@@ -13,6 +13,8 @@ class RestoreMenuState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
+	var warningShit:FlxText; 
+
 	var menuItems:Array<String> = [
 		'yes'
 	];
@@ -56,6 +58,12 @@ class RestoreMenuState extends MusicBeatSubstate
 		}
 
 		changeSelection();
+
+		warningShit = new FlxText(5, FlxG.height - 18, 0, "ARE YOU SURE TO DELETE YOUR DATA? THIS ACTION IS PERMANENT!", 40);
+		warningShit.scrollFactor.set();
+		warningShit.y -= 15;
+		warningShit.setFormat("VCR OSD Mono", 25, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(warningShit);
 	}
 
 	override function update(elapsed:Float)
@@ -88,6 +96,7 @@ class RestoreMenuState extends MusicBeatSubstate
 			switch (daSelected)
 			{
 				case "yes":
+					warningShit.alpha = 0;
 					Highscore.resetSong(song, difficulty);
 			}
 		}
