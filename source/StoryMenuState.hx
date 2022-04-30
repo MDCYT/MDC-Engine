@@ -77,7 +77,6 @@ class StoryMenuState extends MusicBeatState
 			trace(story);
 			story.weekCharacters[i] = [moreData[i].character[1].name, moreData[i].character[2].name, moreData[i].character[3].name]; 
 			story.weekNames[i] = moreData[i].description;
-			story.weekData[i];
 		}
 
 		trace(weekUnlocked);
