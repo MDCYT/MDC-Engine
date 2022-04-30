@@ -4,6 +4,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.animation.FlxBaseAnimation;
 import flixel.graphics.frames.FlxAtlasFrames;
+import expansion.*;
 
 using StringTools;
 
@@ -12,15 +13,16 @@ class Character extends FlxSprite
 	public var animOffsets:Map<String, Array<Dynamic>>;
 	public var debugMode:Bool = false;
 
+	private var danceIdle:Bool = false;
 	public var isPlayer:Bool = false;
 	public var curCharacter:String = 'bf';
 
 	public var holdTimer:Float = 0;
+	public var ola:Mods.CharFile;
 
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false)
 	{
 		super(x, y);
-
 		animOffsets = new Map<String, Array<Dynamic>>();
 		curCharacter = character;
 		this.isPlayer = isPlayer;
@@ -28,8 +30,45 @@ class Character extends FlxSprite
 		var tex:FlxAtlasFrames;
 		antialiasing = true;
 
+		tex = Paths.getSparrowAtlas('DADDY_DEAREST');
+		frames = tex;
+		animation.addByPrefix('idle', 'Dad idle dance', 24);
+		animation.addByPrefix('singUP', 'Dad Sing Note UP', 24);
+		animation.addByPrefix('singRIGHT', 'Dad Sing Note RIGHT', 24);
+		animation.addByPrefix('singDOWN', 'Dad Sing Note DOWN', 24);
+		animation.addByPrefix('singLEFT', 'Dad Sing Note LEFT', 24);
+
+		addOffset('idle');
+		addOffset("singUP", -6, 50);
+		addOffset("singRIGHT", 0, 27);
+		addOffset("singLEFT", -10, 10);
+		addOffset("singDOWN", 0, -30);
+
+		playAnim('idle');
+
+
+
 		switch (curCharacter)
 		{
+			default:
+				#if desktop
+				ola = haxe.Json.parse(cast Paths.NativePaths.txt('data/chars/$character'));
+				tex = Paths.NativePaths.getSparrowAtlas(ola.image);
+				frames = tex;
+				antialiasing = ola.antialiasing;
+				flipX = ola.flipX;
+
+				for (i in 0...ola.sopas.length){
+					var s = ola.sopas[i];
+					if (s.indices.length > 0 && s.indices != null){
+						animation.addByIndices(s.name, s.prefix, s.indices, "", s.fps, s.loop);
+						addOffset(s.name, s.offsets[0],s.offsets[1]);
+					} else {
+						animation.addByPrefix(s.name, s.prefix, s.fps, s.loop);
+						addOffset(s.name, s.offsets[0],s.offsets[1]);
+					}
+				}
+				#end
 			case 'gf':
 				// GIRLFRIEND CODE
 				tex = Paths.getSparrowAtlas('GF_assets');
@@ -122,23 +161,6 @@ class Character extends FlxSprite
 				updateHitbox();
 				antialiasing = false;
 
-			case 'dad':
-				// DAD ANIMATION LOADING CODE
-				tex = Paths.getSparrowAtlas('DADDY_DEAREST');
-				frames = tex;
-				animation.addByPrefix('idle', 'Dad idle dance', 24);
-				animation.addByPrefix('singUP', 'Dad Sing Note UP', 24);
-				animation.addByPrefix('singRIGHT', 'Dad Sing Note RIGHT', 24);
-				animation.addByPrefix('singDOWN', 'Dad Sing Note DOWN', 24);
-				animation.addByPrefix('singLEFT', 'Dad Sing Note LEFT', 24);
-
-				addOffset('idle');
-				addOffset("singUP", -6, 50);
-				addOffset("singRIGHT", 0, 27);
-				addOffset("singLEFT", -10, 10);
-				addOffset("singDOWN", 0, -30);
-
-				playAnim('idle');
 			case 'spooky':
 				tex = Paths.getSparrowAtlas('spooky_kids_assets');
 				frames = tex;
@@ -545,59 +567,32 @@ class Character extends FlxSprite
 
 				playAnim('idle');
 		}
+		danceIdle = (animation.getByName('danceLeft') != null && animation.getByName('danceRight') != null);
 
 		dance();
-
+	
 		if (isPlayer)
 		{
 			flipX = !flipX;
-
-			// Doesn't flip for BF, since his are already in the right place???
-			if (!curCharacter.startsWith('bf'))
-			{
-				// var animArray
-				var oldRight = animation.getByName('singRIGHT').frames;
-				animation.getByName('singRIGHT').frames = animation.getByName('singLEFT').frames;
-				animation.getByName('singLEFT').frames = oldRight;
-
-				// IF THEY HAVE MISS ANIMATIONS??
-				if (animation.getByName('singRIGHTmiss') != null)
-				{
-					var oldMiss = animation.getByName('singRIGHTmiss').frames;
-					animation.getByName('singRIGHTmiss').frames = animation.getByName('singLEFTmiss').frames;
-					animation.getByName('singLEFTmiss').frames = oldMiss;
-				}
-			}
 		}
 	}
 
 	override function update(elapsed:Float)
 	{
-		if (!curCharacter.startsWith('bf'))
+		if (isPlayer)
 		{
 			if (animation.curAnim.name.startsWith('sing'))
 			{
 				holdTimer += elapsed;
 			}
 
-			var dadVar:Float = 4;
-
-			if (curCharacter == 'dad')
-				dadVar = 6.1;
+			var dadVar:Float = (ola.singDuration != null ? ola.singDuration : 4);
 			if (holdTimer >= Conductor.stepCrochet * dadVar * 0.001)
 			{
 				dance();
 				holdTimer = 0;
 			}
 		}
-
-		switch (curCharacter)
-		{
-			case 'gf':
-				if (animation.curAnim.name == 'hairFall' && animation.curAnim.finished)
-					playAnim('danceRight');
-		}
-
 		super.update(elapsed);
 	}
 
@@ -610,66 +605,21 @@ class Character extends FlxSprite
 	{
 		if (!debugMode)
 		{
-			switch (curCharacter)
-			{
-				case 'gf':
-					if (!animation.curAnim.name.startsWith('hair'))
-					{
+			if (danceIdle) { 
 						danced = !danced;
 
 						if (danced)
 							playAnim('danceRight');
 						else
 							playAnim('danceLeft');
-					}
-
-				case 'gf-christmas':
-					if (!animation.curAnim.name.startsWith('hair'))
-					{
-						danced = !danced;
-
-						if (danced)
-							playAnim('danceRight');
-						else
-							playAnim('danceLeft');
-					}
-
-				case 'gf-car':
-					if (!animation.curAnim.name.startsWith('hair'))
-					{
-						danced = !danced;
-
-						if (danced)
-							playAnim('danceRight');
-						else
-							playAnim('danceLeft');
-					}
-				case 'gf-pixel':
-					if (!animation.curAnim.name.startsWith('hair'))
-					{
-						danced = !danced;
-
-						if (danced)
-							playAnim('danceRight');
-						else
-							playAnim('danceLeft');
-					}
-
-				case 'spooky':
-					danced = !danced;
-
-					if (danced)
-						playAnim('danceRight');
-					else
-						playAnim('danceLeft');
-				default:
+		} else 
 					playAnim('idle');
-			}
 		}
 	}
 
 	public function playAnim(AnimName:String, Force:Bool = false, Reversed:Bool = false, Frame:Int = 0):Void
 	{
+		if (animation.getByName(AnimName) != null){
 		animation.play(AnimName, Force, Reversed, Frame);
 
 		var daOffset = animOffsets.get(AnimName);
@@ -696,6 +646,7 @@ class Character extends FlxSprite
 				danced = !danced;
 			}
 		}
+	}
 	}
 
 	public function addOffset(name:String, x:Float = 0, y:Float = 0)
