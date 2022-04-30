@@ -29,11 +29,11 @@ etc...
 
 [MDC](https://github.com/MDCYT)/creador principal y main programer
 
-[Ni](https://github.com/nizako) /Co-creador y star programer
+[Niz](https://github.com/nizako)/Co-creador y star programer
 
-[Manux](https://github.com/Manux123) /Extra Programer
+[Manux](https://github.com/Manux123)/Extra Programer
 
-[AmsDevice](https://github.com/Amsdevice) /Logo art-Programwer
+[AmsDevice](https://github.com/Amsdevice)/Logo art-Programwer
 
 ## Descarga
 
