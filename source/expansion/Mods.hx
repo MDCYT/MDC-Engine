@@ -29,10 +29,10 @@ typedef CharFile = {
   var image:String;
   var antialiasing:Bool;
   var flipX:Bool;
-  var frames:Array<Popo>;
+  var frames:Array<Frames>;
   var singDuration:Float;
 }
-typedef Popo = {
+typedef Frames = {
   var name:String;
   var prefix:String;
   var fps:Int;
@@ -77,8 +77,11 @@ class Mods  extends MusicBeatState {
     var rawList = FileSystem.readDirectory('mods');
     for (i in 0...rawList.length){
       trace(rawList[i]);
+    var modList = FileSystem.readDirectory('mods');
+    for (i in 0...modList.length){
+      trace(modList[i]);
       if (FileSystem.exists('mods/${list[i]}/pack.json'))
-        list.push(list[i]);
+        modList.push(list[i]);
     }
     for (i in 0...list.length){
       var modShit:ModPack = haxe.Json.parse(NativeFile.file_contents_string('mods/${list[i]}/pack.json'));
@@ -99,7 +102,7 @@ class Mods  extends MusicBeatState {
       add(desc);
 
     }
-
+    }
   }
   #end
 }
