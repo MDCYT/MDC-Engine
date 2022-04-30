@@ -24,31 +24,40 @@ import lime.utils.Assets;
 import openfl.utils.Assets as OpenFlASs;
 import haxe.Json;
 import flixel.FlxG;
-class NativePaths {
 
+class NativePaths
+{
 	inline public static var SOUND_EXT = #if web "mp3" #else "ogg" #end;
+
 	#if desktop
-	inline public static function sound(from:String) {
+	inline public static function sound(from:String)
+	{
 		if (Assets.exists('assets/sounds/' + from + SOUND_EXT))
 			return Sound.fromFile('assets/sounds/' + from + SOUND_EXT);
-		else 
+		else
 			return null;
 	}
-	inline public static function music(from:String) {
+
+	inline public static function music(from:String)
+	{
 		if (Assets.exists('assets/music/' + from + SOUND_EXT))
 			return Sound.fromFile('assets/music/' + from + SOUND_EXT);
-		else 
+		else
 			return null;
 	}
-	inline public static function image(from:String) {
+
+	inline public static function image(from:String)
+	{
 		if (Assets.exists('assets/images/' + from))
 			return BitmapData.fromFile('assets/images/' + from);
 		else
 			return null;
 	}
-	inline public static function txt(from:String) { 
+
+	inline public static function txt(from:String)
+	{
 		var elxokas = "";
-		if (Assets.exists('assets/' + from +".txt"))
+		if (Assets.exists('assets/' + from + ".txt"))
 			elxokas = ".txt";
 		else if (Assets.exists("assets/" + from + ".json"))
 			elxokas = ".json";
@@ -56,45 +65,59 @@ class NativePaths {
 			elxokas = ".xml";
 		if (Assets.exists('assets/' + from + elxokas))
 			return NativeFile.file_contents_string('assets/' + from);
-	  else
+		else
 			return "null";
 	}
 
-	inline static public function song(song:String, s:String) {
+	inline static public function song(song:String, s:String)
+	{
 		if (Assets.exists('assets/songs/' + song.toLowerCase() + "/" + s + SOUND_EXT))
-			return Sound.fromFile('assets/songs/' + song.toLowerCase()  + "/" + s + SOUND_EXT);
-		else 
+			return Sound.fromFile('assets/songs/' + song.toLowerCase() + "/" + s + SOUND_EXT);
+		else
 			return null;
 	}
+
 	inline static public function font(key:String)
-		return 'assets/fonts/$key';	
+		return 'assets/fonts/$key';
+
 	inline static public function soundRandom(key:String, min:Int, max:Int)
 		return sound(key + FlxG.random.int(min, max));
+
 	inline static public function getSparrowAtlas(key:String, ?library:String)
 		return FlxAtlasFrames.fromSparrow(image(key), txt('images/$key'));
+
 	inline static public function getPackerAtlas(key:String, ?library:String)
 		return FlxAtlasFrames.fromSpriteSheetPacker(image(key), txt('images/$key'));
-	#else	
-	inline public static function sound(from:String) {
-			return null;
-	inline public static function music(from:String) 
-			return null;
-	inline public static function image(from:String) {
-			return null;
-	inline public static function txt(from:String) 
+	#else
+	inline public static function sound(from:String)
 		return null;
+
+	inline public static function music(from:String)
+		return null;
+
+	inline public static function image(from:String)
+		return null;
+
+	inline public static function txt(from:String)
+		return null;
+
 	inline static public function font(key:String)
-		return null;	
+		return null;
+
 	inline static public function song(song:String, s:String)
 		return null;
+
 	inline static public function soundRandom(key:String, min:Int, max:Int)
 		return null;
+
 	inline static public function getSparrowAtlas(key:String, ?library:String)
-		return null;;
+		return null;
+
 	inline static public function getPackerAtlas(key:String, ?library:String)
 		return null;
 	#end
 }
+
 class Paths
 {
 	inline public static var SOUND_EXT = #if web "mp3" #else "ogg" #end;
