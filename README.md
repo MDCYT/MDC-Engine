@@ -6,33 +6,6 @@
 
 Este repositorio, es una moficacion del codigo fuente de [Friday Night Funkin](https://github.com/ninjamuffin99/Funkin)
 
-
-##################################################################################
- ___    ___   ____     ____
-|   \  /   | |  _ \   /  __|
-|    \/    | | | | | |  /
-| |\    /| | | |_| | |  \__
-|_| \__/ |_| |____/   \____|
- 
- _____   _   _    ____    _   _   _   _____
-|  ___| | \ | |  /  __|  | | | \ | | |  ___|
-|  __|  |  \| | |  |  _  | | |  \| | |  __|
-| |___  | |\  | |  |_| | | | | |\  | | |___
-|_____| |_| \_|  \_____| |_| |_| \_| |_____|
-##################################################################################
-
-# AmsDev
-
-
-#Niz
-
-
-#Manux
-
-
-#MDC
-
-
 ## Creditos
 
 - [ninjamuffin99](https://twitter.com/ninja_muffin99) - Programador de la base
@@ -100,3 +73,16 @@ Para correrlo en tu computadora(Mac, Linux, Windows) puede ser un poco mas dific
 
 Esto te instala 22GB de muchas cosas basura, Pero, una vez hallas acabado, abres una terminal y te diriges al directorio de tu proyecto y ejecutas `lime test windows -debug`. Y, una vez halla fializado el comando (Esto demora entre 1 y 2 horas la primera vez, luego tarda menos tiempo, entre 5 y 10 minutos), podras ejecutar FNF, para poder tener el ejecutable, ejecutamos el comando de `lime build windows -final` y nos dirigimos a `export/release/windows/bin` donde encontrarias el ejecutable.
 En una Mac, deberia funcionar el comando de `lime test mac -debug`, pero si no funciona, puedes buscar una guia en internet, no se, nunca he usado una Mac.
+
+##################################################################################
+ ___    ___   ____     ____
+|   \  /   | |  _ \   /  __|
+|    \/    | | | | | |  /
+| |\    /| | | |_| | |  \__
+|_| \__/ |_| |____/   \____|
+ _____   _   _    ____    _   _   _   _____
+|  ___| | \ | |  /  __|  | | | \ | | |  ___|
+|  __|  |  \| | |  |  _  | | |  \| | |  __|
+| |___  | |\  | |  |_| | | | | |\  | | |___
+|_____| |_| \_|  \_____| |_| |_| \_| |_____|
+##################################################################################
