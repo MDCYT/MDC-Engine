@@ -4,7 +4,7 @@
   "flipX": true,
   "icon": "bf",
   "antialiasing": true,
-  "sopas": [
+  "frames": [
     {
       "name": "idle",
       "prefix": "idle",

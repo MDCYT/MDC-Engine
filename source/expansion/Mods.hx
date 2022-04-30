@@ -9,10 +9,10 @@ typedef CharFile = {
   var image:String;
   var antialiasing:Bool;
   var flipX:Bool;
-  var sopas:Array<Popo>;
+  var frames:Array<Frames>;
   var singDuration:Float;
 }
-typedef Popo = {
+typedef Frames = {
   var name:String;
   var prefix:String;
   var fps:Int;
@@ -52,11 +52,11 @@ class Mods  extends MusicBeatState {
 
   override function create() {
     super.create();
-    var cuandolist = FileSystem.readDirectory('mods');
-    for (i in 0...cuandolist.length){
-      trace(cuandolist[i]);
+    var modList = FileSystem.readDirectory('mods');
+    for (i in 0...modList.length){
+      trace(modList[i]);
       if (FileSystem.exists('mods/${list[i]}/pack.json'))
-        list.push(list[i]);
+        modList.push(list[i]);
     }
 
 
