@@ -10,18 +10,21 @@
       "prefix": "idle",
       "fps": 24,
       "loop": false,
+      "offsets": [0,0],
       "indices": []
     },
     {
       "name": "singLEFT",
       "prefix": "left",
       "fps": 24,
+      "offsets": [0,0],
       "loop": false,
       "indices": []
     },
     {
       "name": "singUP",
       "prefix": "up",
+      "offsets": [0,0],
       "fps": 24,
       "loop": false,
       "indices": []
@@ -30,11 +33,13 @@
       "name": "singDOWN",
       "prefix": "down",
       "fps": 24,
+      "offsets": [0,0],
       "loop": false,
       "indices": []
     },
     {
       "name": "singRIGHT",
+      "offsets": [0,0],
       "prefix": "right",
       "fps": 24,
       "loop": false,
