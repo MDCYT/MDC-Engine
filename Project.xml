@@ -73,6 +73,9 @@
 		<library name="week6"    preload="false" />
 		<library name="week7"    preload="false" />
 	</section>
+
+	<!-- AMS watermark -->
+	<define name="AMS_WTRMRKS"/>
 	
 	<assets path="assets/songs"    library="songs"    exclude="*.ogg" if="web"/>
 	<assets path="assets/songs"    library="songs"    exclude="*.mp3" unless="web"/>
