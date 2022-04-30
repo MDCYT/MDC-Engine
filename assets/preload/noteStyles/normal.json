@@ -1,0 +1,81 @@
+{
+    "noteStyle": [
+     {
+        "name":"normal",
+        "path":"NOTE_assets",
+        "animations":["redScroll","red0"],
+        "antialiasing":true,
+        "width":0.7
+     },
+     {
+        "name":"normal",
+        "path":"NOTE_assets",
+        "animations":["blueScroll","blue0"],
+        "antialiasing":true,
+        "width":0.7
+     },
+     {
+        "name":"normal",
+        "path":"NOTE_assets",
+        "animations":["purpleScroll","purple0"],
+        "antialiasing":true,
+        "width":0.7
+     },
+     {
+        "name":"normal",
+        "path":"NOTE_assets",
+        "animations":["purpleholdend","pruple end hold"],
+        "antialiasing":true,
+        "width":0.7
+     },
+     {
+        "name":"normal",
+        "path":"NOTE_assets",
+        "animations":["greenholdend","green hold end"],
+        "antialiasing":true,
+        "width":0.7
+     },
+     {
+        "name":"normal",
+        "path":"NOTE_assets",
+        "animations":["redholdend","red hold end"],
+        "antialiasing":true,
+        "width":0.7
+     },
+     {
+        "name":"normal",
+        "path":"NOTE_assets",
+        "animations":["blueholdend","blue hold end"],
+        "antialiasing":true,
+        "width":0.7
+     },
+     {
+        "name":"normal",
+        "path":"NOTE_assets",
+        "animations":["purplehold","purple hold piece"],
+        "antialiasing":true,
+        "width":0.7
+     },
+     {
+        "name":"normal",
+        "path":"NOTE_assets",
+        "animations":["greenhold","green hold piece"],
+        "antialiasing":true,
+        "width":0.7
+     },
+     {
+        "name":"normal",
+        "path":"NOTE_assets",
+        "animations":["redhold","red hold piece"],
+        "antialiasing":true,
+        "width":0.7
+     },
+     {
+        "name":"normal",
+        "path":"NOTE_assets",
+        "animations":["bluehold","blue hold piece"],
+        "antialiasing":true,
+        "width":0.7
+     }
+    ]
+}

@@ -84,7 +84,7 @@ class PlayState extends MusicBeatState
 
 	private var combo:Int = 0;
 	private var notePlayed:Float = 0;
-	private var accuracy:Float = 0.00;
+	private var accuracy:Float = 100.00;
 	private var totalPlayed:Float = 0;
 
 	private var healthBarBG:FlxSprite;
@@ -145,14 +145,16 @@ class PlayState extends MusicBeatState
 	var detailsText:String = "";
 	var detailsPausedText:String = "";
 	#end
-	private function actualizaraccuracy(){
+	private function updateAccuracy(){
 		totalPlayed += 1;
-		accuracy = Math.max(0,notePlayed / totalPlayed * 100);
+		accuracy = notePlayed / totalPlayed * 100;
 		if(accuracy > 100)
 			accuracy = 100.00;
 		if(accuracy < 0)
 			accuracy = 0.00;
-		accuracy = Std.int(accuracy);
+		//Convert float to string with 2 decimal places
+		//Example 99.17326 to 99.17
+		accuracy = Math.round(accuracy * 100) / 100;
 	}
 	override public function create()
 	{
@@ -1357,7 +1359,7 @@ class PlayState extends MusicBeatState
 
 		super.update(elapsed);
 
-		scoreTxt.text = 'Score: $songScore | Misses: $missCounter | Accuracy: $accuracy' ;
+		scoreTxt.text = 'Score: $songScore | Misses: $missCounter | Accuracy: $accuracy%' ;
 		goodHTSTxt.text = "Good Hits:" + goodHTS;
 
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
@@ -1690,10 +1692,22 @@ class PlayState extends MusicBeatState
 				{
 					if (daNote.tooLate || !daNote.wasGoodHit)
 					{
+						updateAccuracy();
 						health -= 0.0475;
 						vocals.volume = 0;
 						missCounter += 1;
-						notePlayed -= 0.2;
+						//Play miss key animation
+						switch (Math.abs(daNote.noteData))
+						{
+							case 0:
+								dad.playAnim('missLEFT', true);
+							case 1:
+								dad.playAnim('missDOWN', true);
+							case 2:
+								dad.playAnim('missUP', true);
+							case 3:
+								dad.playAnim('missRIGHT', true);
+						}
 					}
 
 					daNote.active = false;
@@ -1841,7 +1855,7 @@ class PlayState extends MusicBeatState
 		}
 		else if (noteDiff > Conductor.safeZoneOffset * 0.2)
 		{
-			notePlayed += 1;
+			notePlayed += 0.9;
 			daRating = 'good';
 			score = 200;
 		}
@@ -1852,7 +1866,7 @@ class PlayState extends MusicBeatState
 			score = 300;
 			goodHTS += 1;
 		}
-		actualizaraccuracy();
+		updateAccuracy();
 		songScore += score;
 		var pixelShitPart1:String = "";
 		var pixelShitPart2:String = '';
@@ -2166,10 +2180,11 @@ class PlayState extends MusicBeatState
 				gf.playAnim('sad');
 			}
 			combo = 0;
-			notePlayed -= 0.6;
 			songScore -= 10;
 
 			missCounter += 1;
+
+			updateAccuracy();
 
 			FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
 			// FlxG.sound.play(Paths.sound('missnote1'), 1, false);
@@ -2233,8 +2248,14 @@ class PlayState extends MusicBeatState
 			if (!note.isSustainNote)
 			{
 				popUpScore(note.strumTime);
-				combo += 1;
 			}
+
+			if(note.isSustainNote){
+				notePlayed += 1;
+				updateAccuracy();
+			}
+
+			combo += 1;
 
 			if (note.noteData >= 0)
 				health += 0.023;

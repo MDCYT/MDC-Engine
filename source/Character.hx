@@ -1,6 +1,6 @@
-
 package;
 
+import Controls.Action;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.animation.FlxBaseAnimation;
@@ -15,6 +15,7 @@ class Character extends FlxSprite
 	public var debugMode:Bool = false;
 
 	private var danceIdle:Bool = false;
+
 	public var isPlayer:Bool = false;
 	public var curCharacter:String = 'bf';
 
@@ -52,31 +53,8 @@ class Character extends FlxSprite
 
 		playAnim('idle');
 
-
-
 		switch (curCharacter)
 		{
-			default:
-				#if desktop
-				
-				ola = haxe.Json.parse(cast Paths.NativePaths.txt('data/chars/$character'));
-				tex = Paths.NativePaths.getSparrowAtlas(ola.image);
-				frames = tex;
-				singDuration = ola.singDuration;
-				antialiasing = ola.antialiasing;
-				flipX = ola.flipX;
-				icon = ola.icon;
-				for (i in 0...ola.sopas.length){
-					var s = ola.sopas[i];
-					if (s.indices.length > 0 && s.indices != null){
-						animation.addByIndices(s.name, s.prefix, s.indices, "", s.fps, s.loop);
-						addOffset(s.name, s.offsets[0],s.offsets[1]);
-					} else {
-						animation.addByPrefix(s.name, s.prefix, s.fps, s.loop);
-						addOffset(s.name, s.offsets[0],s.offsets[1]);
-					}
-				}
-				#end
 			case 'gf':
 				// GIRLFRIEND CODE
 				tex = Paths.getSparrowAtlas('GF_assets');
@@ -526,7 +504,7 @@ class Character extends FlxSprite
 
 				playAnim('idle');
 
-				case 'ch1':
+			case 'ch1':
 				tex = Paths.getSparrowAtlas('ch1_assets');
 				frames = tex;
 				animation.addByPrefix('singUP', 'spooky UP NOTE', 24, false);
@@ -542,7 +520,7 @@ class Character extends FlxSprite
 				addOffset("singDOWN", -50, -130);
 
 				playAnim('idle');
-				case 'ch2':
+			case 'ch2':
 				tex = Paths.getSparrowAtlas('ch2_assets');
 				frames = tex;
 				animation.addByPrefix('singUP', 'spooky UP NOTE', 24, false);
@@ -558,7 +536,7 @@ class Character extends FlxSprite
 				addOffset("singDOWN", -50, -130);
 
 				playAnim('idle');
-				case 'ch3':
+			case 'ch3':
 				tex = Paths.getSparrowAtlas('ch3_assets');
 				frames = tex;
 				animation.addByPrefix('singUP', 'spooky UP NOTE', 24, false);
@@ -574,11 +552,36 @@ class Character extends FlxSprite
 				addOffset("singDOWN", -50, -130);
 
 				playAnim('idle');
+
+			default:
+				#if desktop
+				ola = haxe.Json.parse(cast Paths.NativePaths.txt('data/chars/$character'));
+				tex = Paths.NativePaths.getSparrowAtlas(ola.image);
+				frames = tex;
+				singDuration = ola.singDuration;
+				antialiasing = ola.antialiasing;
+				flipX = ola.flipX;
+				icon = ola.icon;
+				for (i in 0...ola.sopas.length)
+				{
+					var s = ola.sopas[i];
+					if (s.indices.length > 0 && s.indices != null)
+					{
+						animation.addByIndices(s.name, s.prefix, s.indices, "", s.fps, s.loop);
+						addOffset(s.name, s.offsets[0], s.offsets[1]);
+					}
+					else
+					{
+						animation.addByPrefix(s.name, s.prefix, s.fps, s.loop);
+						addOffset(s.name, s.offsets[0], s.offsets[1]);
+					}
+				}
+				#end
 		}
 		danceIdle = (animation.getByName('danceLeft') != null && animation.getByName('danceRight') != null);
 
 		dance();
-	
+
 		if (isPlayer)
 		{
 			flipX = !flipX;
@@ -612,48 +615,51 @@ class Character extends FlxSprite
 	{
 		if (!debugMode)
 		{
-			if (danceIdle) { 
+			if (danceIdle)
+			{
 				danced = !danced;
 
 				if (danced)
 					playAnim('danceRight');
 				else
 					playAnim('danceLeft');
-			} else 
+			}
+			else
 				playAnim('idle');
 		}
 	}
 
 	public function playAnim(AnimName:String, Force:Bool = false, Reversed:Bool = false, Frame:Int = 0):Void
 	{
-		if (animation.getByName(AnimName) != null){
-		animation.play(AnimName, Force, Reversed, Frame);
-
-		var daOffset = animOffsets.get(AnimName);
-		if (animOffsets.exists(AnimName))
+		if (animation.getByName(AnimName) != null)
 		{
-			offset.set(daOffset[0], daOffset[1]);
-		}
-		else
-			offset.set(0, 0);
+			animation.play(AnimName, Force, Reversed, Frame);
 
-		if (curCharacter == 'gf')
-		{
-			if (AnimName == 'singLEFT')
+			var daOffset = animOffsets.get(AnimName);
+			if (animOffsets.exists(AnimName))
 			{
-				danced = true;
+				offset.set(daOffset[0], daOffset[1]);
 			}
-			else if (AnimName == 'singRIGHT')
-			{
-				danced = false;
-			}
+			else
+				offset.set(0, 0);
 
-			if (AnimName == 'singUP' || AnimName == 'singDOWN')
+			if (curCharacter == 'gf')
 			{
-				danced = !danced;
+				if (AnimName == 'singLEFT')
+				{
+					danced = true;
+				}
+				else if (AnimName == 'singRIGHT')
+				{
+					danced = false;
+				}
+
+				if (AnimName == 'singUP' || AnimName == 'singDOWN')
+				{
+					danced = !danced;
+				}
 			}
 		}
-	}
 	}
 
 	public function addOffset(name:String, x:Float = 0, y:Float = 0)
