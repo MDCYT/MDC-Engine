@@ -1692,9 +1692,22 @@ class PlayState extends MusicBeatState
 				{
 					if (daNote.tooLate || !daNote.wasGoodHit)
 					{
+						updateAccuracy();
 						health -= 0.0475;
 						vocals.volume = 0;
 						missCounter += 1;
+						//Play miss key animation
+						switch (Math.abs(daNote.noteData))
+						{
+							case 0:
+								dad.playAnim('missLEFT', true);
+							case 1:
+								dad.playAnim('missDOWN', true);
+							case 2:
+								dad.playAnim('missUP', true);
+							case 3:
+								dad.playAnim('missRIGHT', true);
+						}
 					}
 
 					daNote.active = false;
@@ -2167,10 +2180,11 @@ class PlayState extends MusicBeatState
 				gf.playAnim('sad');
 			}
 			combo = 0;
-			updateAccuracy();
 			songScore -= 10;
 
 			missCounter += 1;
+
+			updateAccuracy();
 
 			FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
 			// FlxG.sound.play(Paths.sound('missnote1'), 1, false);
