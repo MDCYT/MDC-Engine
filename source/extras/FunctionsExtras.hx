@@ -27,7 +27,7 @@ var storyDifficultyText:String = "";
 		if (SONG.validScore)
 		{
 			#if !switch
-			source.Highscore.saveScore(SONG.song, songScore, storyDifficulty);
+			Highscore.saveScore(SONG.song, songScore, storyDifficulty);
 			#end
 		}
 }
