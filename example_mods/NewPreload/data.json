@@ -9,5 +9,8 @@
         "type": "git",
         "url": "https://github.com/example/example-mod.git"
     },
-    "enabled": false
+    "enabled": false,
+    "type": "mod",
+    "codeLanguage": "Haxe",
+    "language": "en"
 }
