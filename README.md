@@ -22,11 +22,15 @@ Este repositorio, es una moficacion del codigo fuente de [Friday Night Funkin](h
 
 # AmsDev
 
+
 #Niz
+
 
 #Manux
 
+
 #MDC
+
 
 ## Creditos
 
