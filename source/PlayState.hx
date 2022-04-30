@@ -164,11 +164,11 @@ class PlayState extends MusicBeatState
 		Conductor.mapBPMChanges(SONG);
 		Conductor.changeBPM(SONG.bpm);
 
-		var pathDialog:Array<String> = CoolUtil.coolTextFile('${SONG.song.toLowerCase()}/${SONG.song.toLowerCase()}Dialogue');
+		var pathDialog:String = Paths.txt('${SONG.song.toLowerCase()}/${SONG.song.toLowerCase()}Dialogue');
 
 		if (Assets.exists(pathDialog))
 		{
-			dialogue = pathDialog;
+			dialogue = CoolUtil.coolTextFile(pathDialog);
 		}
 		/*
 		switch (SONG.song.toLowerCase())
