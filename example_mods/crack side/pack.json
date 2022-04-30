@@ -1,0 +1,17 @@
+{
+    "name": "Crack side",
+    "version": "0.1.1",
+    "author": "Niz",
+    "description": "BIEN CHISTOSITO EL NIZ VEDA",
+    "url": "https://gamejolt.com",
+    "icon": "icon.png",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nizako/crack-side-MDC-ENGINE-MOD.git",
+        "urlUpdate": "https://github.com/nizako/crack-side-MDC-ENGINE-MOD/ver-"
+    },
+    "enabled": true,
+    "type": "mod",
+    "codeLanguage": "Haxe",
+    "language": "en"
+}

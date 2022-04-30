@@ -1,15 +1,35 @@
 package expansion;
+import flixel.FlxSprite;
+import flixel.util.FlxColor;
+import flixel.text.FlxText;
 #if desktop
 import sys.FileSystem;
 import cpp.NativeFile;
 import sys.io.File;
 #end
+typedef ModPack = {
+  var name:String;
+  var version:String;
+  var author:String;
+  var description:String;
+  var url:String;
+  var icon:String;
+  var repository:Repository;
+  var enabled:Bool;
+  var type:String;
+  var codeLanguage:String;
+  var language:String;
+}
+typedef Repository = {
+  var type:String;
+  var url:String;
+}
 typedef CharFile = {
   var icon:String;
   var image:String;
   var antialiasing:Bool;
   var flipX:Bool;
-  var sopas:Array<Popo>;
+  var frames:Array<Popo>;
   var singDuration:Float;
 }
 typedef Popo = {
@@ -52,13 +72,33 @@ class Mods  extends MusicBeatState {
 
   override function create() {
     super.create();
-    var cuandolist = FileSystem.readDirectory('mods');
-    for (i in 0...cuandolist.length){
-      trace(cuandolist[i]);
+    var bg = new FlxSprite().loadGraphic('assets/images/menuDesat.png');
+    add(bg);
+    var rawList = FileSystem.readDirectory('mods');
+    for (i in 0...rawList.length){
+      trace(rawList[i]);
       if (FileSystem.exists('mods/${list[i]}/pack.json'))
         list.push(list[i]);
     }
+    for (i in 0...list.length){
+      var modShit:ModPack = haxe.Json.parse(NativeFile.file_contents_string('mods/${list[i]}/pack.json'));
 
+      var bg = new FlxSprite(70, (i * 600) + 50).makeGraphic(500,400,FlxColor.BLACK);
+      bg.screenCenter(X);
+      bg.alpha = 0.6;
+      add(bg);
+
+      var name = new FlxText(70, bg.y + 40,0, modShit.name);
+      name.setFormat(Paths.font('vcr.ttf'), 25, FlxColor.BLACK, LEFT);
+      add(name);
+      var author = new FlxText(0, name.y - 30,0, modShit.author);
+      author.setFormat(Paths.font('vcr.ttf'), 16, FlxColor.BLACK, LEFT);
+      add(author);
+      var desc = new FlxText(0, author.y - 50,0, modShit.description);
+      desc.setFormat(Paths.font('vcr.ttf'), 10, FlxColor.BLACK, LEFT);
+      add(desc);
+
+    }
 
   }
   #end
