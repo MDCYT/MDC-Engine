@@ -38,8 +38,7 @@ class EditorChar extends MusicBeatState {
     char.animation.addByPrefix(a,b,c,d);
   }
 function getAnimsautomaticamente(){
-  var newChar:Character;
-  return newChar;
+
 }
 }
 
