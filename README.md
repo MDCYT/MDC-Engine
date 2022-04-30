@@ -12,9 +12,11 @@
 ```
 
 este es un repositorio editado de el funkin master
+
 hecho por cameron o ninjamuffin
 
 es un edit menu que tiene:
+
 Opciones
 
 Nuevas Mecanicas
@@ -25,9 +27,12 @@ etc...
 
 ## Creditos
 
-MDC/creador principal
-[Ni](https://github.com/nizako) /Co-creador y main programer
+[MDC](https://github.com/MDCYT)/creador principal y main programer
+
+[Ni](https://github.com/nizako) /Co-creador y star programer
+
 [Manux](https://github.com/Manux123) /Extra Programer
+
 [AmsDevice](https://github.com/Amsdevice) /Logo art-Programwer
 
 ## Descarga
