@@ -18,6 +18,9 @@ class Character extends FlxSprite
 	public var curCharacter:String = 'bf';
 
 	var singDuration:Float = 4;
+
+	public var icon:String = "bf";
+
 	public var holdTimer:Float = 0;
 	public var ola:Mods.CharFile;
 
@@ -27,6 +30,7 @@ class Character extends FlxSprite
 		animOffsets = new Map<String, Array<Dynamic>>();
 		curCharacter = character;
 		this.isPlayer = isPlayer;
+		icon = character;
 
 		var tex:FlxAtlasFrames;
 		antialiasing = true;
@@ -60,7 +64,7 @@ class Character extends FlxSprite
 				singDuration = ola.singDuration;
 				antialiasing = ola.antialiasing;
 				flipX = ola.flipX;
-
+				icon = ola.icon;
 				for (i in 0...ola.sopas.length){
 					var s = ola.sopas[i];
 					if (s.indices.length > 0 && s.indices != null){
@@ -582,7 +586,7 @@ class Character extends FlxSprite
 
 	override function update(elapsed:Float)
 	{
-		if (isPlayer)
+		if (!isPlayer)
 		{
 			if (animation.curAnim.name.startsWith('sing'))
 			{

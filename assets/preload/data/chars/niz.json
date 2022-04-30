@@ -1,0 +1,44 @@
+{
+  "image": "tu mama",
+  "singDuration": 6,
+  "flipX": true,
+  "icon": "bf",
+  "antialiasing": true,
+  "sopas": [
+    {
+      "name": "idle",
+      "prefix": "idle",
+      "fps": 24,
+      "loop": false,
+      "indices": []
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "left",
+      "fps": 24,
+      "loop": false,
+      "indices": []
+    },
+    {
+      "name": "singUP",
+      "prefix": "up",
+      "fps": 24,
+      "loop": false,
+      "indices": []
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "down",
+      "fps": 24,
+      "loop": false,
+      "indices": []
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "right",
+      "fps": 24,
+      "loop": false,
+      "indices": []
+    }
+  ]
+}

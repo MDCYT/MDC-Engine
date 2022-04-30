@@ -740,11 +740,11 @@ class PlayState extends MusicBeatState
 		// healthBar
 		add(healthBar);
 
-		iconP1 = new HealthIcon(SONG.player1, true);
+		iconP1 = new HealthIcon(boyfriend.icon, true);
 		iconP1.y = healthBar.y - (iconP1.height / 2);
 		add(iconP1);
 
-		iconP2 = new HealthIcon(SONG.player2, false);
+		iconP2 = new HealthIcon(dad.icon, false);
 		iconP2.y = healthBar.y - (iconP2.height / 2);
 		add(iconP2);
 		
