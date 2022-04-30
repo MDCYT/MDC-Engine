@@ -164,6 +164,13 @@ class PlayState extends MusicBeatState
 		Conductor.mapBPMChanges(SONG);
 		Conductor.changeBPM(SONG.bpm);
 
+		var pathDialog:String = Paths.txt('${SONG.song.toLowerCase()}/${SONG.song.toLowerCase()}Dialogue');
+
+		if (Assets.exists(pathDialog))
+		{
+			dialogue = CoolUtil.coolTextFile(pathDialog);
+		}
+		/*
 		switch (SONG.song.toLowerCase())
 		{
 			//dialogue bullshit
@@ -172,7 +179,7 @@ class PlayState extends MusicBeatState
 			case 'roses': dialogue = CoolUtil.coolTextFile(Paths.txt('roses/rosesDialogue'));
 				
 			case 'thorns': dialogue = CoolUtil.coolTextFile(Paths.txt('thorns/thornsDialogue'));	
-		}
+		}*/
 
 		#if desktop
 		// Making difficulty text for Discord Rich Presence.
