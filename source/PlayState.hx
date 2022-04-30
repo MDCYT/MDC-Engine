@@ -133,6 +133,8 @@ class PlayState extends MusicBeatState
 	// how big to stretch the pixel art assets
 	public static var daPixelZoom:Float = 6;
 
+	var pathDialog:String = Paths.txt('${SONG.song.toLowerCase()}/${SONG.song.toLowerCase()}Dialogue');
+
 	var inCutscene:Bool = false;
 
 	#if desktop
@@ -175,8 +177,6 @@ class PlayState extends MusicBeatState
 
 		Conductor.mapBPMChanges(SONG);
 		Conductor.changeBPM(SONG.bpm);
-
-		var pathDialog:String = Paths.txt('${SONG.song.toLowerCase()}/${SONG.song.toLowerCase()}Dialogue');
 
 		if (Assets.exists(pathDialog))
 		{
@@ -782,15 +782,15 @@ class PlayState extends MusicBeatState
 							});
 						});
 					});
-				case 'senpai':
-					schoolIntro(doof);
 				case 'roses':
 					FlxG.sound.play(Paths.sound('ANGRY'));
-					schoolIntro(doof);
-				case 'thorns':
-					schoolIntro(doof);
 				default:
-					startCountdown();
+					if (Assets.exists(pathDialog))
+					{
+						schoolIntro(doof);
+					}
+					else
+						startCountdown();
 			}
 		}
 		else
@@ -1659,15 +1659,19 @@ class PlayState extends MusicBeatState
 							dad.playAnim('singRIGHT' + altAnim, true);
 					}
 					enemyStrums.forEach(function(spr:FlxSprite)
+					{
+						if (Math.abs(daNote.noteData) == spr.ID)
 						{
-							if (Math.abs(daNote.noteData) == spr.ID)
-								{
-									spr.animation.play('confirm', true);
-									spr.centerOffsets();
-									spr.offset.x -=13;
-									spr.offset.y -=13;
-								}
-							});
+							spr.animation.play('confirm', true);
+							spr.centerOffsets();
+							if (!curStage.startsWith('school'))
+							{
+								spr.offset.x -=13;
+								spr.offset.y -=13;
+							}
+						}
+					});
+
 					dad.holdTimer = 0;
 
 					if (SONG.needsVoices)
