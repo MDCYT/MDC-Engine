@@ -10,6 +10,14 @@ import polymod.format.ParseRules.TargetSignatureElement;
 
 using StringTools;
 
+
+typedef NoteStyleData = 
+{
+	var name:String;
+	var animations:Array<Dynamic>;
+	var width:Float;
+}
+
 class Note extends FlxSprite
 {
 	public var strumTime:Float = 0;
