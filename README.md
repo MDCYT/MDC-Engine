@@ -33,7 +33,7 @@ etc...
 
 [Manux](https://github.com/Manux123)/Extra Programer
 
-[AmsDevice](https://github.com/Amsdevice)/Logo art-Programwer
+[AmsDevice](https://github.com/Amsdevice)/Logo art-Programer
 
 ## Descarga
 
@@ -74,3 +74,11 @@ Para instalar algunas librerias adicionnales, necesitaras seguir estos pasos:
 7. Poner en el CMD `haxelib git flixel-addons https://github.com/HaxeFlixel/flixel-addons` para instalar Flixel Addons.
 
 Listo, tienes todo lo necesario para empezar a compilar el juego!
+
+##Copilacion
+
+Unicamente necesitas poner lime test windows
+
+Si quieres tener a parte la debug console solo pones lime test windows -debug
+
+Si lo quieres en HTML solo pon lime test html5
