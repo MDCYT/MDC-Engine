@@ -74,7 +74,7 @@ Para correrlo en tu computadora(Mac, Linux, Windows) puede ser un poco mas dific
 Esto te instala 22GB de muchas cosas basura, Pero, una vez hallas acabado, abres una terminal y te diriges al directorio de tu proyecto y ejecutas `lime test windows -debug`. Y, una vez halla fializado el comando (Esto demora entre 1 y 2 horas la primera vez, luego tarda menos tiempo, entre 5 y 10 minutos), podras ejecutar FNF, para poder tener el ejecutable, ejecutamos el comando de `lime build windows -final` y nos dirigimos a `export/release/windows/bin` donde encontrarias el ejecutable.
 En una Mac, deberia funcionar el comando de `lime test mac -debug`, pero si no funciona, puedes buscar una guia en internet, no se, nunca he usado una Mac.
 
-##################################################################################
+```
  ___    ___   ____     ____
 |   \  /   | |  _ \   /  __|
 |    \/    | | | | | |  /
@@ -85,4 +85,25 @@ En una Mac, deberia funcionar el comando de `lime test mac -debug`, pero si no f
 |  __|  |  \| | |  |  _  | | |  \| | |  __|
 | |___  | |\  | |  |_| | | | | |\  | | |___
 |_____| |_| \_|  \_____| |_| |_| \_| |_____|
-##################################################################################
+```
+
+## MDC Engine
+
+este es un repositorio editado de el funkin master
+hecho por cameron o ninjamuffin
+
+es un edit menu que tiene:
+Opciones
+
+Nuevas Mecanicas
+
+Uso del .JSON
+
+etc...
+
+## Creditos
+
+MDC/creador principal
+[Niz}(https://github.com/nizako) /Co-creador y main programer
+[Manux](https://github.com/Manux123) /Extra Programer
+[AmsDevice](https://github.com/Amsdevice) /Logo art-Programwer
