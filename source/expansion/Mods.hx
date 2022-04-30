@@ -1,5 +1,9 @@
 package expansion;
-
+#if desktop
+import sys.FileSystem;
+import cpp.NativeFile;
+import sys.io.File;
+#end
 typedef CharFile = {
   var icon:String;
   var image:String;
@@ -43,5 +47,19 @@ function getAnimsautomaticamente(){
 }
 
 class Mods  extends MusicBeatState {
-  
+  #if desktop
+  var list:Array<Dynamic> = [];
+
+  override function create() {
+    super.create();
+    var cuandolist = FileSystem.readDirectory('mods');
+    for (i in 0...cuandolist.length){
+      trace(cuandolist[i]);
+      if (FileSystem.exists('mods/${list[i]}/pack.json'))
+        list.push(list[i]);
+    }
+
+
+  }
+  #end
 }
