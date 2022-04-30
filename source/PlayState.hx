@@ -69,7 +69,7 @@ class PlayState extends MusicBeatState
 	private var curSection:Int = 0;
 
 	private var camFollow:FlxObject;
-
+	
 	private static var prevCamFollow:FlxObject;
 
 	private var strumLineNotes:FlxTypedGroup<FlxSprite>;
@@ -81,7 +81,11 @@ class PlayState extends MusicBeatState
 
 	private var gfSpeed:Int = 1;
 	private var health:Float = 1;
+
 	private var combo:Int = 0;
+	private var notePlayed:Float = 0;
+	private var accuracy:Float = 0.00;
+	private var totalPlayed:Float = 0;
 
 	private var healthBarBG:FlxSprite;
 	private var healthBar:FlxBar;
@@ -139,7 +143,15 @@ class PlayState extends MusicBeatState
 	var detailsText:String = "";
 	var detailsPausedText:String = "";
 	#end
-
+	private function actualizaraccuracy(){
+		totalPlayed += 1;
+		accuracy = Math.max(0,notePlayed / totalPlayed * 100);
+		if(accuracy > 100)
+			accuracy = 100.00;
+		if(accuracy < 0)
+			accuracy = 0.00;
+		accuracy = Std.int(accuracy);
+	}
 	override public function create()
 	{
 		instance = this;
@@ -490,49 +502,6 @@ class PlayState extends MusicBeatState
 				bg.scale.set(6, 6);
 				add(bg);
 
-				/* 
-		                           var bg:FlxSprite = new FlxSprite(posX, posY).loadGraphic(Paths.image('weeb/evilSchoolBG'));
-		                           bg.scale.set(6, 6);
-		                           // bg.setGraphicSize(Std.int(bg.width * 6));
-		                           // bg.updateHitbox();
-		                           add(bg);
-
-		                           var fg:FlxSprite = new FlxSprite(posX, posY).loadGraphic(Paths.image('weeb/evilSchoolFG'));
-		                           fg.scale.set(6, 6);
-		                           // fg.setGraphicSize(Std.int(fg.width * 6));
-		                           // fg.updateHitbox();
-		                           add(fg);
-
-		                           wiggleShit.effectType = WiggleEffectType.DREAMY;
-		                           wiggleShit.waveAmplitude = 0.01;
-		                           wiggleShit.waveFrequency = 60;
-		                           wiggleShit.waveSpeed = 0.8;
-		                    
-
-		                  // bg.shader = wiggleShit.shader;
-		                  // fg.shader = wiggleShit.shader;
-
-		                  
-		                            var waveSprite = new FlxEffectSprite(bg, [waveEffectBG]);
-		                            var waveSpriteFG = new FlxEffectSprite(fg, [waveEffectFG]);
-
-		                            // Using scale since setGraphicSize() doesnt work???
-		                            waveSprite.scale.set(6, 6);
-		                            waveSpriteFG.scale.set(6, 6);
-		                            waveSprite.setPosition(posX, posY);
-		                            waveSpriteFG.setPosition(posX, posY);
-
-		                            waveSprite.scrollFactor.set(0.7, 0.8);
-		                            waveSpriteFG.scrollFactor.set(0.9, 0.8);
-
-		                            // waveSprite.setGraphicSize(Std.int(waveSprite.width * 6));
-		                            // waveSprite.updateHitbox();
-		                            // waveSpriteFG.setGraphicSize(Std.int(fg.width * 6));
-		                            // waveSpriteFG.updateHitbox();
-
-		                            add(waveSprite);
-		                            add(waveSpriteFG);
-		                    */
 		    }
 			case 'testStage':
 			{
@@ -1387,8 +1356,7 @@ class PlayState extends MusicBeatState
 
 		super.update(elapsed);
 
-		scoreTxt.text = "Score:" + songScore;
-		missTxt.text = "Misses:" + missCounter;
+		scoreTxt.text = 'Score: $songScore | Misses: $missCounter | Accuracy: $accuracy' ;
 		goodHTSTxt.text = "Good Hits:" + goodHTS;
 
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
@@ -1720,6 +1688,7 @@ class PlayState extends MusicBeatState
 						health -= 0.0475;
 						vocals.volume = 0;
 						missCounter += 1;
+						notePlayed -= 0.2;
 					}
 
 					daNote.active = false;
@@ -1856,35 +1825,30 @@ class PlayState extends MusicBeatState
 		if (noteDiff > Conductor.safeZoneOffset * 0.9)
 		{
 			daRating = 'shit';
+			notePlayed += 0.1;
 			score = 50;
 		}
 		else if (noteDiff > Conductor.safeZoneOffset * 0.75)
 		{
+			notePlayed += 0.5;
 			daRating = 'bad';
 			score = 100;
 		}
 		else if (noteDiff > Conductor.safeZoneOffset * 0.2)
 		{
+			notePlayed += 1;
 			daRating = 'good';
 			score = 200;
 		}
 		else if (noteDiff > Conductor.safeZoneOffset * 0.0)
 		{
+			notePlayed += 1;
 			daRating = 'sick';
 			score = 300;
 			goodHTS += 1;
 		}
-
+		actualizaraccuracy();
 		songScore += score;
-
-		/* if (combo > 60)
-				daRating = 'sick';
-			else if (combo > 12)
-				daRating = 'good'
-			else if (combo > 4)
-				daRating = 'bad';
-		 */
-
 		var pixelShitPart1:String = "";
 		var pixelShitPart2:String = '';
 
@@ -1932,7 +1896,8 @@ class PlayState extends MusicBeatState
 		seperatedScore.push(Math.floor(combo / 100));
 		seperatedScore.push(Math.floor((combo - (seperatedScore[0] * 100)) / 10));
 		seperatedScore.push(combo % 10);
-
+		if (combo >= 10)
+			add(comboSpr);
 		var daLoop:Int = 0;
 		for (i in seperatedScore)
 		{
@@ -1956,7 +1921,7 @@ class PlayState extends MusicBeatState
 			numScore.velocity.y -= FlxG.random.int(140, 160);
 			numScore.velocity.x = FlxG.random.float(-5, 5);
 
-			if (combo >= 10 || combo == 0)
+			if (combo >= 10)
 				add(numScore);
 
 			FlxTween.tween(numScore, {alpha: 0}, 0.2, {
@@ -1969,10 +1934,7 @@ class PlayState extends MusicBeatState
 
 			daLoop++;
 		}
-		/* 
-			trace(combo);
-			trace(seperatedScore);
-		 */
+
 
 		coolText.text = Std.string(seperatedScore);
 		// add(coolText);
@@ -2199,7 +2161,7 @@ class PlayState extends MusicBeatState
 				gf.playAnim('sad');
 			}
 			combo = 0;
-
+			notePlayed -= 0.6;
 			songScore -= 10;
 
 			missCounter += 1;
