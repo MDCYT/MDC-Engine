@@ -1,9 +1,13 @@
 package ;
 
+import flixel.text.FlxText;
+import flixel.FlxSprite;
+import flixel.group.FlxGroup.FlxTypedGroup;
+
 class VariablesExtras
 {
-  esoTilin:Int = 0;
-  cuandoYoLaVi:FlxText;
-  elPepe:FlxTypedGroup<Alphabet>;
-  eteSech:FlxTypedGroup<FlxSprite>;
+  var esoTilin:Int = 0;
+  var cuandoYoLaVi:FlxText;
+  var elPepe:FlxTypedGroup<Alphabet>;
+  var eteSech:FlxTypedGroup<FlxSprite>;
 }
