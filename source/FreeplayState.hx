@@ -15,6 +15,12 @@ import lime.utils.Assets;
 
 using StringTools;
 
+typedef SongsJsonData = {
+	var song:String;
+	var iconChar:String;
+	var week:Int;
+}
+
 class FreeplayState extends MusicBeatState
 {
 	var songs:Array<SongMetadata> = [];
