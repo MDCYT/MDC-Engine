@@ -9,35 +9,39 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 
-class OptionsSubState extends MusicBeatSubstate
+class RestoreMenuState extends MusicBeatSubstate
 {
-
-	public static var startSong = true;
-	
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
 	var menuItems:Array<String> = [
-		'preferences', 
-		'hud', 
-		'keybinds',
-		'Data Restorer'
+		'yes'
 	];
 	var curSelected:Int = 0;
-
+	var song:String;
+	var difficulty:Int;
+	var week:Int;
 
 	override function create()
 	{
 
 		#if desktop
-		DiscordClient.changePresence("In the Options", null);
+		DiscordClient.changePresence("In the DataRestorerMenu", null);
 		#end
 
-		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
+		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuBGBlue'));
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
 		bg.updateHitbox();
 		bg.screenCenter();
 		bg.antialiasing = true;
 		add(bg);
+
+		var reset:FlxSprite = new FlxSprite(FlxG.width, 0).loadGraphic(Paths.image('restart'));
+		reset.scale.y = 0.5;
+		reset.scale.x = 0.5;
+		reset.screenCenter();
+		reset.y -= 130;
+		reset.alpha = 1;
+		add(reset);
 
 		grpMenuShit = new FlxTypedGroup<Alphabet>();
 		add(grpMenuShit);
@@ -66,7 +70,7 @@ class OptionsSubState extends MusicBeatSubstate
 
 		if (back)
 		{
-			FlxG.switchState(new MainMenuState());
+			FlxG.switchState(new OptionsSubState());
 		}
 		if (upP)
 		{
@@ -80,17 +84,11 @@ class OptionsSubState extends MusicBeatSubstate
 		if (accepted)
 		{
 			var daSelected:String = menuItems[curSelected];
-
+			FlxG.sound.play(Paths.sound('confirmMenu'));
 			switch (daSelected)
 			{
-				case "preferences":
-					FlxG.switchState(new MainMenuState());    
-				case "hud":
-					FlxG.switchState(new MainMenuState());	
-				case "keybinds":
-					FlxG.switchState(new KeyBinds());		
-				case "Data Restorer":
-					FlxG.switchState(new RestoreMenuState());				
+				case "yes":
+					Highscore.resetSong(song, difficulty);
 			}
 		}
 	}
@@ -111,7 +109,7 @@ class OptionsSubState extends MusicBeatSubstate
 			item.targetY = bullShit - curSelected;
 			bullShit++;
 
-			item.alpha = 0.6;
+			item.alpha = 1;
 			// item.setGraphicSize(Std.int(item.width * 0.8));
 
 			if (item.targetY == 0)

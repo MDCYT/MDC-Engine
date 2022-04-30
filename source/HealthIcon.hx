@@ -13,8 +13,13 @@ class HealthIcon extends FlxSprite
 	{
 		super();
 		loadGraphic(Paths.image('iconGrid'), true, 150, 150);
-
+		reLoadIcons(char, isPlayer);
 		antialiasing = true;
+		scrollFactor.set();
+	}
+
+	function reLoadIcons(char:String = 'bf', isPlayer:Bool = false)
+	{
 		animation.add('bf', [0, 1], 0, false, isPlayer);
 		animation.add('bf-car', [0, 1], 0, false, isPlayer);
 		animation.add('bf-christmas', [0, 1], 0, false, isPlayer);
@@ -38,7 +43,6 @@ class HealthIcon extends FlxSprite
 		animation.add('ch2', [26, 27], 0, false, isPlayer);
 		animation.add('ch3', [28, 29], 0, false, isPlayer);
 		animation.play(char);
-		scrollFactor.set();
 	}
 
 	override function update(elapsed:Float)
