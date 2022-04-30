@@ -84,7 +84,7 @@ class PlayState extends MusicBeatState
 
 	private var combo:Int = 0;
 	private var notePlayed:Float = 0;
-	private var accuracy:Float = 0.00;
+	private var accuracy:Float = 100.00;
 	private var totalPlayed:Float = 0;
 
 	private var healthBarBG:FlxSprite;
@@ -145,14 +145,16 @@ class PlayState extends MusicBeatState
 	var detailsText:String = "";
 	var detailsPausedText:String = "";
 	#end
-	private function actualizaraccuracy(){
+	private function updateAccuracy(){
 		totalPlayed += 1;
-		accuracy = Math.max(0,notePlayed / totalPlayed * 100);
+		accuracy = notePlayed / totalPlayed * 100;
 		if(accuracy > 100)
 			accuracy = 100.00;
 		if(accuracy < 0)
 			accuracy = 0.00;
-		accuracy = Std.int(accuracy);
+		//Convert float to string with 2 decimal places
+		//Example 99.17326 to 99.17
+		accuracy = Math.round(accuracy * 100) / 100;
 	}
 	override public function create()
 	{
@@ -1357,7 +1359,7 @@ class PlayState extends MusicBeatState
 
 		super.update(elapsed);
 
-		scoreTxt.text = 'Score: $songScore | Misses: $missCounter | Accuracy: $accuracy' ;
+		scoreTxt.text = 'Score: $songScore | Misses: $missCounter | Accuracy: $accuracy%' ;
 		goodHTSTxt.text = "Good Hits:" + goodHTS;
 
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
@@ -1693,7 +1695,6 @@ class PlayState extends MusicBeatState
 						health -= 0.0475;
 						vocals.volume = 0;
 						missCounter += 1;
-						notePlayed -= 0.2;
 					}
 
 					daNote.active = false;
@@ -1841,7 +1842,7 @@ class PlayState extends MusicBeatState
 		}
 		else if (noteDiff > Conductor.safeZoneOffset * 0.2)
 		{
-			notePlayed += 1;
+			notePlayed += 0.9;
 			daRating = 'good';
 			score = 200;
 		}
@@ -1852,7 +1853,7 @@ class PlayState extends MusicBeatState
 			score = 300;
 			goodHTS += 1;
 		}
-		actualizaraccuracy();
+		updateAccuracy();
 		songScore += score;
 		var pixelShitPart1:String = "";
 		var pixelShitPart2:String = '';
@@ -2166,7 +2167,7 @@ class PlayState extends MusicBeatState
 				gf.playAnim('sad');
 			}
 			combo = 0;
-			notePlayed -= 0.6;
+			updateAccuracy();
 			songScore -= 10;
 
 			missCounter += 1;
@@ -2233,8 +2234,14 @@ class PlayState extends MusicBeatState
 			if (!note.isSustainNote)
 			{
 				popUpScore(note.strumTime);
-				combo += 1;
 			}
+
+			if(note.isSustainNote){
+				notePlayed += 1;
+				updateAccuracy();
+			}
+
+			combo += 1;
 
 			if (note.noteData >= 0)
 				health += 0.023;

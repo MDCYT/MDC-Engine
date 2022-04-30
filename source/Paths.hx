@@ -48,8 +48,9 @@ class NativePaths
 
 	inline public static function image(from:String)
 	{
-		if (Assets.exists('assets/images/' + from))
+		if (Assets.exists('assets/images/' + from + ".png")){
 			return BitmapData.fromFile('assets/images/' + from + '.png');
+		}
 		else
 			return null;
 	}
@@ -63,6 +64,7 @@ class NativePaths
 			elxokas = ".json";
 		else if (Assets.exists("assets/" + from + ".xml"))
 			elxokas = ".xml";
+
 		if (Assets.exists('assets/' + from + elxokas))
 			return NativeFile.file_contents_string('assets/' + from + elxokas);
 		else
