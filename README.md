@@ -75,7 +75,7 @@ Para instalar algunas librerias adicionnales, necesitaras seguir estos pasos:
 
 Listo, tienes todo lo necesario para empezar a compilar el juego!
 
-##Copilacion
+## Copilacion
 
 Unicamente necesitas poner lime test windows
 
