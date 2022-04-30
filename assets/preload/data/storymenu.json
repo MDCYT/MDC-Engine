@@ -1,0 +1,34 @@
+{
+    "weekData": [
+		["Tutorial"],
+		["Bopeebo", "Fresh", "Dadbattle"],
+		["Spookeez", "South", "Monster"],
+		["Pico", "Philly", "Blammed"],
+		["Satin-Panties", "High", "Milf"],
+		["Cocoa", "Eggnog", "Winter-Horrorland"],
+		["Senpai", "Roses", "Thorns"],
+		["Track1", "Track2", "Track3"]
+	],
+
+    "weekCharacters": [
+		["dad", "bf", "gf"],
+		["dad", "bf", "gf"],
+		["spooky", "bf", "gf"],
+		["pico", "bf", "gf"],
+		["mom", "bf", "gf"],
+		["parents-christmas", "bf", "gf"],
+		["senpai", "bf", "gf"],
+		["ejemplo", "bf", "gf"]
+	],
+
+    "weekNames": [
+        "",
+        "Daddy Dearest",
+        "Spooky Month",
+        "PICO",
+        "MOMMY MUST MURDER",
+        "RED SNOW",
+        "hating simulator ft. moawling",
+        "Another extra-ordinary week ft. BF"
+    ]
+}

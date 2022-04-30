@@ -31,4 +31,22 @@ class MenuCharacter extends FlxSprite
 		animation.play(character);
 		updateHitbox();
 	}
+
+	override public function update(elapsed:Float)
+	{
+		switch (character)
+		{
+			case 'spooky':
+				offset.x -= 20;
+			case 'pico':
+				offset.x -= 20;
+				flipX = true;
+			case 'mom':
+				setGraphicSize(Std.int(width * 0.9));
+			case 'parents-christmas':
+				setGraphicSize(Std.int(width * 1.15));
+		}
+		
+		super.update(elapsed);
+	}
 }
