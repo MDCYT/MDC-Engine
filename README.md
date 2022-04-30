@@ -27,13 +27,13 @@ etc...
 
 ## Creditos
 
-[MDC](https://github.com/MDCYT)/creador principal y main programer
+[MDC](https://github.com/MDCYT)/creador principal y main programmer
 
-[Niz](https://github.com/nizako)/Co-creador y star programer
+[Niz](https://github.com/nizako)/Co-creador y star programmer
 
-[Manux](https://github.com/Manux123)/Extra Programer
+[Manux](https://github.com/Manux123)/Extra Programmer
 
-[AmsDevice](https://github.com/Amsdevice)/Logo art-Programer
+[AmsDevice](https://github.com/Amsdevice)/Logo art-programmer
 
 ## Descarga
 
@@ -77,8 +77,8 @@ Listo, tienes todo lo necesario para empezar a compilar el juego!
 
 ## Compilacion
 
-Unicamente necesitas poner lime test windows
+Unicamente necesitas poner `lime test windows`
 
-Si quieres tener a parte la debug console solo pones lime test windows -debug
+Si quieres tener a parte la debug console solo pones `lime test windows -debug`
 
-Si lo quieres en HTML solo pon lime test html5
+Si lo quieres en HTML solo pon `lime test html5` // aunque los mods no sirven (no puedes conseguir archivos sin compilar en web)
