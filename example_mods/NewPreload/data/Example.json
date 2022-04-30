@@ -1,8 +1,10 @@
-song: 'Test',
-notes: [],
-bpm: 150,
-needsVoices: true,
-player1: 'niz',
-player2: 'ams',
-speed: 1,
-validScore: false
+{
+  "song": "Test",
+  "notes": [],
+  "bpm": 150,
+  "needsVoices": true,
+  "player1": "niz",
+  "player2": "ams",
+  "speed": 1,
+  "validScore": false
+}
