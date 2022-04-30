@@ -17,6 +17,7 @@ class Character extends FlxSprite
 	public var isPlayer:Bool = false;
 	public var curCharacter:String = 'bf';
 
+	var singDuration:Float = 4;
 	public var holdTimer:Float = 0;
 	public var ola:Mods.CharFile;
 
@@ -52,9 +53,11 @@ class Character extends FlxSprite
 		{
 			default:
 				#if desktop
+				
 				ola = haxe.Json.parse(cast Paths.NativePaths.txt('data/chars/$character'));
 				tex = Paths.NativePaths.getSparrowAtlas(ola.image);
 				frames = tex;
+				singDuration = ola.singDuration;
 				antialiasing = ola.antialiasing;
 				flipX = ola.flipX;
 
@@ -585,9 +588,8 @@ class Character extends FlxSprite
 			{
 				holdTimer += elapsed;
 			}
-			ola.singDuration = 4;
-			var dadVar:Float = ola.singDuration ;
-			if (holdTimer >= Conductor.stepCrochet * dadVar * 0.001)
+			// dsjfkhsdklfsdjfkl
+			if (holdTimer >= Conductor.stepCrochet * singDuration * 0.001)
 			{
 				dance();
 				holdTimer = 0;
