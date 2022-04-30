@@ -62,14 +62,12 @@ class RestoreMenuState extends MusicBeatSubstate
 
 		warningShit = new FlxText(5, FlxG.height - 18, 0, "ARE YOU SURE TO DELETE YOUR DATA? THIS ACTION IS PERMANENT!", 80);
 		warningShit.scrollFactor.set();
-		warningShit.screenCenter(X);
 		warningShit.y -= 15;
 		warningShit.setFormat("VCR OSD Mono", 45, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(warningShit);
 
 		succesedShit = new FlxText(5, FlxG.height - 18, 0, "Data deleted successfully!", 80);
 		succesedShit.scrollFactor.set();
-		succesedShit.screenCenter(X);
 		succesedShit.y -= 15;
 		succesedShit.alpha = 0;
 		succesedShit.setFormat("VCR OSD Mono", 45, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);

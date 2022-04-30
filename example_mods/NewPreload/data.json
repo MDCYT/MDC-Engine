@@ -1,0 +1,13 @@
+{
+    "name": "Example-Mod",
+    "version": "1.0",
+    "author": "Example Author",
+    "description": "Example mod description",
+    "url": "https://example.com",
+    "icon": "icon.png",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/example/example-mod.git"
+    },
+    "enabled": false
+}

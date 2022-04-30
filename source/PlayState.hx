@@ -782,8 +782,6 @@ class PlayState extends MusicBeatState
 							});
 						});
 					});
-				case 'roses':
-					FlxG.sound.play(Paths.sound('ANGRY'));
 				default:
 					if (Assets.exists(pathDialog))
 					{
@@ -807,6 +805,9 @@ class PlayState extends MusicBeatState
 
 	function schoolIntro(?dialogueBox:DialogueBox):Void
 	{
+		if (SONG.song.toLowerCase() == 'roses')
+			FlxG.sound.play(Paths.sound('ANGRY'));
+		
 		var black:FlxSprite = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
 		black.scrollFactor.set();
 		add(black);
