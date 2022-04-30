@@ -1,5 +1,8 @@
 package;
 
+#if desktop
+import Discord.DiscordClient;
+#end
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -8,62 +11,113 @@ import flixel.util.FlxColor;
 
 class OptionsSubState extends MusicBeatSubstate
 {
-	var textMenuItems:Array<String> = ['Master Volume', 'Sound Volume', 'Controls'];
 
-	var selector:FlxSprite;
+	public static var startSong = true;
+	
+	var grpMenuShit:FlxTypedGroup<Alphabet>;
+
+	var menuItems:Array<String> = [
+		'preferences', 
+		'hud', 
+		'keybinds',
+		'Data Restorer'
+	];
 	var curSelected:Int = 0;
 
-	var grpOptionsTexts:FlxTypedGroup<FlxText>;
 
-	public function new()
+	override function create()
 	{
-		super();
 
-		grpOptionsTexts = new FlxTypedGroup<FlxText>();
-		add(grpOptionsTexts);
+		#if desktop
+		DiscordClient.changePresence("In the Options", null);
+		#end
 
-		selector = new FlxSprite().makeGraphic(5, 5, FlxColor.RED);
-		add(selector);
+		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
+		bg.setGraphicSize(Std.int(bg.width * 1.1));
+		bg.updateHitbox();
+		bg.screenCenter();
+		bg.antialiasing = true;
+		add(bg);
 
-		for (i in 0...textMenuItems.length)
+		grpMenuShit = new FlxTypedGroup<Alphabet>();
+		add(grpMenuShit);
+
+		for (i in 0...menuItems.length)
 		{
-			var optionText:FlxText = new FlxText(20, 20 + (i * 50), 0, textMenuItems[i], 32);
-			optionText.ID = i;
-			grpOptionsTexts.add(optionText);
+			var songText:Alphabet = new Alphabet(0, 0, menuItems[i], true, false);
+			songText.isMenuItem = true;
+			songText.screenCenter(X);
+			songText.forceX = songText.x;
+			grpMenuShit.add(songText);
 		}
+
+		changeSelection();
 	}
 
 	override function update(elapsed:Float)
 	{
+
 		super.update(elapsed);
 
-		if (controls.UP_P)
-			curSelected -= 1;
+		var upP = controls.UP_P;
+		var downP = controls.DOWN_P;
+		var accepted = controls.ACCEPT;
+		var back = controls.BACK;
 
-		if (controls.DOWN_P)
-			curSelected += 1;
+		if (back)
+		{
+			FlxG.switchState(new MainMenuState());
+		}
+		if (upP)
+		{
+			changeSelection(-1);
+		}
+		if (downP)
+		{
+			changeSelection(1);
+		}
+
+		if (accepted)
+		{
+			var daSelected:String = menuItems[curSelected];
+
+			switch (daSelected)
+			{
+				case "preferences":
+					FlxG.switchState(new MainMenuState());    
+				case "hud":
+					FlxG.switchState(new MainMenuState());	
+				case "keybinds":
+					FlxG.switchState(new KeyBinds());		
+				case "Data Restorer":
+					FlxG.switchState(new RestoreMenuState());				
+			}
+		}
+	}
+
+	function changeSelection(change:Int = 0):Void
+	{
+		curSelected += change;
 
 		if (curSelected < 0)
-			curSelected = textMenuItems.length - 1;
-
-		if (curSelected >= textMenuItems.length)
+			curSelected = menuItems.length - 1;
+		if (curSelected >= menuItems.length)
 			curSelected = 0;
 
-		grpOptionsTexts.forEach(function(txt:FlxText)
-		{
-			txt.color = FlxColor.WHITE;
+		var bullShit:Int = 0;
 
-			if (txt.ID == curSelected)
-				txt.color = FlxColor.YELLOW;
-		});
-
-		if (controls.ACCEPT)
+		for (item in grpMenuShit.members)
 		{
-			switch (textMenuItems[curSelected])
+			item.targetY = bullShit - curSelected;
+			bullShit++;
+
+			item.alpha = 0.6;
+			// item.setGraphicSize(Std.int(item.width * 0.8));
+
+			if (item.targetY == 0)
 			{
-				case "Controls":
-					FlxG.state.closeSubState();
-					FlxG.state.openSubState(new ControlsSubState());
+				item.alpha = 1;
+				// item.setGraphicSize(Std.int(item.width));
 			}
 		}
 	}
