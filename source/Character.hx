@@ -562,9 +562,9 @@ class Character extends FlxSprite
 				antialiasing = ola.antialiasing;
 				flipX = ola.flipX;
 				icon = ola.icon;
-				for (i in 0...ola.sopas.length)
+				for (i in 0...ola.frames.length)
 				{
-					var s = ola.sopas[i];
+					var s = ola.frames[i];
 					if (s.indices.length > 0 && s.indices != null)
 					{
 						animation.addByIndices(s.name, s.prefix, s.indices, "", s.fps, s.loop);

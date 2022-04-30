@@ -1,34 +1,88 @@
 {
-    "weekData": [
-		["Tutorial"],
-		["Bopeebo", "Fresh", "Dadbattle"],
-		["Spookeez", "South", "Monster"],
-		["Pico", "Philly", "Blammed"],
-		["Satin-Panties", "High", "Milf"],
-		["Cocoa", "Eggnog", "Winter-Horrorland"],
-		["Senpai", "Roses", "Thorns"],
-		["Track1", "Track2", "Track3"]
-	],
-
-    "weekCharacters": [
-		["dad", "bf", "gf"],
-		["dad", "bf", "gf"],
-		["spooky", "bf", "gf"],
-		["pico", "bf", "gf"],
-		["mom", "bf", "gf"],
-		["parents-christmas", "bf", "gf"],
-		["senpai", "bf", "gf"],
-		["ejemplo", "bf", "gf"]
-	],
-
-    "weekNames": [
-        "",
-        "Daddy Dearest",
-        "Spooky Month",
-        "PICO",
-        "MOMMY MUST MURDER",
-        "RED SNOW",
-        "hating simulator ft. moawling",
-        "Another extra-ordinary week ft. BF"
-    ]
+    "data": [{
+		"name": "Tutorial",
+		"description": "",
+		"character": [
+			{
+				"name": "gf",
+				"offset": {
+					"x": 0,
+					"y": 0
+				},
+				"size": {
+					"x": 1,
+					"y": 1
+				},
+				"color": "#000000"
+			},
+			{},
+			{
+				"name": "bf",
+				"offset": {
+					"x": 0,
+					"y": 0
+				},
+				"size": {
+					"x": 1,
+					"y": 1
+				},
+				"color": "#000000"
+			}
+		],
+		"background": {
+			"color": "#ffffff",
+			"image": ""
+		},
+		"tracks": ["Tutorial"],
+		"unlocked": true
+	},
+	{
+		"name": "Week1",
+		"description": "Daddy Dearest",
+		"character": [
+			{
+				"name": "dad",
+				"offset": {
+					"x": 0,
+					"y": 0
+				},
+				"size": {
+					"x": 1,
+					"y": 1
+				},
+				"color": "#000000"
+			},
+			{
+				"name": "bf",
+				"offset": {
+					"x": 0,
+					"y": 0
+				},
+				"size": {
+					"x": 1,
+					"y": 1
+				},
+				"color": "#000000"
+			},
+			{
+				"name": "gf",
+				"offset": {
+					"x": 0,
+					"y": 0
+				},
+				"size": {
+					"x": 1,
+					"y": 1
+				},
+				"color": "#000000"
+			}
+		],
+		"background": {
+			"color": "#ffffff",
+			"image": ""
+		},
+		"tracks": ["Bopeebo", "Fresh", "Dadbattle"],
+		"unlocked": true
+	}
+]
 }

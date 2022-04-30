@@ -30,11 +30,18 @@ typedef StoryData =
 class StoryMenuState extends MusicBeatState
 {
 	var scoreText:FlxText;
-	var story:StoryData;
+	var moreData:Dynamic;
+	var story:StoryData = {
+		weekData: [["Tutorial"]],
+		weekCharacters: [["dad", "bf", "gf"]],
+		weekNames: [""]
+	};
+	
+	var data:Dynamic;
 
 	var curDifficulty:Int = 1;
 
-	public static var weekUnlocked:Array<Bool> = [true, true, true, true, true, true, true, true];
+	public static var weekUnlocked:Array<Bool> = [true];
 
 	var txtWeekTitle:FlxText;
 
@@ -56,9 +63,24 @@ class StoryMenuState extends MusicBeatState
 	{
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
-
+		
 		var rawFile = Assets.getText('assets/data/storymenu.json');
-		story = Json.parse(rawFile);
+		data = Json.parse(rawFile);
+		moreData = data.data; 
+
+		trace(weekUnlocked);
+
+		for (i in 0...moreData.length)
+		{
+			weekUnlocked[i] = moreData[i].unlocked;
+			story.weekData[i] = moreData[i].tracks;
+			trace(story);
+			story.weekCharacters[i] = [moreData[i].character[1].name, moreData[i].character[2].name, moreData[i].character[3].name]; 
+			story.weekNames[i] = moreData[i].description;
+		}
+
+		trace(weekUnlocked);
+		
 
 		if (FlxG.sound.music != null)
 		{
@@ -444,4 +466,5 @@ class StoryMenuState extends MusicBeatState
 		intendedScore = Highscore.getWeekScore(curWeek, curDifficulty);
 		#end
 	}
+
 }
