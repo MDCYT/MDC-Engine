@@ -6,6 +6,28 @@
 
 Este repositorio, es una moficacion del codigo fuente de [Friday Night Funkin](https://github.com/ninjamuffin99/Funkin)
 
+## MDC Engine Credits
+
+ ___    ___   ____     ____
+|   \  /   | |  _ \   /  __|
+|    \/    | | | | | |  /   
+| |\    /| | | |_| | |  \__
+|_| \__/ |_| |____/   \____|
+ 
+ _____   _   _    ____    _   _   _   _____
+|  ___| | \ | |  /  __|  | | | \ | | |  ___|
+|  __|  |  \| | |  |  _  | | |  \| | |  __|
+| |___  | |\  | |  |_| | | | | |\  | | |___
+|_____| |_| \_|  \_____| |_| |_| \_| |_____|
+
+# AmsDev
+
+#Niz
+
+#Manux
+
+#MDC
+
 ## Creditos
 
 - [ninjamuffin99](https://twitter.com/ninja_muffin99) - Programador de la base
