@@ -43,7 +43,6 @@ class MainMenuState extends MusicBeatState
 	}
 	override function openSubState(state:FlxSubState){
 		super.openSubState(state);
-		selectedSomethin = true;
 	}
 	override function create()
 	{

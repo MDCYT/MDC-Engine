@@ -80,6 +80,7 @@ class OptionsSubState extends MusicBeatSubstate
 		if (accepted)
 		{
 			var daSelected:String = menuItems[curSelected];
+			MainMenuState.selectedSomethin = false;
 
 			switch (daSelected)
 			{
