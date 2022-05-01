@@ -156,7 +156,7 @@ class InitialCache extends MusicBeatState {
     }
     text.text = 'LOADING: ${current}\n$loaded / $max';
     load = max == loaded;
-    if (load && !tryChange) 
+    if (load) 
       onLoad();
   }
 }
