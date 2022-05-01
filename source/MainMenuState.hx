@@ -193,7 +193,8 @@ class MainMenuState extends MusicBeatState
 							FlxFlicker.flicker(spr, 1, 0.06, false, false, function(flick:FlxFlicker)
 							{
 								var daChoice:String = optionShit[curSelected];
-
+							
+								selectedSomethin = false;
 								switch (daChoice)
 								{
 									case 'story mode':

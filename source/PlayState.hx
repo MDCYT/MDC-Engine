@@ -1823,7 +1823,7 @@ class PlayState extends MusicBeatState
 
 	var endingSong:Bool = false;
 
-	private function popUpScore(strumtime:Float):Void
+	private function popUpScore(strumtime:Float, n:Note):Void
 	{
 		var noteDiff:Float = Math.abs(strumtime - Conductor.songPosition);
 		// boyfriend.playAnim('hey');
@@ -1865,6 +1865,10 @@ class PlayState extends MusicBeatState
 			daRating = 'sick';
 			score = 300;
 			goodHTS += 1;
+		}
+		if (daRating == "sick" #if debug || true #end){
+			var s = new NoteSplash(n.noteData, playerStrums.members[n.noteData].x, playerStrums.members[n.noteData].y);
+			add(s);
 		}
 		updateAccuracy();
 		songScore += score;
@@ -2247,11 +2251,13 @@ class PlayState extends MusicBeatState
 		{
 			if (!note.isSustainNote)
 			{
-				popUpScore(note.strumTime);
+				popUpScore(note.strumTime, note);
 			}
 
 			if(note.isSustainNote){
-				notePlayed += 1;
+				notePlayed += 0.1;
+				health += 0.00001;
+
 				updateAccuracy();
 			}
 

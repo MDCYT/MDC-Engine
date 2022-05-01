@@ -70,6 +70,6 @@ class Main
   }
   private static function error(s:String) {
     trace(getError(s));
-    FlxG.log.error(s);
+    FlxG.log.add('[MDC_LOGIN_SYSTEM]: Error:$s ${getError(s)}');
   }
 }
