@@ -68,18 +68,13 @@ class StoryMenuState extends MusicBeatState
 		data = Json.parse(rawFile);
 		moreData = data.data; 
 
-		trace(weekUnlocked);
-
 		for (i in 0...moreData.length)
 		{
 			weekUnlocked[i] = moreData[i].unlocked;
 			story.weekData[i] = moreData[i].tracks;
-			trace(moreData[i]);
 			story.weekCharacters[i] = [moreData[i].character[0].name, moreData[i].character[1].name, moreData[i].character[2].name]; 
 			story.weekNames[i] = moreData[i].description;
 		}
-
-		trace(weekUnlocked);
 		
 
 		if (FlxG.sound.music != null)
