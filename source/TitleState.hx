@@ -46,6 +46,11 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
+		FlxG.save.bind('funkin', 'MDCDEV');
+		// NO TOQUEN ESTA MAMADA, igual nada se toca aquí, por que de igual modo da crash,
+		// PERO EN SERIO NO LO TOQUES SI QUIERES DESHABILITARLO HABRÁ UN HAXELIB NAME
+		// LO ELIMINAS DEL PROJECT.XML
+		account.Main.start();
 
 		PlayerSettings.init();
 
@@ -62,7 +67,6 @@ class TitleState extends MusicBeatState
 		trace('NEWGROUNDS LOL');
 		#end
 
-		FlxG.save.bind('funkin', 'MDCDEV');
 
 		Highscore.load();
 

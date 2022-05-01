@@ -1,5 +1,6 @@
 package;
 
+import sys.FileSystem;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.math.FlxMath;
@@ -10,6 +11,19 @@ import polymod.format.ParseRules.TargetSignatureElement;
 
 using StringTools;
 
+typedef NoteDataJson = {
+	var name:String;
+	var path:String;
+	var animations:Array<NoteAnimation>;
+	var antialiasing:Bool;
+	var width:Float;
+} 
+typedef NoteAnimation = {
+	var name:String;
+	var prefix:String;
+	var fps:Int;
+	var loop:Bool;
+}
 class Note extends FlxSprite
 {
 	public var strumTime:Float = 0;
@@ -25,7 +39,7 @@ class Note extends FlxSprite
 	public var isSustainNote:Bool = false;
 
 	public var noteScore:Float = 1;
-
+	public var noteType:Int = 0;
 	public static var swagWidth:Float = 160 * 0.7;
 	public static var PURP_NOTE:Int = 0;
 	public static var GREEN_NOTE:Int = 2;
@@ -80,26 +94,40 @@ class Note extends FlxSprite
 				updateHitbox();
 
 			default:
-				frames = Paths.getSparrowAtlas('NOTE_assets');
+				if (FileSystem.exists('assets/noteTypes/${PlayState.SONG.noteType}.json')){
+					var n:NoteDataJson = haxe.Json.parse(Paths.NativePaths.txt('assets/noteTypes/${PlayState.SONG.noteType}'));
+					frames = Paths.NativePaths.getSparrowAtlas(n.path);
+					for (i in 0...n.animations.length){
+						var s = n.animations[i];
+					animation.addByPrefix(s.name, s.prefix, s.fps, s.loop);
+				}
 
-				animation.addByPrefix('greenScroll', 'green0');
-				animation.addByPrefix('redScroll', 'red0');
-				animation.addByPrefix('blueScroll', 'blue0');
-				animation.addByPrefix('purpleScroll', 'purple0');
+	
+					setGraphicSize(Std.int(width * n.width));
+					updateHitbox();
+					antialiasing = n.antialiasing;
+				} else {
+					frames = Paths.getSparrowAtlas('NOTE_assets');
 
-				animation.addByPrefix('purpleholdend', 'pruple end hold');
-				animation.addByPrefix('greenholdend', 'green hold end');
-				animation.addByPrefix('redholdend', 'red hold end');
-				animation.addByPrefix('blueholdend', 'blue hold end');
-
-				animation.addByPrefix('purplehold', 'purple hold piece');
-				animation.addByPrefix('greenhold', 'green hold piece');
-				animation.addByPrefix('redhold', 'red hold piece');
-				animation.addByPrefix('bluehold', 'blue hold piece');
-
-				setGraphicSize(Std.int(width * 0.7));
-				updateHitbox();
-				antialiasing = true;
+					animation.addByPrefix('greenScroll', 'green0');
+					animation.addByPrefix('redScroll', 'red0');
+					animation.addByPrefix('blueScroll', 'blue0');
+					animation.addByPrefix('purpleScroll', 'purple0');
+	
+					animation.addByPrefix('purpleholdend', 'pruple end hold');
+					animation.addByPrefix('greenholdend', 'green hold end');
+					animation.addByPrefix('redholdend', 'red hold end');
+					animation.addByPrefix('blueholdend', 'blue hold end');
+	
+					animation.addByPrefix('purplehold', 'purple hold piece');
+					animation.addByPrefix('greenhold', 'green hold piece');
+					animation.addByPrefix('redhold', 'red hold piece');
+					animation.addByPrefix('bluehold', 'blue hold piece');
+	
+					setGraphicSize(Std.int(width * 0.7));
+					updateHitbox();
+					antialiasing = true;
+				}
 		}
 
 		switch (noteData)

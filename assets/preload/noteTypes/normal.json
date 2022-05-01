@@ -1,0 +1,70 @@
+{
+   "name": "test",
+   "antialiasing": true,
+   "width": 0.7,
+   "path": "NOTE_assets",
+   "animations": [
+      {
+         "name":"greenScroll",
+         "prefix":"green0",
+         "fps": 30,
+         "loop": true
+      },
+      {
+         "name":"redScroll",
+         "prefix":"red0",
+         "fps": 30,
+         "loop": true
+      },      {
+         "name":"blueScroll",
+         "prefix":"blue0",
+         "fps": 30,
+         "loop": true
+      },      {
+         "name":"purpleScroll",
+         "prefix":"purple0",
+         "fps": 30,
+         "loop": true
+      },      {
+         "name":"purpleholdend",
+         "prefix":"pruple end hold",
+         "fps": 30,
+         "loop": true
+      },      {
+         "name":"greenholdend",
+         "prefix":"green hold end",
+         "fps": 30,
+         "loop": true
+      },      {
+         "name":"redholdend",
+         "prefix":"red hold end",
+         "fps": 30,
+         "loop": true
+      },{
+         "name":"blueholdend",
+         "prefix":"blue hold end",
+         "fps": 30,
+         "loop": true
+      },{
+         "name":"purplehold",
+         "prefix":"purple hold piece",
+         "fps": 30,
+         "loop": true
+      },{
+         "name":"greenhold",
+         "prefix":"green hold piece",
+         "fps": 30,
+         "loop": true
+      },{
+         "name":"redhold",
+         "prefix":"red hold piece",
+         "fps": 30,
+         "loop": true
+      },{
+         "name":"bluehold",
+         "prefix":"'blue hold piece",
+         "fps": 30,
+         "loop": true
+      }
+   ]
+}
