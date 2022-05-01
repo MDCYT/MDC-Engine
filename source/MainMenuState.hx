@@ -105,7 +105,7 @@ class MainMenuState extends MusicBeatState
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
 
-		bf = new FlxSprite(720, 340);
+		bf = new FlxSprite(890, 470);
 		bf.frames = Paths.getSparrowAtlas('BOYFRIEND', 'shared');
 		bf.antialiasing = true;
 		bf.animation.addByPrefix('idle', 'BF idle dance', 24);
