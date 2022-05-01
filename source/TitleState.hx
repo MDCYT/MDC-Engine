@@ -54,7 +54,20 @@ class TitleState extends MusicBeatState
 			startIntro();
 		});
 
+		PlayerSettings.init();
 
+
+        // DEBUG BULLSHIT
+
+        NGio.noLogin(APIStuff.API);
+
+        #if ng
+        var ng:NGio = new NGio(APIStuff.API, APIStuff.EncKey);
+        trace('NEWGROUNDS LOL');
+        #end
+
+
+        Highscore.load();
 	}
 
 	var logoBl:FlxSprite;
