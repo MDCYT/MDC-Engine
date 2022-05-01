@@ -142,7 +142,11 @@ class InitialCache extends MusicBeatState {
     
   }
   function onLoad() {
-    FlxG.switchState(new TitleState());
+    if (FileSystem.exists('coco.png')) {
+      FlxG.switchState(new TitleState());
+    } else {
+      
+    }
   }
   var load:Bool = false;
   var tryChange:Bool = true;
