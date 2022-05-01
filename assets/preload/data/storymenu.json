@@ -84,6 +84,294 @@
       },
       "tracks": ["Bopeebo", "Fresh", "Dadbattle"],
       "unlocked": true
+    },
+    {
+      "name": "Week2",
+      "description": "Spooky Month",
+      "character": [
+        {
+          "name": "spooky",
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 1,
+            "y": 1
+          },
+          "color": "#000000"
+        },
+        {
+          "name": "bf",
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 1,
+            "y": 1
+          },
+          "color": "#000000"
+        },
+        {
+          "name": "gf",
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 1,
+            "y": 1
+          },
+          "color": "#000000"
+        }
+      ],
+      "background": {
+        "color": "#ffffff",
+        "image": ""
+      },
+      "tracks": ["Spookeez", "South", "Monster"],
+      "unlocked": true
+    },
+    {
+      "name": "Week3",
+      "description": "Pico",
+      "character": [
+        {
+          "name": "pico",
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 1,
+            "y": 1
+          },
+          "color": "#000000"
+        },
+        {
+          "name": "bf",
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 1,
+            "y": 1
+          },
+          "color": "#000000"
+        },
+        {
+          "name": "gf",
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 1,
+            "y": 1
+          },
+          "color": "#000000"
+        }
+      ],
+      "background": {
+        "color": "#ffffff",
+        "image": ""
+      },
+      "tracks": ["Pico", "Philly", "Blammed"],
+      "unlocked": true
+    },
+    {
+      "name": "Week4",
+      "description": "Mommy must murder",
+      "character": [
+        {
+          "name": "mom",
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 1,
+            "y": 1
+          },
+          "color": "#000000"
+        },
+        {
+          "name": "bf",
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 1,
+            "y": 1
+          },
+          "color": "#000000"
+        },
+        {
+          "name": "gf",
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 1,
+            "y": 1
+          },
+          "color": "#000000"
+        }
+      ],
+      "background": {
+        "color": "#ffffff",
+        "image": ""
+      },
+      "tracks": ["Satin-Panties", "High", "Milf"],
+      "unlocked": true
+    },
+    {
+      "name": "Week5",
+      "description": "Red snow",
+      "character": [
+        {
+          "name": "parents-christmas",
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 1,
+            "y": 1
+          },
+          "color": "#000000"
+        },
+        {
+          "name": "bf",
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 1,
+            "y": 1
+          },
+          "color": "#000000"
+        },
+        {
+          "name": "gf",
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 1,
+            "y": 1
+          },
+          "color": "#000000"
+        }
+      ],
+      "background": {
+        "color": "#ffffff",
+        "image": ""
+      },
+      "tracks": ["Cocoa", "Eggnog", "Winter-Horrorland"],
+      "unlocked": true
+    },
+    {
+      "name": "Week6",
+      "description": "hating simulator ft. moawling",
+      "character": [
+        {
+          "name": "senpai",
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 1,
+            "y": 1
+          },
+          "color": "#000000"
+        },
+        {
+          "name": "bf",
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 1,
+            "y": 1
+          },
+          "color": "#000000"
+        },
+        {
+          "name": "gf",
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 1,
+            "y": 1
+          },
+          "color": "#000000"
+        }
+      ],
+      "background": {
+        "color": "#ffffff",
+        "image": ""
+      },
+      "tracks": ["Senpai", "Roses", "Thorns"],
+      "unlocked": true
+    },
+    {
+      "name": "Week1",
+      "description": "Another extra-ordinary week ft. BF",
+      "character": [
+        {
+          "name": "ejemplo",
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 1,
+            "y": 1
+          },
+          "color": "#000000"
+        },
+        {
+          "name": "bf",
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 1,
+            "y": 1
+          },
+          "color": "#000000"
+        },
+        {
+          "name": "gf",
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 1,
+            "y": 1
+          },
+          "color": "#000000"
+        }
+      ],
+      "background": {
+        "color": "#ffffff",
+        "image": ""
+      },
+      "tracks": ["Track1", "Track2", "Track3"],
+      "unlocked": true
     }
   ]
 }
