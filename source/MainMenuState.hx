@@ -25,6 +25,7 @@ class MainMenuState extends MusicBeatState
 	var curSelected:Int = 0;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
+	var bf:FlxSprite;
 
 	var optionShit:Array<String> = ['story mode', 'freeplay', 'options'];			
 	var oldversion:Bool = false;
@@ -104,12 +105,20 @@ class MainMenuState extends MusicBeatState
 			menuItem.antialiasing = true;
 		}
 
-		FlxG.camera.follow(camFollow, null, 0.06);
+		FlxG.camera.follow(camFollow, null, 0);
 
 		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "v" + Application.current.meta.get('version'), 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
+
+		bf = new FlxSprite(890, 470);
+		bf.frames = Paths.getSparrowAtlas('BOYFRIEND', 'shared');
+		bf.antialiasing = true;
+		bf.animation.addByPrefix('idle', 'BF idle dance', 24);
+		bf.animation.addByPrefix('hey', 'BF HEY!!', 24);
+		bf.animation.play('idle');
+		add(bf);
 
 		// NG.core.calls.event.logEvent('swag').send();
 
@@ -128,6 +137,10 @@ class MainMenuState extends MusicBeatState
 
 		if (!selectedSomethin)
 		{
+			/*if (FlxG.mouse.wheel != 0)
+			{
+				changeItem(FlxG.mouse.wheel *2);
+			}*/
 			if (controls.UP_P)
 			{
 				FlxG.sound.play(Paths.sound('scrollMenu'));
@@ -147,6 +160,7 @@ class MainMenuState extends MusicBeatState
 
 			if (controls.ACCEPT)
 			{
+				bf.animation.play('hey');
 				if (optionShit[curSelected] == 'donate')
 				{
 					#if linux
