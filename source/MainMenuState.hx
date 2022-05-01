@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxSubState;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -26,18 +27,24 @@ class MainMenuState extends MusicBeatState
 	var menuItems:FlxTypedGroup<FlxSprite>;
 	var bf:FlxSprite;
 
-	#if !switch
 	var optionShit:Array<String> = ['story mode', 'freeplay', 'options'];			
-	#else
-	var optionShit:Array<String> = ['story mode', 'freeplay'];
-	#end
+	var oldversion:Bool = false;
 
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
+	public static var selectedSomethin:Bool = false;
 
 	public static var mdcEngineVer:String = "1.2.1";
 	public static var gameVer:String = "0.2.7.1";
 
+	function updateDaEngine() {
+		if (oldversion) {
+			openSubState(new UpdaterScreen());
+		}
+	}
+	override function openSubState(state:FlxSubState){
+		super.openSubState(state);
+	}
 	override function create()
 	{
 		#if desktop
@@ -120,7 +127,6 @@ class MainMenuState extends MusicBeatState
 		super.create();
 	}
 
-	var selectedSomethin:Bool = false;
 
 	override function update(elapsed:Float)
 	{
