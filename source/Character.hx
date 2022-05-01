@@ -55,6 +55,8 @@ class Character extends FlxSprite
 
 		switch (curCharacter)
 		{
+
+			case 'dad': // DO NOTHING dumb bass
 			case 'gf':
 				// GIRLFRIEND CODE
 				tex = Paths.getSparrowAtlas('GF_assets');

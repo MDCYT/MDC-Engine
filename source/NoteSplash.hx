@@ -9,10 +9,10 @@ class NoteSplash  extends FlxSprite {
     
 
     antialiasing = true;
-    animation.addByPrefix('note impact ${FlxG.random.int(0,1)} left', 'left', 24, false);
-    animation.addByPrefix('note impact ${FlxG.random.int(0,1)} down', 'down', 24, false);
-    animation.addByPrefix('note impact ${FlxG.random.int(0,1)} up', 'up', 24, false);
-    animation.addByPrefix('note impact ${FlxG.random.int(0,1)} right', 'right', 24, false);
+    animation.addByPrefix('left', 'note impact ${FlxG.random.int(1,2)} left', 24, false);
+    animation.addByPrefix('down', 'note impact ${FlxG.random.int(1,2)} down', 24, false);
+    animation.addByPrefix('up', 'note impact ${FlxG.random.int(1,2)} up', 24, false);
+    animation.addByPrefix('right', 'note impact ${FlxG.random.int(1,2)} right', 24, false);
     switch(s){
       case 0: animation.play('left');
       case 1: animation.play('down');
