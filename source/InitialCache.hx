@@ -1,5 +1,6 @@
 package;
 
+import openfl.media.Sound;
 import flixel.graphics.FlxGraphic;
 import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileDiamond;
 import flixel.addons.transition.TransitionData;
@@ -96,11 +97,16 @@ class InitialCache extends MusicBeatState {
     max = toLoadSongs.length + toLoadSounds.length + toLoadMusic.length + toLoadImg.length;
     for (i in 0...toLoadSongs.length) {
       loaded ++;
-      FlxG.sound.load('assets/songs/${toLoadSongs[i]}/Inst.ogg');
+    var pat = 'assets/songs/${toLoadSongs[i]}/';
+      var s = Sound.fromFile(pat + 'Inst.ogg');
+      FlxG.sound.load(s);
       current = 'assets/songs/${toLoadSongs[i]}/Inst.ogg';
-      if (FileSystem.exists('assets/songs/${toLoadSongs[i]}/Voices.ogg')){
+
+      if (FileSystem.exists('${pat}Voices.ogg')){
+        var p = Sound.fromFile(pat + 'Voices.ogg');
+
         current = 'assets/songs/${toLoadSongs[i]}/Voices.ogg';
-        FlxG.sound.load('assets/songs/${toLoadSongs[i]}/Voices.ogg');
+        FlxG.sound.load(p);
       }
     }
     for (i in 0...toLoadSounds.length) {
@@ -142,6 +148,9 @@ class InitialCache extends MusicBeatState {
   var tryChange:Bool = true;
   override function update(e:Float) {
     super.update(e);
+    FlxG.watch.addQuick("State", current);
+    FlxG.watch.addQuick("loaded", loaded);
+    FlxG.watch.addQuick("loaded", max);
     if (load) {
       current = 'all its loaded!';
     }
