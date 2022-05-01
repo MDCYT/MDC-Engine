@@ -46,7 +46,8 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
-		
+		if (FlxG.sound.music != null)
+		FlxG.sound.music.stop();
 		curWacky = FlxG.random.getObject(getIntroTextShit());
 
 		new FlxTimer().start(1, function(tmr:FlxTimer)
@@ -322,14 +323,15 @@ class TitleState extends MusicBeatState
 	override function beatHit()
 	{
 		super.beatHit();
-
+		if (logoBl != null)
 		logoBl.animation.play('bump');
 		danceLeft = !danceLeft;
-
+		if (gfDance != null){
 		if (danceLeft)
 			gfDance.animation.play('danceRight');
 		else
 			gfDance.animation.play('danceLeft');
+	}
 
 		FlxG.log.add(curBeat);
 

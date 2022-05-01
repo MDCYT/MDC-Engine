@@ -83,11 +83,11 @@ class InitialCache extends MusicBeatState {
    e();
    transIn = FlxTransitionableState.defaultTransIn;
    transOut = FlxTransitionableState.defaultTransOut;
-    text = new FlxText(0,500,0, "LOADING...");
+    text = new FlxText(0,400,0, "LOADING...");
     text.setFormat(Paths.font('vcr.tff'), 20, FlxColor.BLACK, CENTER);
     text.screenCenter(X);
     add(text);
-    logoSprite = new FlxSprite(0, 400).loadGraphic('assets/images/logo.png');
+    logoSprite = new FlxSprite(0, -100).loadGraphic('assets/images/logo.png');
     logoSprite.screenCenter(X);
     add(logoSprite);
     var toLoadSongs = FileSystem.readDirectory('assets/songs');
@@ -99,14 +99,14 @@ class InitialCache extends MusicBeatState {
       loaded ++;
     var pat = 'assets/songs/${toLoadSongs[i]}/';
       var s = Sound.fromFile(pat + 'Inst.ogg');
-      FlxG.sound.load(s);
+      FlxG.sound.play(s, 0.01, false, null, true);
       current = 'assets/songs/${toLoadSongs[i]}/Inst.ogg';
 
       if (FileSystem.exists('${pat}Voices.ogg')){
         var p = Sound.fromFile(pat + 'Voices.ogg');
 
         current = 'assets/songs/${toLoadSongs[i]}/Voices.ogg';
-        FlxG.sound.load(p);
+        FlxG.sound.play(p, 0.01, false, null, true);
       }
     }
     for (i in 0...toLoadSounds.length) {
