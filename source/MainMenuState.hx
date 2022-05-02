@@ -26,6 +26,9 @@ class MainMenuState extends MusicBeatState
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
 	var bf:FlxSprite;
+	var bgINV:FlxSprite;
+	var invitation:FlxSprite;
+    var invitationButton:FlxSprite;
 
 	var optionShit:Array<String> = ['story mode', 'freeplay', 'options'];			
 	var oldversion:Bool = false;
@@ -51,6 +54,8 @@ class MainMenuState extends MusicBeatState
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
 		#end
+
+		FlxG.mouse.visible = false;
 
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
@@ -112,13 +117,32 @@ class MainMenuState extends MusicBeatState
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
 
-		bf = new FlxSprite(890, 470);
+		bf = new FlxSprite(890, 400);
 		bf.frames = Paths.getSparrowAtlas('BOYFRIEND', 'shared');
 		bf.antialiasing = true;
 		bf.animation.addByPrefix('idle', 'BF idle dance', 24);
 		bf.animation.addByPrefix('hey', 'BF HEY!!', 24);
 		bf.animation.play('idle');
 		add(bf);
+
+		bgINV = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		bgINV.alpha = 0;
+		bgINV.scrollFactor.set();
+		add(bgINV);
+
+		invitation = new FlxSprite(FlxG.width, 0).loadGraphic(Paths.image('invtationShit', 'shared'));
+		invitation.scale.y = 0.8;
+		invitation.scale.x = 0.8;
+		invitation.screenCenter();
+		invitation.alpha = 0;
+		add(invitation);
+
+		invitationButton = new FlxSprite(FlxG.width, 0).loadGraphic(Paths.image('invtationButtonShit', 'shared'));
+		invitationButton.scale.y = 0.8;
+		invitationButton.scale.x = 0.8;
+		invitationButton.screenCenter();
+		invitationButton.alpha = 0;
+		add(invitationButton);
 
 		// NG.core.calls.event.logEvent('swag').send();
 
@@ -137,6 +161,14 @@ class MainMenuState extends MusicBeatState
 
 		if (!selectedSomethin)
 		{
+			if (FlxG.keys.justPressed.TAB)
+				{
+					FlxG.mouse.visible = true;
+					bgINV.alpha = 0.6;
+					invitation.alpha = 1;
+					invitationButton.alpha = 1;
+				}
+
 			if (controls.UP_P)
 			{
 				FlxG.sound.play(Paths.sound('scrollMenu'));
@@ -151,7 +183,10 @@ class MainMenuState extends MusicBeatState
 
 			if (controls.BACK)
 			{
-				FlxG.switchState(new TitleState());
+				FlxG.mouse.visible = false;
+				bgINV.alpha = 0;
+				invitation.alpha = 0;
+				invitationButton.alpha = 0;
 			}
 
 			if (controls.ACCEPT)
