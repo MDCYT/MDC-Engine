@@ -161,6 +161,11 @@ class MainMenuState extends MusicBeatState
 
 		if (!selectedSomethin)
 		{
+			if(FlxG.mouse.justPressed){
+				FlxG.mouse.visible = false;
+				invitationButton.alpha = 0;
+				FlxG.openURL('https://discord.gg/V4MaYftz');
+			}
 			if (FlxG.keys.justPressed.TAB)
 				{
 					FlxG.mouse.visible = true;
