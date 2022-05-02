@@ -7,7 +7,7 @@ class NoteSplash  extends FlxSprite {
   public function new(s:Int = 0, x:Float, y:Float){
     super(x,y);
     frames = Paths.getSparrowAtlas('splash', 'shared');
-    var e = Assets.getText('assets/data/s').split('\n');
+   // var e = Assets.getText('assets/data/s').split('\n');
     
 
     antialiasing = true;
@@ -15,8 +15,8 @@ class NoteSplash  extends FlxSprite {
     animation.addByPrefix('down', 'note impact ${FlxG.random.int(1,2)} down', 24, false);
     animation.addByPrefix('up', 'note impact ${FlxG.random.int(1,2)} up', 24, false);
     animation.addByPrefix('right', 'note impact ${FlxG.random.int(1,2)} right', 24, false);
-    x += Std.parseFloat(e[0]);
-    y += Std.parseFloat(e[1]);
+    x -= 110;
+    y -= 110;
     switch(s){
       case 0: animation.play('left');
       case 1: animation.play('down');
