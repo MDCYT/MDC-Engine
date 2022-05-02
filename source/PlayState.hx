@@ -720,6 +720,8 @@ class PlayState extends MusicBeatState
 		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width - 190, healthBarBG.y + 30, 0, "", 22);
 		scoreTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
+		//Center to screen
+		scoreTxt.screenCenter(X);
 		add(scoreTxt);
 
 		missTxt = new FlxText(healthBarBG.x + healthBarBG.width - 190, healthBarBG.y + 30, 0, "", 22);
@@ -1359,8 +1361,9 @@ class PlayState extends MusicBeatState
 
 		super.update(elapsed);
 
-		scoreTxt.text = 'Score: $songScore | Misses: $missCounter | Accuracy: $accuracy%' ;
-		goodHTSTxt.text = "Good Hits:" + goodHTS;
+		scoreTxt.text = 'Good Hits: $goodHTS | Score: $songScore | Misses: $missCounter | Accuracy: $accuracy%' ;
+		//Center to screen
+		scoreTxt.x = (FlxG.width / 2) - (scoreTxt.width / 2);
 
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
 		{
@@ -2255,7 +2258,7 @@ class PlayState extends MusicBeatState
 			}
 
 			if(note.isSustainNote){
-				notePlayed += 0.1;
+				notePlayed += 1;
 				health += 0.00001;
 
 				updateAccuracy();
