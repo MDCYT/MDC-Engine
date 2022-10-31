@@ -11,74 +11,50 @@
 |_____| |_| \_|  \_____| |_| |_| \_| |_____|
 ```
 
-este es un repositorio editado de el funkin master
+This repository is modified from another originally called [FUNKIN MASTER](https://github.com/ninjamuffin99/funkin)
 
-hecho por cameron o ninjamuffin
+Originally made by Cameron/Ninjamuffin99.
+## Problems
+If you have problems you can enter our [Discord server](https://discord.gg/dae) 8(Mostly Spanish)
 
-es un edit menu que tiene:
+## Added
 
-Opciones
+- New options menu.
+- Hscript built-in.
+- Edition of Charts (improved), Characters, Stages, Events etc.
+- Option menu.
+- Languages!
+- Engines parser (Available: Psych Engine, MizEngine, Kade Engine, Funkin OG, Osu!Mania (BETA))
 
-Nuevas Mecanicas
 
-Uso del .JSON
+## Credits
 
-etc...
+- [MDC](https://github.com/MDCYT) - Original programmer & Creator
 
-## Creditos
+- [NizCraft](https://twitter.com/nizcraftpapu) - Main prgrammer & Co-cretor
 
-[MDC](https://github.com/MDCYT)/creador principal y main programmer
+- [Manux](https://github.com/Manux123)/ - Extra Programmer
 
-[Niz](https://github.com/nizako)/Co-creador y star programmer
+- [AmsDevice](https://github.com/Amsdevice) - Logo, Art & Programmer
 
-[Manux](https://github.com/Manux123)/Extra Programmer
+- [AssmanBruh]() - Main artist
 
-[AmsDevice](https://github.com/Amsdevice)/Logo art-programmer
+## Installing the Required Programs
+First, you need to install Haxe and HaxeFlixel. I'm too lazy to write and keep updated with that setup (which is pretty simple).
 
-## Descarga
-
-Si simplemente quieres descargar la version exportada, puedes hacerlo dandole click a la parte de releases de GitHub
-
-## Instrucciones de Compilacion
-
-Esto es solo por si quieres compilar el juego.
-
-### Instalando los programas necesarios
-
-Primero que nada, deberas instalar algunas cosas necesarias para esto.
-- [Instalar Haxe 4.1.5](https://haxe.org/download/version/4.1.5/) 
-
-Otras weas para instalar se encuentran en el `Project.xml`, y estos serian los comandos de instalacion:
+1. Install [Haxe](https://haxe.org/download/version/4.1.5/)
+2. Install [HaxeFlixel](https://haxeflixel.com/documentation/install-haxeflixel/) after downloading Haxe
+3. Install [git-scm](https://git-scm.com/downloads)
+4. Install this for the correctly install
 ```
 haxelib install lime
-haxelib install openfl
-haxelib install flixel
-haxelib run lime setup flixel
-haxelib run lime setup
-haxelib install flixel-tools
-haxelib run flixel-tools setup
-haxelib update flixel
+haxelib instal flixel
+haxelib install flixel-addons
 haxelib install flixel-ui
 haxelib install hscript
-haxelib install newgrounds
-haxelib install actuate
+haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
 ```
+5. Install [vstools](https://cdn.discordapp.com/attachments/828084042120953867/830191004686352444/vs_buildtools__1911057386.1611785237.exe) and Select these compponents.
+- MSVC v142 - VS 2019 C++ x64/x86 build tools
+- Windows SDK (10.0.17763
 
-Para instalar algunas librerias adicionnales, necesitaras seguir estos pasos:
-1. Descargar [git-scm](https://git-scm.com/downloads). 
-2. Seguir las instrucciones correctas de instalacion (Marcar la opcion de PATH)
-3. Poner en el CMD `haxelib git polymod https://github.com/larsiusprime/polymod.git` para instalar Polymod.
-4. Poner en el CMD `haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc` Para instalar Discord RPC.
-5. Poner en el CMD `haxelib git extension-webm https://github.com/GrowtopiaFli/extension-webm` Para instalar Extension Webm.
-6. Poner en el CMD `lime rebuild extension-webm [windows/mac/linux]`(Poner dependiedo de tu sistema operativo, ejemplo: `lime rebuild extension-webm windows`) para tener correctamete instalado Extension Webm.
-7. Poner en el CMD `haxelib git flixel-addons https://github.com/HaxeFlixel/flixel-addons` para instalar Flixel Addons.
-
-Listo, tienes todo lo necesario para empezar a compilar el juego!
-
-## Compilacion
-
-Unicamente necesitas poner `lime test windows`
-
-Si quieres tener a parte la debug console solo pones `lime test windows -debug`
-
-Si lo quieres en HTML solo pon `lime test html5` // aunque los mods no sirven (no puedes conseguir archivos sin compilar en web)
