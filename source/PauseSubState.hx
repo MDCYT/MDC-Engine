@@ -3,6 +3,7 @@ package;
 import Controls.Control;
 import flixel.FlxG;
 import flixel.FlxSprite;
+
 import flixel.FlxSubState;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -11,6 +12,7 @@ import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import flixel.tweens.FlxTween.FlxTweenManager;
 import flixel.util.FlxColor;
 
 class PauseSubState extends MusicBeatSubstate
@@ -21,11 +23,13 @@ class PauseSubState extends MusicBeatSubstate
 	var curSelected:Int = 0;
 
 	var pauseMusic:FlxSound;
+	var localTweens:Array<FlxTween> = [];
+	var soundsToReplacePause:Array<FlxSound> = [];
 
-	public function new(x:Float, y:Float)
+	public function new(x:Float, y:Float,soundsToReplacePause:Array<FlxSound>)
 	{
 		super();
-
+		this.soundsToReplacePause = soundsToReplacePause;
 		pauseMusic = new FlxSound().loadEmbedded(Paths.music('breakfast'), true, true);
 		pauseMusic.volume = 0;
 		pauseMusic.play(false, FlxG.random.int(0, Std.int(pauseMusic.length / 2)));
@@ -56,10 +60,11 @@ class PauseSubState extends MusicBeatSubstate
 
 		levelInfo.x = FlxG.width - (levelInfo.width + 20);
 		levelDifficulty.x = FlxG.width - (levelDifficulty.width + 20);
+	
 
-		FlxTween.tween(bg, {alpha: 0.6}, 0.4, {ease: FlxEase.quartInOut});
-		FlxTween.tween(levelInfo, {alpha: 1, y: 20}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.3});
-		FlxTween.tween(levelDifficulty, {alpha: 1, y: levelDifficulty.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.5});
+		localTweens[0] = FlxTween.tween(bg, {alpha: 0.6}, 0.4, {ease: FlxEase.quartInOut});
+		localTweens[1] =FlxTween.tween(levelInfo, {alpha: 1, y: 20}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.3});
+		localTweens[2] =FlxTween.tween(levelDifficulty, {alpha: 1, y: levelDifficulty.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.5});
 
 		grpMenuShit = new FlxTypedGroup<Alphabet>();
 		add(grpMenuShit);
@@ -74,14 +79,15 @@ class PauseSubState extends MusicBeatSubstate
 
 		changeSelection();
 
-		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
+		cameras = [FlxG.state.camSubStates];
 	}
 
 	override function update(elapsed:Float)
 	{
 		if (pauseMusic.volume < 0.5)
 			pauseMusic.volume += 0.01 * elapsed;
-
+		for (soung in soundsToReplacePause)
+			soung.pause();
 		super.update(elapsed);
 
 		var upP = controls.UP_P;
@@ -96,6 +102,10 @@ class PauseSubState extends MusicBeatSubstate
 		{
 			changeSelection(1);
 		}
+		for (i in localTweens)
+			{
+				i.active = true;
+			}
 
 		if (accepted)
 		{

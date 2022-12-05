@@ -1273,6 +1273,13 @@ class PlayState extends MusicBeatState
 		{
 			music.pause();
 			vocals.pause();
+			@:privateAccess var tweens = FlxTween.globalManager._tweens; 
+			for (coolTween in tweens)
+				{
+					if (coolTween != null && !coolTween.finished)
+						coolTween.active = false;
+
+				}
 
 			if (!startTimer.finished)
 				startTimer.active = false;
@@ -1295,8 +1302,16 @@ class PlayState extends MusicBeatState
 				startTimer.active = true;
 		
 			paused = false;
+			@:privateAccess var tweens = FlxTween.globalManager._tweens; 
+			// REAL PAUSE
+			for (coolTween in tweens)
+				{
+					if (coolTween != null && !coolTween.finished)
+						coolTween.active = true;
 
+				}
 			#if desktop
+			
 			if (startTimer.finished)
 			{
 				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC, true, songLength - Conductor.songPosition);
@@ -1459,7 +1474,7 @@ class PlayState extends MusicBeatState
 				FlxG.switchState(new GitarooPause());
 			}
 			else
-				openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+				openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y,[music,vocals]));
 		
 			#if desktop
 			DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
@@ -1907,12 +1922,12 @@ class PlayState extends MusicBeatState
 	private function popUpScore(nnot:Note,?diff:Float = -999):Void
 	{
 		add(scoreGRP);
-		scoreGRP.cameras = [camHUD];
+		scoreGRP.cameras = comboGrp.cameras = msGrp.cameras = [anotherCam];
 		var noteDiff:Float = -(nnot.strumTime - Conductor.songPosition);
 		scoreGRP.add(comboSpr);
 		scoreGRP.add(rating);
-		scoreGRP.add(comboGrp);
-		scoreGRP.add(msGrp);
+		add(comboGrp);
+		add(msGrp);
 
 		var score:Int = 350;
 		var daRating:String = "sick";
@@ -1951,7 +1966,9 @@ class PlayState extends MusicBeatState
 		{
 			if (comboGrp.members[i] == null) comboGrp.members[i] = new SwagNum();
 			var numScore:SwagNum = comboGrp.members[i];
-			numScore.appear('${seperatedScore[i]}', i != 0 ? comboGrp.members[i - 1] : numScore, true, 1 );
+			comboGrp.remove(numScore);
+
+			numScore.appear('${seperatedScore[i]}', i != 0 ? comboGrp.members[i - 1] : numScore, false, 1 );
 			comboGrp.add(numScore);
 		}
 
@@ -1960,7 +1977,8 @@ class PlayState extends MusicBeatState
 		
 			if (msGrp.members[i] == null) msGrp.members[i] = new SwagNum();
 			var numScore:SwagNum = msGrp.members[i];
-			numScore.appear('${Math.floor(noteDiff)}MS'.split("")[i], i != 0 ? msGrp.members[i - 1] : numScore, true, 0.35 );
+			msGrp.remove(numScore);
+			numScore.appear('${Math.floor(noteDiff)}MS'.split("")[i], i != 0 ? msGrp.members[i - 1] : numScore, true, 0.85);
 			msGrp.add(numScore);
 		}
 

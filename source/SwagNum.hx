@@ -30,23 +30,21 @@ class SwagNum extends FlxSprite
         alpha = 1;
         acceleration.set();
 	    velocity.set();
-      
         antialiasing = !Note.isPixel;
         setGraphicSize(Std.int(((width) *  (Note.isPixel ? 6 : 0.5)) * mult));
-        acceleration.set();
-        velocity.set();
-
         updateHitbox();
-        if (!move) return;
+
         screenCenter();
 		x = FlxG.width * 0.55;
 
-        if (prevNum != this) x = prevNum.x + prevNum.width;
+        if (prevNum != this) x = prevNum.x + prevNum.width - 10;
         
-        y += 80;
+        y += 10 + (move ? 60 : 20);
+        if (num == "M" || num == "S") y += 20;
 
-        acceleration.set(FlxG.random.int(200, 300));
-        velocity.set(-(FlxG.random.int(140,160)),FlxG.random.float(-7.5,7.5));
+
+        acceleration.set(0,550);
+        velocity.set(-( FlxG.random.int(0, 10)),-(FlxG.random.int(140, 175)));
         tweenThis();
     }
     public function tweenThis()
