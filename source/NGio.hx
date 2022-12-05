@@ -36,13 +36,6 @@ class NGio
 	public static function noLogin(api:String)
 	{
 		trace('INIT NOLOGIN');
-
-		if(api == "" || api == null)
-		{
-			trace('API IS EMPTY');
-			return;
-		}
-
 		GAME_VER = "v" + Application.current.meta.get('version');
 
 		NG.create(api);
@@ -66,13 +59,6 @@ class NGio
 
 	public function new(api:String, encKey:String, ?sessionId:String)
 	{
-
-		//If dont have encKey, exit
-		if (encKey == null || encKey == '')
-		{
-			trace('NO ENC KEY');
-			return;
-		}
 		trace("connecting to newgrounds");
 
 		NG.createAndCheckSession(api, sessionId);

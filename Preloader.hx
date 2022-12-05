@@ -13,7 +13,7 @@ import flixel.FlxG;
  
 class Preloader extends FlxBasePreloader
 {
-    public function new(MinDisplayTime:Float=3, ?AllowedURLs:Array<String>) 
+    public function new(MinDisplayTime:Float=0, ?AllowedURLs:Array<String>) 
     {
         super(MinDisplayTime, AllowedURLs);
     }
@@ -39,18 +39,9 @@ class Preloader extends FlxBasePreloader
      
     override function update(Percent:Float):Void 
     {
-        if(Percent < 69)
-        {
-            logo.scaleX += Percent / 1920;
-            logo.scaleY += Percent / 1920;
-            logo.x -= Percent * 0.6;
-            logo.y -= Percent / 2;
-        }else{
-            logo.scaleX = this._width / 1280;
-            logo.scaleY = this._width / 1280;
-            logo.x = ((this._width) / 2) - ((logo.width) / 2);
-            logo.y = (this._height / 2) - ((logo.height) / 2);
-        }
+        trace(Percent);
+        logo.alpha = -Percent;
+     
         
         super.update(Percent);
     }

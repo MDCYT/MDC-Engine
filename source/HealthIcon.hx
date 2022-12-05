@@ -2,53 +2,42 @@ package;
 
 import flixel.FlxSprite;
 
+using StringTools;
 class HealthIcon extends FlxSprite
 {
 	/**
 	 * Used for FreeplayState! If you use it elsewhere, prob gonna annoying
 	 */
 	public var sprTracker:FlxSprite;
+	public var character:String = "bf";
+	private var isPlayer:Bool = false;
+	private var winingAnim:Bool = false;
 
-	public function new(char:String = 'bf', isPlayer:Bool = false)
+	public function new(char:String = 'bf', isPlayer:Bool = false,?winingAnim:Bool = false,?canBeTwoaAnims:Bool =  true)
 	{
 		super();
-		loadGraphic(Paths.image('iconGrid'), true, 150, 150);
-		reLoadIcons(char, isPlayer);
-		antialiasing = true;
+		character = char;
+
+		this.isPlayer = isPlayer;
+		antialiasing = !(char.endsWith("-pixel"));
+		if (!Paths.exists('images/icons/${char}.png')) char = character + "-icon";
+		if (!Paths.exists('images/icons/${char}.png')) char = "icon-" + character;
+		if (!Paths.exists('images/icons/${char}.png')) char = character;
+		if (!Paths.exists('images/icons/${char}.png')) char = "face";
+		loadGraphic(Paths.image('icons/' + char));
+		// trace (winingAnim); 
+		if (canBeTwoaAnims){
+		loadGraphic(Paths.image('icons/' + char), true, Std.int(width / (winingAnim ? 3 : 2)), Std.int(height));
+		animation.add("icon", (winingAnim ? [0,1,2] : [0, 1]), 0, false, isPlayer);
+		animation.play("icon");
+		}
+		setGraphicSize(165);
+		updateHitbox();
 		scrollFactor.set();
 	}
-
-	function reLoadIcons(char:String = 'bf', isPlayer:Bool = false)
-	{
-		animation.add('bf', [0, 1], 0, false, isPlayer);
-		animation.add('bf-car', [0, 1], 0, false, isPlayer);
-		animation.add('bf-christmas', [0, 1], 0, false, isPlayer);
-		animation.add('bf-pixel', [21, 21], 0, false, isPlayer);
-		animation.add('spooky', [2, 3], 0, false, isPlayer);
-		animation.add('pico', [4, 5], 0, false, isPlayer);
-		animation.add('mom', [6, 7], 0, false, isPlayer);
-		animation.add('mom-car', [6, 7], 0, false, isPlayer);
-		animation.add('tankman', [8, 9], 0, false, isPlayer);
-		animation.add('face', [10, 11], 0, false, isPlayer);
-		animation.add('dad', [12, 13], 0, false, isPlayer);
-		animation.add('senpai', [22, 22], 0, false, isPlayer);
-		animation.add('senpai-angry', [22, 22], 0, false, isPlayer);
-		animation.add('spirit', [23, 23], 0, false, isPlayer);
-		animation.add('bf-old', [14, 15], 0, false, isPlayer);
-		animation.add('gf', [16], 0, false, isPlayer);
-		animation.add('parents-christmas', [17], 0, false, isPlayer);
-		animation.add('monster', [19, 20], 0, false, isPlayer);
-		animation.add('monster-christmas', [19, 20], 0, false, isPlayer);
-		animation.add('ch1', [24, 25], 0, false, isPlayer);
-		animation.add('ch2', [26, 27], 0, false, isPlayer);
-		animation.add('ch3', [28, 29], 0, false, isPlayer);
-		animation.play(char);
-	}
-
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
-
 		if (sprTracker != null)
 			setPosition(sprTracker.x + sprTracker.width + 10, sprTracker.y - 30);
 	}

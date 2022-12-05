@@ -1,0 +1,8 @@
+{
+    "formatVer": "1",
+    "songs": [
+        ["Tutorial","gf",[0,0,0]]
+    ],
+    "hide": [false,false],
+    "weekFile": "tutorial-week"
+}

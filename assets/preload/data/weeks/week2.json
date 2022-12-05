@@ -1,0 +1,10 @@
+{
+    "formatVer": "1",
+    "songs": [
+        ["Spookeez","spooky",[0,0,0]],
+        ["South","spooky",[0,0,0]],
+        ["monster","lemon demon",[0,0,0]]
+    ],
+    "hide": [false,false],
+    "weekFile": "week-1"
+}

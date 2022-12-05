@@ -1,0 +1,13 @@
+{
+    "img": "bfPortrait",
+    "sound": "default",
+    "scale": 6,
+    "animation":
+    [
+        {
+            "anim": "idle",
+            "prefix": "Boyfriend portrait enter instance 1",
+            "offset": [0,0]
+        }
+    ]
+}

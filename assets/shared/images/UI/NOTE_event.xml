@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="NOTE_event.png">
+	<!-- Created with Adobe Animate version 22.0.4.185 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="event0000" x="17" y="17" width="175" height="187"/>
+	<SubTexture name="event0001" x="17" y="17" width="175" height="187"/>
+	<SubTexture name="event0002" x="292" y="17" width="175" height="187"/>
+	<SubTexture name="event0003" x="292" y="17" width="175" height="187"/>
+	<SubTexture name="event0004" x="567" y="17" width="175" height="187"/>
+	<SubTexture name="event0005" x="567" y="17" width="175" height="187"/>
+	<SubTexture name="event0006" x="17" y="304" width="175" height="187"/>
+	<SubTexture name="event0007" x="17" y="304" width="175" height="187"/>
+</TextureAtlas>

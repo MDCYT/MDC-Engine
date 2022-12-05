@@ -5,36 +5,15 @@ import flixel.FlxG;
 class Highscore
 {
 	#if (haxe >= "4.0.0")
-	public static var weekScores:Map<String, Int> = new Map();
-	public static var songRating:Map<String, Float> = new Map();
 	public static var songScores:Map<String, Int> = new Map();
 	#else
 	public static var songScores:Map<String, Int> = new Map<String, Int>();
 	#end
 
-	public static function resetSong(song:String, diff:Int = 0):Void
-		{
-			var daSong:String = formatSong(song, diff);
-			setScore(daSong, 0);
-			setRating(daSong, 0);
-		}
-	
-		public static function resetWeek(week:String, diff:Int = 0):Void
-		{
-			var daWeek:String = formatSong(week, diff);
-			setWeekScore(daWeek, 0);
-		}
-	
 
 	public static function saveScore(song:String, score:Int = 0, ?diff:Int = 0):Void
 	{
 		var daSong:String = formatSong(song, diff);
-
-
-		#if !switch
-		NGio.postScore(score, song);
-		#end
-
 
 		if (songScores.exists(daSong))
 		{
@@ -47,11 +26,6 @@ class Highscore
 
 	public static function saveWeekScore(week:Int = 1, score:Int = 0, ?diff:Int = 0):Void
 	{
-
-		#if !switch
-		NGio.postScore(score, "Week " + week);
-		#end
-
 
 		var daWeek:String = formatSong('week' + week, diff);
 
@@ -74,21 +48,6 @@ class Highscore
 		FlxG.save.data.songScores = songScores;
 		FlxG.save.flush();
 	}
-	static function setWeekScore(week:String, score:Int):Void
-	{
-		// Reminder that I don't need to format this song, it should come formatted!
-		weekScores.set(week, score);
-		FlxG.save.data.weekScores = weekScores;
-		FlxG.save.flush();
-	}
-
-	static function setRating(song:String, rating:Float):Void
-		{
-			// Reminder that I don't need to format this song, it should come formatted!
-			songRating.set(song, rating);
-			FlxG.save.data.songRating = songRating;
-			FlxG.save.flush();
-		}
 
 	public static function formatSong(song:String, diff:Int):String
 	{

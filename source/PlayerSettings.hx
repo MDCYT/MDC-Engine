@@ -5,14 +5,75 @@ import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.util.FlxSignal;
 
+import flixel.input.keyboard.FlxKey;
+import flixel.FlxG;
+import flixel.input.gamepad.FlxGamepadInputID;
+
 // import ui.DeviceManager;
 // import props.Player;
 class PlayerSettings
 {
+
+	private static var map:Map<String,Dynamic> = [];
+    public static var downscroll:Bool = true;
+    public static var botplay:Bool = false;
+    public static var ghosttapin:Bool = false;
+    public static var pressCauseMiss:Bool = false;
+    public static var sustainPressDependToFather:Bool = true;
+
+    public static var safeFrames:Int = 10;
+    public static var offset:Int = 0; // IN MS
+    public static var pitch:Float = 1; // Default pitch on songs; redo later
+	public static var offsetMiss:Float = 360;
+
+	public static var FPS:Int = 60;
+	public static var showFPS:Bool = false;
+	public static var badQuality:Bool = true;
+	public static var antialiasing:Bool = false;
+	public static var showOpponentArrows:Bool = false;
+
+    public static var keybinds:Map<String,Array<FlxKey>> =
+    [
+        "left"=> [LEFT,A],
+        "down"=> [DOWN,S],
+        "up"=> [UP,W],
+        "right"=> [RIGHT,D],
+
+        "ui-left"=> [LEFT,A],
+        "ui-down"=> [DOWN,S],
+        "ui-up"=> [UP,W],
+        "ui-right"=> [RIGHT,D],
+        
+        "accept"=> [ENTER],
+        "cancel"=> [ESCAPE,BACKSPACE],
+        "reset"=> [R],
+
+        "null"=> [Q],
+    ];
+ 
+    public static var keybinds_control:Map<String,Array<FlxGamepadInputID>> =
+    [
+        "left"=> [X],
+        "down"=> [A],
+        "up"=> [Y],
+        "right"=> [B],
+
+        "ui-left"=> [DPAD_LEFT],
+        "ui-down"=> [DPAD_DOWN],
+        "ui-up"=> [DPAD_UP],
+        "ui-right"=> [DPAD_RIGHT],
+        
+        "accept"=> [START,A],
+        "cancel"=> [B],
+        "reset"=> [],
+
+    ];
+
 	static public var numPlayers(default, null) = 0;
 	static public var numAvatars(default, null) = 0;
 	static public var player1(default, null):PlayerSettings;
 	static public var player2(default, null):PlayerSettings;
+
 
 	#if (haxe >= "4.0.0")
 	static public final onAvatarAdd = new FlxTypedSignal<PlayerSettings->Void>();
@@ -29,6 +90,7 @@ class PlayerSettings
 	#else
 	public var controls:Controls;
 	#end
+	// public final settings:Settings;
 
 	// public var avatar:Player;
 	// public var camera(get, never):PlayCamera;
@@ -44,79 +106,15 @@ class PlayerSettings
 		controls.setKeyboardScheme(scheme);
 	}
 
-	/* 
-		static public function addAvatar(avatar:Player):PlayerSettings
-		{
-			var settings:PlayerSettings;
 
-			if (player1 == null)
-			{
-				player1 = new PlayerSettings(0, Solo);
-				++numPlayers;
-			}
-
-			if (player1.avatar == null)
-				settings = player1;
-			else
-			{
-				if (player2 == null)
-				{
-					if (player1.controls.keyboardScheme.match(Duo(true)))
-						player2 = new PlayerSettings(1, Duo(false));
-					else
-						player2 = new PlayerSettings(1, None);
-					++numPlayers;
-				}
-
-				if (player2.avatar == null)
-					settings = player2;
-				else
-					throw throw 'Invalid number of players: ${numPlayers + 1}';
-			}
-			++numAvatars;
-			settings.avatar = avatar;
-			avatar.settings = settings;
-
-			splitCameras();
-
-			onAvatarAdd.dispatch(settings);
-
-			return settings;
-		}
-
-		static public function removeAvatar(avatar:Player):Void
-		{
-			var settings:PlayerSettings;
-
-			if (player1 != null && player1.avatar == avatar)
-				settings = player1;
-			else if (player2 != null && player2.avatar == avatar)
-			{
-				settings = player2;
-				if (player1.controls.keyboardScheme.match(Duo(_)))
-					player1.setKeyboardScheme(Solo);
-			}
-			else
-				throw "Cannot remove avatar that is not for a player";
-
-			settings.avatar = null;
-			while (settings.controls.gamepadsAdded.length > 0)
-			{
-				final id = settings.controls.gamepadsAdded.shift();
-				settings.controls.removeGamepad(id);
-				DeviceManager.releaseGamepad(FlxG.gamepads.getByID(id));
-			}
-
-			--numAvatars;
-
-			splitCameras();
-
-			onAvatarRemove.dispatch(avatar.settings);
-		}
-
-	 */
 	static public function init():Void
 	{
+		map = new Map();
+        if (FlxG.save.data.config != null)
+            map = FlxG.save.data.config;
+        else 
+            save();
+
 		if (player1 == null)
 		{
 			player1 = new PlayerSettings(0, Solo);
@@ -148,7 +146,6 @@ class PlayerSettings
 			player2.controls.addDefaultGamepad(1);
 		}
 
-		// DeviceManager.init();
 	}
 
 	static public function reset()
@@ -157,4 +154,26 @@ class PlayerSettings
 		player2 = null;
 		numPlayers = 0;
 	}
+
+	public static function getAndCheckIfNull(data:String,?value:Dynamic):Dynamic
+		{
+			if (map.get(data) == null)
+				map.set(data,value);
+			else
+				value = map.get(data);
+			return value;
+		}
+		public static function save()
+		{
+			map.set("downscroll",downscroll);
+			map.set("botplay",botplay);
+			map.set("ghosttapin",ghosttapin);
+			map.set("pressCauseMiss",pressCauseMiss);
+			map.set("offset",offset);
+			map.set("pitch",pitch);
+			FlxG.save.data.config = map;
+			FlxG.save.flush();
+	
+		}
 }
+

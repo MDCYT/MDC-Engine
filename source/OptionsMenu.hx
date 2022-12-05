@@ -29,7 +29,7 @@ class OptionsMenu extends MusicBeatState
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
 		menuBG.screenCenter();
-		menuBG.antialiasing = true;
+		menuBG.antialiasing = PlayerSettings.antialiasing;
 		add(menuBG);
 
 		/* 
@@ -99,9 +99,6 @@ class OptionsMenu extends MusicBeatState
 
 	function changeSelection(change:Int = 0)
 	{
-		#if !switch
-		NGio.logEvent('Fresh');
-		#end
 
 		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 

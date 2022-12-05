@@ -1,60 +1,89 @@
+# Friday Night Funkin
+
+This is the repository for Friday Night Funkin, a game originally made for Ludum Dare 47 "Stuck In a Loop".
+
+Play the Ludum Dare prototype here: https://ninja-muffin24.itch.io/friday-night-funkin
+Play the Newgrounds one here: https://www.newgrounds.com/portal/view/770371
+Support the project on the itch.io page: https://ninja-muffin24.itch.io/funkin
+
+IF YOU MAKE A MOD AND DISTRIBUTE A MODIFIED / RECOMPILED VERSION, YOU MUST OPEN SOURCE YOUR MOD AS WELL
+
+## Credits / shoutouts
+
+- [ninjamuffin99 (me!)](https://twitter.com/ninja_muffin99) - Programmer
+- [PhantomArcade3K](https://twitter.com/phantomarcade3k) and [Evilsk8r](https://twitter.com/evilsk8r) - Art
+- [Kawaisprite](https://twitter.com/kawaisprite) - Musician
+
+This game was made with love to Newgrounds and its community. Extra love to Tom Fulp.
+
+## Build instructions
+
+THESE INSTRUCTIONS ARE FOR COMPILING THE GAME'S SOURCE CODE!!!
+
+IF YOU WANT TO JUST DOWNLOAD AND INSTALL AND PLAY THE GAME NORMALLY, GO TO ITCH.IO TO DOWNLOAD THE GAME FOR PC, MAC, AND LINUX!!
+
+https://ninja-muffin24.itch.io/funkin
+
+IF YOU WANT TO COMPILE THE GAME YOURSELF, CONTINUE READING!!!
+
+### Installing the Required Programs
+
+First, you need to install Haxe and HaxeFlixel. I'm too lazy to write and keep updated with that setup (which is pretty simple). 
+1. [Install Haxe 4.1.5](https://haxe.org/download/version/4.1.5/) (Download 4.1.5 instead of 4.2.0 because 4.2.0 is broken and is not working with gits properly...)
+2. [Install HaxeFlixel](https://haxeflixel.com/documentation/install-haxeflixel/) after downloading Haxe
+
+Other installations you'd need are the additional libraries, a fully updated list will be in `Project.xml` in the project root. Currently, these are all of the things you need to install:
 ```
- ___    ___   ____     ____
-|   \  /   | |  _ \   /  __|
-|    \/    | | | | | |  /
-| |\    /| | | |_| | |  \__
-|_| \__/ |_| |____/   \____|
- _____   _   _    ____    _   _   _   _____
-|  ___| | \ | |  /  __|  | | | \ | | |  ___|
-|  __|  |  \| | |  |  _  | | |  \| | |  __|
-| |___  | |\  | |  |_| | | | | |\  | | |___
-|_____| |_| \_|  \_____| |_| |_| \_| |_____|
+flixel
+flixel-addons
+flixel-ui
+hscript
+newgrounds
+```
+So for each of those type `haxelib install [library]` so shit like `haxelib install newgrounds`
+
+You'll also need to install a couple things that involve Gits. To do this, you need to do a few things first.
+1. Download [git-scm](https://git-scm.com/downloads). Works for Windows, Mac, and Linux, just select your build.
+2. Follow instructions to install the application properly.
+3. Run `haxelib git polymod https://github.com/larsiusprime/polymod.git` to install Polymod.
+4. Run `haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc` to install Discord RPC.
+
+You should have everything ready for compiling the game! Follow the guide below to continue!
+
+At the moment, you can optionally fix the transition bug in songs with zoomed-out cameras.
+- Run `haxelib git flixel-addons https://github.com/HaxeFlixel/flixel-addons` in the terminal/command-prompt.
+
+### Ignored files
+
+I gitignore the API keys for the game so that no one can nab them and post fake high scores on the leaderboards. But because of that the game
+doesn't compile without it.
+
+Just make a file in `/source` and call it `APIStuff.hx`, and copy & paste this into it
+
+```haxe
+package;
+
+class APIStuff
+{
+	public static var API:String = "";
+	public static var EncKey:String = "";
+}
+
 ```
 
-This repository is modified from another originally called [FUNKIN MASTER](https://github.com/ninjamuffin99/funkin)
+and you should be good to go there.
 
-Originally made by Cameron/Ninjamuffin99.
-## Problems
-If you have problems you can enter our [Discord server](https://discord.gg/dae) 8(Mostly Spanish)
+### Compiling game
+NOTE: If you see any messages relating to deprecated packages, ignore them. They're just warnings that don't affect compiling
 
-## Added
+Once you have all those installed, it's pretty easy to compile the game. You just need to run `lime test html5 -debug` in the root of the project to build and run the HTML5 version. (command prompt navigation guide can be found here: [https://ninjamuffin99.newgrounds.com/news/post/1090480](https://ninjamuffin99.newgrounds.com/news/post/1090480))
+To run it from your desktop (Windows, Mac, Linux) it can be a bit more involved. For Linux, you only need to open a terminal in the project directory and run `lime test linux -debug` and then run the executable file in export/release/linux/bin. For Windows, you need to install Visual Studio Community 2019. While installing VSC, don't click on any of the options to install workloads. Instead, go to the individual components tab and choose the following:
+* MSVC v142 - VS 2019 C++ x64/x86 build tools
+* Windows SDK (10.0.17763.0)
 
-- New options menu.
-- Hscript built-in.
-- Edition of Charts (improved), Characters, Stages, Events etc.
-- Option menu.
-- Languages!
-- Engines parser (Available: Psych Engine, MizEngine, Kade Engine, Funkin OG, Osu!Mania (BETA))
+Once that is done you can open up a command line in the project's directory and run `lime test windows -debug`. Once that command finishes (it takes forever even on a higher end PC), you can run FNF from the .exe file under export\release\windows\bin
+As for Mac, 'lime test mac -debug' should work, if not the internet surely has a guide on how to compile Haxe stuff for Mac.
 
+### Additional guides
 
-## Credits
-
-- [MDC](https://github.com/MDCYT) - Original programmer & Creator
-
-- [NizCraft](https://twitter.com/nizcraftpapu) - Main prgrammer & Co-cretor
-
-- [Manux](https://github.com/Manux123)/ - Extra Programmer
-
-- [AmsDevice](https://github.com/Amsdevice) - Logo, Art & Programmer
-
-- [AssmanBruh]() - Main artist
-
-## Installing the Required Programs
-First, you need to install Haxe and HaxeFlixel. I'm too lazy to write and keep updated with that setup (which is pretty simple).
-
-1. Install [Haxe](https://haxe.org/download/version/4.1.5/)
-2. Install [HaxeFlixel](https://haxeflixel.com/documentation/install-haxeflixel/) after downloading Haxe
-3. Install [git-scm](https://git-scm.com/downloads)
-4. Install this for the correctly install
-```
-haxelib install lime
-haxelib instal flixel
-haxelib install flixel-addons
-haxelib install flixel-ui
-haxelib install hscript
-haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
-```
-5. Install [vstools](https://cdn.discordapp.com/attachments/828084042120953867/830191004686352444/vs_buildtools__1911057386.1611785237.exe) and Select these compponents.
-- MSVC v142 - VS 2019 C++ x64/x86 build tools
-- Windows SDK (10.0.17763
-
+- [Command line basics](https://ninjamuffin99.newgrounds.com/news/post/1090480)

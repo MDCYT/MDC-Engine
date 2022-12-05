@@ -1,0 +1,10 @@
+{
+    "formatVer": "1",
+    "songs": [
+        ["Bopeebo","dad",[0,0,0]],
+        ["Fresh","dad",[0,0,0]],
+        ["Dadbattle","dad",[0,0,0]]
+    ],
+    "hide": [false,false],
+    "weekFile": "week-1"
+}

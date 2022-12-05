@@ -1,0 +1,10 @@
+{
+    "formatVer": "1",
+    "songs": [
+        ["Pico","pico",[0,0,0]],
+        ["philly","pico",[0,0,0]],
+        ["blammed","pico",[0,0,0]]
+    ],
+    "hide": [false,false],
+    "weekFile": "week-1"
+}

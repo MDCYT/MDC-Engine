@@ -1,0 +1,229 @@
+{
+ "animations": [
+  {
+   "prefix": "BF idle dance",
+   "offsets": [
+    0,
+    0
+   ],
+   "indices": [],
+   "isIndices": false,
+   "fps": 24,
+   "loop": false,
+   "animation": "idle"
+  },
+  {
+   "prefix": "BF NOTE UP0",
+   "offsets": [
+    -42,
+    27
+   ],
+   "indices": [],
+   "isIndices": false,
+   "fps": 24,
+   "loop": false,
+   "animation": "singUP"
+  },
+  {
+   "prefix": "BF NOTE LEFT0",
+   "offsets": [
+    8,
+    -4
+   ],
+   "indices": [],
+   "isIndices": false,
+   "fps": 24,
+   "loop": false,
+   "animation": "singLEFT"
+  },
+  {
+   "prefix": "BF NOTE RIGHT0",
+   "offsets": [
+    -36,
+    -3
+   ],
+   "indices": [],
+   "isIndices": false,
+   "fps": 24,
+   "loop": false,
+   "animation": "singRIGHT"
+  },
+  {
+   "prefix": "BF NOTE DOWN0",
+   "offsets": [
+    -23,
+    -46
+   ],
+   "indices": [],
+   "isIndices": false,
+   "fps": 24,
+   "loop": false,
+   "animation": "singDOWN"
+  },
+  {
+   "prefix": "BF NOTE UP MISS",
+   "offsets": [
+    -42,
+    27
+   ],
+   "indices": [],
+   "isIndices": false,
+   "fps": 24,
+   "loop": false,
+   "animation": "singUPmiss"
+  },
+  {
+   "prefix": "BF NOTE DOWN MISS",
+   "offsets": [
+    -10,
+    -24
+   ],
+   "indices": [],
+   "isIndices": false,
+   "fps": 24,
+   "loop": false,
+   "animation": "singDOWNmiss"
+  },
+  {
+   "prefix": "BF NOTE RIGHT0",
+   "offsets": [
+    -36,
+    -3
+   ],
+   "indices": [],
+   "isIndices": false,
+   "fps": 24,
+   "loop": false,
+   "animation": "singRIGHT"
+  },
+  {
+   "prefix": "BF NOTE RIGHT MISS",
+   "offsets": [
+    -30,
+    21
+   ],
+   "indices": [],
+   "isIndices": false,
+   "fps": 24,
+   "loop": false,
+   "animation": "singRIGHTmiss"
+  },
+  {
+   "prefix": "BF NOTE RIGHT0",
+   "offsets": [
+    -36,
+    -3
+   ],
+   "indices": [],
+   "isIndices": false,
+   "fps": 24,
+   "loop": false,
+   "animation": "singRIGHT"
+  },
+  {
+   "prefix": "BF NOTE LEFT MISS",
+   "offsets": [
+    6,
+    20
+   ],
+   "indices": [],
+   "isIndices": false,
+   "fps": 24,
+   "loop": false,
+   "animation": "singLEFTmiss"
+  },
+  {
+   "prefix": "BF HEY",
+   "offsets": [
+    0,
+    0
+   ],
+   "indices": [],
+   "isIndices": false,
+   "fps": 24,
+   "loop": false,
+   "animation": "hey"
+  },
+  {
+   "prefix": "BF dies",
+   "offsets": [
+    30,
+    11
+   ],
+   "indices": [],
+   "isIndices": false,
+   "fps": 24,
+   "loop": false,
+   "animation": "firstDeath"
+  },
+  {
+   "prefix": "BF Dead Loop",
+   "offsets": [
+    30,
+    7
+   ],
+   "indices": [],
+   "isIndices": false,
+   "fps": 24,
+   "loop": false,
+   "animation": "deathLoop"
+  },
+  {
+   "prefix": "BF Dead confirm",
+   "offsets": [
+    30,
+    71
+   ],
+   "indices": [],
+   "isIndices": false,
+   "fps": 24,
+   "loop": false,
+   "animation": "deathConfirm"
+  },
+  {
+   "prefix": "BF idle shaking",
+   "offsets": [
+    0,
+    0
+   ],
+   "indices": [],
+   "isIndices": false,
+   "fps": 24,
+   "loop": false,
+   "animation": "scared"
+  }
+ ],
+ "isPlayer": false,
+ "addPos": [
+  0,
+  0
+ ],
+ "animation_death": "death",
+ "image": "BOYFRIEND",
+ "fearAnim": "scared",
+ "addCameraPos": [
+  0,
+  0
+ ],
+ "flip": [
+  true,
+  false
+ ],
+ "icon": "bf",
+ "idle": {
+  "idle_anim": "idle",
+  "is_left_right": false,
+  "right_anim": "",
+  "left_anim": ""
+ },
+ "color": [
+  0,
+  0,
+  0
+ ],
+ "scale": [
+  1,
+  1
+ ],
+ "animHey": "HEY"
+}

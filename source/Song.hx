@@ -14,10 +14,16 @@ typedef SwagSong =
 	var bpm:Int;
 	var needsVoices:Bool;
 	var speed:Float;
-	var ?noteType:String;
+
 	var player1:String;
 	var player2:String;
 	var validScore:Bool;
+
+	var isPixel:Bool;
+	var player3:String;
+	var stage:String;
+	var formatVer:String;
+	var ?isMigredChart:String;
 }
 
 class Song
@@ -40,30 +46,13 @@ class Song
 
 	public static function loadFromJson(jsonInput:String, ?folder:String):SwagSong
 	{
-		var rawJson = Assets.getText(Paths.json(folder.toLowerCase() + '/' + jsonInput.toLowerCase())).trim();
+		var rawJson = Assets.getText(Paths.json("songs/" + folder.toLowerCase() + '/' + jsonInput.toLowerCase())).trim();
 
 		while (!rawJson.endsWith("}"))
 		{
 			rawJson = rawJson.substr(0, rawJson.length - 1);
-			// LOL GOING THROUGH THE BULLSHIT TO CLEAN IDK WHATS STRANGE
 		}
-
-		// FIX THE CASTING ON WINDOWS/NATIVE
-		// Windows???
-		// trace(songData);
-
-		// trace('LOADED FROM JSON: ' + songData.notes);
-		/* 
-			for (i in 0...songData.notes.length)
-			{
-				trace('LOADED FROM JSON: ' + songData.notes[i].sectionNotes);
-				// songData.notes[i].sectionNotes = songData.notes[i].sectionNotes
-			}
-
-				daNotes = songData.notes;
-				daSong = songData.song;
-				daBpm = songData.bpm; */
-
+	
 		return parseJSONshit(rawJson);
 	}
 
@@ -71,6 +60,14 @@ class Song
 	{
 		var swagShit:SwagSong = cast Json.parse(rawJson).song;
 		swagShit.validScore = true;
+		if (swagShit.formatVer == null)
+			swagShit.formatVer = "0";
+		// if (swagShit.isPixel == null)
+			// swagShit.isPixel = false;
+		if (swagShit.player3 == null)
+			swagShit.player3 = "gf";
+		if (swagShit.stage == null)
+			swagShit.stage = "stage";
 		return swagShit;
 	}
 }

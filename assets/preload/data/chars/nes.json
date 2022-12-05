@@ -1,0 +1,97 @@
+{
+ "icon": "bf",
+ "fearAnim": "scared",
+ "animation_death": "death",
+ "scale": [
+  1,
+  1
+ ],
+ "animHey": "HEY",
+ "color": [
+  0,
+  0,
+  0
+ ],
+ "image": "nes",
+ "isPlayer": false,
+ "addPos": [
+  0,
+  0
+ ],
+ "idle": {
+  "right_anim": "",
+  "idle_anim": "idle",
+  "left_anim": "",
+  "is_left_right": false
+ },
+ "flip": [
+  true,
+  false
+ ],
+ "addCameraPos": [
+  0,
+  0
+ ],
+ "animations": [
+  {
+   "prefix": "idle",
+   "offsets": [
+    0,
+    0
+   ],
+   "indices": [],
+   "isIndices": false,
+   "fps": 24,
+   "loop": false,
+   "animation": "idle"
+  },
+  {
+   "prefix": "lef",
+   "offsets": [
+    -28,
+    -18
+   ],
+   "indices": [],
+   "isIndices": false,
+   "fps": 24,
+   "loop": false,
+   "animation": "singLEFT"
+  },
+  {
+   "prefix": "rai",
+   "offsets": [
+    2,
+    23
+   ],
+   "indices": [],
+   "isIndices": false,
+   "fps": 24,
+   "loop": false,
+   "animation": "singRIGHT"
+  },
+  {
+   "prefix": "up",
+   "offsets": [
+    38,
+    45
+   ],
+   "indices": [],
+   "isIndices": false,
+   "fps": 24,
+   "loop": false,
+   "animation": "singUP"
+  },
+  {
+   "prefix": "daun",
+   "offsets": [
+    -42,
+    -95
+   ],
+   "indices": [],
+   "isIndices": false,
+   "fps": 24,
+   "loop": false,
+   "animation": "singDOWN"
+  }
+ ]
+}

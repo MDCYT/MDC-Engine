@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="github.png">
+	<!-- Created with Adobe Animate version 22.0.4.185 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="github basic0000" x="17" y="17" width="516" height="172"/>
+	<SubTexture name="github basic0001" x="17" y="17" width="516" height="172"/>
+	<SubTexture name="github basic0002" x="633" y="17" width="516" height="172"/>
+	<SubTexture name="github basic0003" x="633" y="17" width="516" height="172"/>
+	<SubTexture name="github basic0004" x="633" y="17" width="516" height="172"/>
+	<SubTexture name="github basic0005" x="633" y="17" width="516" height="172"/>
+	<SubTexture name="github white0000" x="1249" y="17" width="661" height="184"/>
+	<SubTexture name="github white0001" x="1249" y="17" width="661" height="184"/>
+	<SubTexture name="github white0002" x="17" y="301" width="661" height="184"/>
+	<SubTexture name="github white0003" x="17" y="301" width="661" height="184"/>
+	<SubTexture name="github white0004" x="778" y="301" width="661" height="184"/>
+	<SubTexture name="github white0005" x="17" y="301" width="661" height="184"/>
+</TextureAtlas>

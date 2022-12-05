@@ -1,0 +1,25 @@
+{
+    "dialogueBox": "default",
+    "music": "none",
+    "dialogues": [
+        {
+            "text": "Beep boop",
+            "position": [0, 40],
+            "char": "bf",
+            "anim": "idle",
+            "velocity": 1
+        },   {
+            "text": "Bopp Bapa bieep pob bap bip bop bap",
+            "position": [0, 40],
+            "char": "bf",
+            "anim": "idle",
+            "velocity": 1
+        },   {
+            "text": "Hello world!",
+            "position": [0, 40],
+            "char": "bf",
+            "anim": "idle",
+            "velocity": 1
+        }
+    ]
+}

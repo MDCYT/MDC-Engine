@@ -15,33 +15,16 @@ class Boyfriend extends Character
 	{
 		super(x, y, char, true);
 	}
-
+	public function getElpepe():String
+		return (animation.curAnim == null ? ""  : animation.curAnim.name);
+	public function getCurAnimFinished():Bool
+		return (animation.curAnim == null ? false  : animation.curAnim.finished);
 	override function update(elapsed:Float)
 	{
-		if (!debugMode)
-		{
-			if(
-				animation.getByName('singUP') != null && animation.getByName('singLEFT') != null && animation.getByName('singRIGHT') != null &&animation.getByName('singDOWN') != null &&
-				animation.getByName('singUPmiss') != null && animation.getByName('singUPmiss') != null && animation.getByName('singUPmiss') != null &&animation.getByName('singUPmiss') != null
-				){
-			if (animation.curAnim.name.startsWith('sing'))
-			{
-				holdTimer += elapsed;
-			}
-			else
-				holdTimer = 0;
-
-			if (animation.curAnim.name.endsWith('miss') && animation.curAnim.finished && !debugMode)
-			{
-				playAnim('idle', true, false, 10);
-			}
-
-			if (animation.curAnim.name == 'firstDeath' && animation.curAnim.finished)
-			{
-				playAnim('deathLoop');
-			}
-		}
-		}
+		
+		holdTimer += elapsed;
+		if (getElpepe() == 'firstDeath' && getCurAnimFinished())
+			playAnim('deathLoop');
 
 		super.update(elapsed);
 	}
