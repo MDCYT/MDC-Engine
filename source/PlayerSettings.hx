@@ -30,7 +30,7 @@ class PlayerSettings
 	public static var showFPS:Bool = false;
 	public static var badQuality:Bool = true;
 	public static var antialiasing:Bool = false;
-	public static var showOpponentArrows:Bool = false;
+	public static var showOpponentArrows:Bool = true;
 
     public static var keybinds:Map<String,Array<FlxKey>> =
     [

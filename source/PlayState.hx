@@ -48,17 +48,7 @@ using StringTools;
 
 class PlayState extends MusicBeatState
 {
-	public function new(?replayData:Replay):Void
-		{
-			super();
-			if (replayData != null)
-				this.replayData = replayData;
-			else
-				this.replayData = [];
-			
-			rPlayData = this.replayData.copy();
-		}
-	private var rPlayData:Dynamic;
+	
 	public static var curStage:String = '';
 	public static var SONG:SwagSong;
 	public static var isStoryMode:Bool = false;
@@ -66,16 +56,15 @@ class PlayState extends MusicBeatState
 	public static var storyPlaylist:Array<String> = [];
 	public static var storyDifficulty:Int = 1;
 
-
+	private var rPlayData:Dynamic;
 	private var vocals:FlxSound = new FlxSound();
 	private var music:FlxSound = new FlxSound();
 	
 	private var dad:Character;
 	private var gf:Character;
 	private var boyfriend:Boyfriend;
-	private var onMusic:Bool = false;
 
-	private var accuracy:Float = 100.00;
+	private var accuracy:Float = 0;
 	private var notesPressed:Map<String,Float> = new Map();
 
 	private var dadGrp:FlxTypedGroup<Character> = new FlxTypedGroup<Character>();
@@ -99,6 +88,8 @@ class PlayState extends MusicBeatState
 
 	private var camZooming:Bool = true;
 	private var curSong:String = "";
+	private var canPlay:Bool = false;
+	
 
 	private var gfSpeed:Int = 1;
 	private var health:Float = 1;
@@ -116,70 +107,141 @@ class PlayState extends MusicBeatState
 	private var iconP1:HealthIcon;
 	private var iconP2:HealthIcon;
 
-	var dialogue:Array<String> = ['blah blah blah', 'coolswag'];
-	var animArray:Array<String> = ["LEFT","DOWN","UP","RIGHT"];
+	private var dialogue:Array<String> = ['blah blah blah', 'coolswag'];
+	private var animArray:Array<String> = ["LEFT","DOWN","UP","RIGHT"];
 
-	var halloweenBG:FlxSprite;
-	var isHalloween:Bool = false;
+	private var halloweenBG:FlxSprite;
+	private var isHalloween:Bool = false;
 
-	var phillyCityLights:FlxTypedGroup<FlxSprite>;
-	var phillyTrain:FlxSprite;
-	var trainSound:FlxSound;
+	private var phillyCityLights:FlxTypedGroup<FlxSprite>;
+	private var phillyTrain:FlxSprite;
+	private var trainSound:FlxSound;
 
-	var limo:FlxSprite;
-	var grpLimoDancers:FlxTypedGroup<BackgroundDancer>;
-	var fastCar:FlxSprite;
+	private var limo:FlxSprite;
+	private var grpLimoDancers:FlxTypedGroup<BackgroundDancer>;
+	private var fastCar:FlxSprite;
 
-	var upperBoppers:FlxSprite;
-	var bottomBoppers:FlxSprite;
-	var santa:FlxSprite;
+	private var upperBoppers:FlxSprite;
+	private var bottomBoppers:FlxSprite;
+	private var santa:FlxSprite;
 
-	var bgGirls:BackgroundGirls;
-	var wiggleShit:WiggleEffect = new WiggleEffect();
+	private var bgGirls:BackgroundGirls;
+	private var wiggleShit:WiggleEffect = new WiggleEffect();
 
-	var songScore:Int = 0;
-	var scoreTxt:FlxText;
-	var scoreBG:FlxSprite;
-	var waterMark:FlxText;
+	private var songScore:Int = 0;
+	private var scoreTxt:FlxText;
+	private var scoreBG:FlxSprite;
+	private var waterMark:FlxText;
 
 	public static var campaignScore:Int = 0;
 
-	var defaultCamZoom:Float = 1.05;
-	var defaultCamZoomHUD:Float = 0.965;
+	private var defaultCamZoom:Float = 1.05;
+	private var defaultCamZoomHUD:Float = 0.965;
 
 	// how big to stretch the pixel art assets
 	public static var daPixelZoom:Float = 6;
 
 	private var songPos:Float = 0;
 
-	var inCutscene:Bool = false;
+	private var inCutscene:Bool = false;
 
 	#if desktop
 	// Discord RPC variables
-	var storyDifficultyText:String = "";
-	var iconRPC:String = "";
-	var songLength:Float = 0;
-	var detailsText:String = "";
-	var detailsPausedText:String = "";
+	private var storyDifficultyText:String = "";
+	private var iconRPC:String = "";
+	private var songLength:Float = 0;
+	private var detailsText:String = "";
+	private var detailsPausedText:String = "";
 	#end
 
+	private var paused:Bool = false;
+	private var startedCountdown:Bool = false;
+	private var canPause:Bool = true;
+	private var charPos:FlxPoint = new FlxPoint(0,0);
+	private var scrollSpeed:Float = 1.0;
+
+	private var events:Array<Dynamic> = [];
+	private var eventID:Int = 0;
+
+	private var bgs:Array<FlxSprite> = [];
+	private var loadedBg:Array<FlxGraphic> = [];
+	private var startTimer:FlxTimer;
+	private var allNotes:Array<Note> = [];
+	private var player:Int = 0;
+	
+	private var generatedStaticArrows:Bool = false;
+	public var ratingTypes = [
+		"Horrible", // 0
+		"Horrible", // 10
+		"Awful", // 20
+
+		"Shit", // 30
+		"Bad", // 40
+		"Meh", // 50
+
+		"Good!", // 60
+		"God!", // 70
+		"Great!", // 80
+
+		"Maniatic!", // 90
+		"Sick!", // 100
+		"Yo y los hackers cuando", // 110
+	];
+	private var noteOffset:Float = 250;
+
+	private var rating:SwagComboOrRatingSpr = new SwagComboOrRatingSpr();
+	private var comboSpr:SwagComboOrRatingSpr = new SwagComboOrRatingSpr();
+	private var comboGrp:FlxTypedGroup<SwagNum> = new FlxTypedGroup<SwagNum>();
+	private var msGrp:FlxTypedGroup<SwagNum> = new FlxTypedGroup<SwagNum>();
+	private var scoreGRP:FlxGroup = new FlxGroup();
+	private var strumP1:Strums = null;
+	private var strumP2:Strums = null;
+
+	private var replayData:Replay = [];
+	public var isReplay:Bool = false;
+	public static var setReplay:Bool = false;
+	private var fastCarCanDrive:Bool = true;
+	private var trainMoving:Bool = false;
+	private var trainFrameTiming:Float = 0;
+
+	private var trainCars:Int = 8;
+	private var trainFinishing:Bool = false;
+	private var trainCooldown:Int = 0;
+	private var startedMoving:Bool = false;
+
+	private var lightningStrikeBeat:Int = 0;
+	private var lightningOffset:Int = 8;
+
+	private var curLight:Int = 0;
+	public function new(?replayData:Replay):Void
+	{
+		super();
+		if (replayData != null)
+			this.replayData = replayData;
+		else
+			this.replayData = [];
+		
+		rPlayData = this.replayData.copy();
+	}
 
 	override public function create()
 	{
 		
 		Conductor.songPosition = -Math.PI * 360;
-		if (setReplay)
-			isReplay = true;
+		if (setReplay) isReplay = true;
 		setReplay = false;
 		if (FlxG.sound.music != null)
 			FlxG.sound.music.stop();
 		FlxG.sound.list.add(vocals);	
 		FlxG.sound.list.add(music);	
-		persistentUpdate = true;
-		persistentDraw = true;
+		persistentUpdate = persistentDraw  = true;
 
 		Conductor.mapBPMChanges(SONG);
 		Conductor.changeBPM(SONG.bpm);
+
+		if (prevCamFollow != null)
+			camFollow = prevCamFollow;
+		prevCamFollow = null;
 
 		#if desktop
 		storyDifficultyText = CoolUtil.difficultyString();
@@ -212,6 +274,7 @@ class PlayState extends MusicBeatState
 			
 		}
 		Note.isPixel = SONG.isPixel;
+	
 
 		gf = new Character(100, 100,  gfVersion);
 		gf.scrollFactor.set(0.95, 0.95);
@@ -257,7 +320,7 @@ class PlayState extends MusicBeatState
 		scoreTxt.scrollFactor.set();
 		add(scoreTxt);
 
-		waterMark = new FlxText(0, (!PlayerSettings.downscroll ? FlxG.height * 0.1 : FlxG.height * 0.9) - 38, 0, "", 20);
+		waterMark = new FlxText(0, (!PlayerSettings.downscroll ? FlxG.height * 0.025 : FlxG.height * 0.925) , 0, "", 20);
 		waterMark.screenCenter(X);
 		waterMark.setFormat(Paths.font("vcr.ttf"), 15, FlxColor.WHITE, CENTER);
 		waterMark.setBorderStyle(OUTLINE,FlxColor.BLACK,2,4);
@@ -304,22 +367,14 @@ class PlayState extends MusicBeatState
 		}
 
 	}
-	private var comboNote:Int = 0;
 	private function tryStart():Void
 	{
 		music.time = 0;
 		music.loadEmbedded(Paths.inst(PlayState.SONG.song), false);
 
 		generateSong();
-
-
-		notesPressed.set("played",0);
-		notesPressed.set("notes",0);
-		notesPressed.set("miss",0);
-		notesPressed.set("sick",0);
-		notesPressed.set("shit",0);
-		notesPressed.set("good",0);
-		notesPressed.set("bad",0);
+		for (shit in ["played","notes","miss","sick","shit","good","bad"])
+		notesPressed.set(shit,0);
 
 		setDialogue();
 	
@@ -392,8 +447,6 @@ class PlayState extends MusicBeatState
 			}
 		notes.repos();
 	}
-	var events:Array<Dynamic> = [];
-	var eventID:Int = 0;
 
 	private function bindEvent(strumTime:Float,event:String,argA:String,argB:String)
 	{
@@ -552,9 +605,9 @@ class PlayState extends MusicBeatState
 		}
 		camFollow.setPosition(camPos.x, camPos.y);
 
+		
 	}
-	private var bgs:Array<FlxSprite> = [];
-	private var loadedBg:Array<FlxGraphic> = [];
+
 	
 	private function genOrDestroyStage():Void
 	{
@@ -1004,8 +1057,7 @@ class PlayState extends MusicBeatState
 		});
 	}
 
-	var startTimer:FlxTimer;
-	var perfectMode:Bool = false;
+
 
 	function startCountdown():Void
 	{
@@ -1092,6 +1144,7 @@ class PlayState extends MusicBeatState
 						onComplete: function(twn:FlxTween)
 						{
 							go.destroy();
+							canPlay= true;
 						}
 					});
 					FlxG.sound.play(Paths.sound('introGo'+ altSuffix), 0.6);
@@ -1104,6 +1157,7 @@ class PlayState extends MusicBeatState
 		}, 5);
 
 	}
+
 
 	function startSong():Void
 	{
@@ -1123,9 +1177,7 @@ class PlayState extends MusicBeatState
 		#end
 	}
 
-	private var allNotes:Array<Note> = [];
-	public static var offsetdebug:Float = 2;
-	private var player:Int = 0;
+
 	private function generateSong():Void
 	{
 		var songData = SONG;
@@ -1239,7 +1291,7 @@ class PlayState extends MusicBeatState
 	{
 		return FlxSort.byValues(FlxSort.ASCENDING, Obj1.strumTime, Obj2.strumTime);
 	}
-	private var generatedStaticArrows:Bool = false;
+
 	private function generateStaticArrows():Void
 	{
 		if (generatedStaticArrows)
@@ -1345,7 +1397,6 @@ class PlayState extends MusicBeatState
 
 		super.onFocus();
 	}
-	public var a:Array<Int> = [170,165];
 	
 	override public function onFocusLost():Void
 	{
@@ -1358,9 +1409,9 @@ class PlayState extends MusicBeatState
 
 		super.onFocusLost();
 	}
-
 	function resyncVocals():Void
 	{
+		if (curStep < 0) return;
 		vocals.pause();
 		music.play();
 		Conductor.songPosition = music.time;
@@ -1368,62 +1419,30 @@ class PlayState extends MusicBeatState
 		vocals.play();
 	}
 
-	private var paused:Bool = false;
-	var startedCountdown:Bool = false;
-	var canPause:Bool = true;
-	private var iconCurSize:Float = 1;
-	private var charPos:FlxPoint = new FlxPoint(0,0);
+
 	private function _fps(?mult:Float = 10):Float
 		return 1 - FlxG.elapsed * mult;
-	private var notePos:FlxPoint = new FlxPoint(0,0);
-	public var fd:Float = 80;
-	public var elpa:Float = 0;
 	
-	private var canInit:Bool = false;
-	public var ratingTypes = [
-		"Awful", // 0
-		"Awful", // 10
-		"Awful", // 20
 
-		"Bad *", // 30
-		"Bad **", // 40
-		"Bad ***", // 50
-
-		"Good!", // 60
-		"Great! *", // 70
-		"Great! **", // 80
-
-		"Sick! *", // 90
-		"Sick! **", // 100
-	];
 	function getRating()
 	{
 		var acc_in_num =  accuracy / 10;
 		FlxG.watch.addQuick("acc", acc_in_num);
 		FlxG.watch.addQuick("acc", Math.floor(acc_in_num));
+		if (notesPressed.get("played") <= 0)
+			return "N/A";
 		return ratingTypes[ Math.floor(acc_in_num)];
 	}
 	override public function update(elapsed:Float)
 	{
-		#if !debug
-		perfectMode = false;
-		#end
+		
 		songPos = ((Conductor.songPosition * 1000) / music.length);
 		if (songPos < 0)
 			songPos = 0;
 		FlxG.watch.addQuick("songPos",songPos);
-		elpa = elapsed;
-		if (elpa >= 0.7)
-		{
-			notePos.set(0,0);
-		}
 
-		FlxG.camera.focusOn(camFollow.getPosition());
+		camFollow.lerpPositionByRect(charPos,_fps(10 * scrollSpeed));
 		
-			camFollow.x = FlxMath.lerp(charPos.x + notePos.x, camFollow.x,_fps());
-			camFollow.y = FlxMath.lerp(charPos.y + notePos.y, camFollow.y,_fps());
-			notePos.x = FlxMath.lerp(0,notePos.x,_fps(5));
-			notePos.y = FlxMath.lerp(0,notePos.y,_fps(5));
 			var tilin = waterMark.text;
 		waterMark.text = '- ${curSong} (${CoolUtil.difficultyString()}) ${FlxStringUtil.formatTime(Math.abs(Conductor.songPosition / 1000), false)} -';
 		waterMark.screenCenter(X);
@@ -1455,9 +1474,9 @@ class PlayState extends MusicBeatState
 
 		super.update(elapsed);
 
-		scoreTxt.text = 'Score: $songScore | Accuracy: $accuracy % | Rating: ${getRating()} | Misses: ${notesPressed.get("miss")}';
+		scoreTxt.text = '< Score: $songScore | Accuracy: ${getRating() == "N/A" ? "?" : Std.string(accuracy)}% | Rating: ${getRating()}  ${notesPressed.get("miss") <= 0 ? "" : '| Misses: ${notesPressed.get("miss")}'}  >';
 		scoreTxt.screenCenter(X);
-		scoreBG.setGraphicSize(Math.floor(scoreTxt.width * 1.2),Math.floor(scoreTxt.height * 1.2));
+		scoreBG.setGraphicSize(Math.floor(scoreTxt.width * 1.05),Math.floor(scoreTxt.height * 1.2));
 		scoreBG.updateHitbox();
 		scoreBG.screenCenter(X);
 
@@ -1490,10 +1509,8 @@ class PlayState extends MusicBeatState
 			#end
 		}
 
-		iconP1.scale.set(iconCurSize,iconCurSize);
-		iconP2.scale.set(iconCurSize,iconCurSize);
-		
-		iconCurSize = FlxMath.lerp(1, iconCurSize,_fps());
+		iconP1.scale.set(FlxMath.lerp(1, iconP1.scale.x,_fps()),FlxMath.lerp(1, iconP1.scale.y,_fps()));
+		iconP2.scale.set(FlxMath.lerp(1, iconP2.scale.x,_fps()),FlxMath.lerp(1, iconP2.scale.y,_fps()));
 
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
@@ -1773,12 +1790,9 @@ class PlayState extends MusicBeatState
 	}
 	function endSong():Void
 	{
-		if (!isReplay)
-		
-				rPlayData = replayData.copy();
+		if (!isReplay) rPlayData = replayData.copy();
 		canPause = false;
 		startingSong = false;
-		onMusic = false;
 		music.volume = 0;
 		vocals.volume = 0;
 		if (SONG.validScore)
@@ -1904,11 +1918,7 @@ class PlayState extends MusicBeatState
 		if (accuracy > 100)
 			accuracy = 100.00;
 	}
-	private var rating:SwagComboOrRatingSpr = new SwagComboOrRatingSpr();
-	private var comboSpr:SwagComboOrRatingSpr = new SwagComboOrRatingSpr();
-	private var comboGrp:FlxTypedGroup<SwagNum> = new FlxTypedGroup<SwagNum>();
-	private var msGrp:FlxTypedGroup<SwagNum> = new FlxTypedGroup<SwagNum>();
-	private var scoreGRP:FlxGroup = new FlxGroup();
+
 
 	
 	function addReplayData(data:Replay.ReplayData):Void
@@ -1918,7 +1928,7 @@ class PlayState extends MusicBeatState
 		FlxG.watch.addQuick("LastData", data);
 		replayData.push(data);
 	}
-	var noteOffset:Float = 250;
+	
 	private function popUpScore(nnot:Note,?diff:Float = -999):Void
 	{
 		add(scoreGRP);
@@ -1983,8 +1993,6 @@ class PlayState extends MusicBeatState
 		}
 
 	}
-	private var strumP1:Strums = null;
-	private var strumP2:Strums = null;
 
 	private function keyShit():Void
 	{
@@ -2142,13 +2150,11 @@ class PlayState extends MusicBeatState
 			vocals.volume = 1;
 
 		daNote.wasGoodHit = true;
-		if (curSong.toLowerCase() != "anzioso")
-		 destroyNote(daNote);
+		if (curSong.toLowerCase() != "amusia")
+			destroyNote(daNote);
 
 	}
-	private var replayData:Replay = [];
-	public var isReplay:Bool = false;
-	public static var setReplay:Bool = false;
+
 
 	function goodNoteHit(note:Note):Void
 	{
@@ -2187,7 +2193,6 @@ class PlayState extends MusicBeatState
 		destroyNote(note);
 	}
 
-	var fastCarCanDrive:Bool = true;
 
 	function resetFastCar():Void
 	{
@@ -2209,12 +2214,6 @@ class PlayState extends MusicBeatState
 		});
 	}
 
-	var trainMoving:Bool = false;
-	var trainFrameTiming:Float = 0;
-
-	var trainCars:Int = 8;
-	var trainFinishing:Bool = false;
-	var trainCooldown:Int = 0;
 
 	function trainStart():Void
 	{
@@ -2223,7 +2222,6 @@ class PlayState extends MusicBeatState
 			trainSound.play(true);
 	}
 
-	var startedMoving:Bool = false;
 
 	function updateTrainPos():Void
 	{
@@ -2247,19 +2245,18 @@ class PlayState extends MusicBeatState
 			}
 
 			if (phillyTrain.x < -4000 && trainFinishing)
-				trainReset();
+				{
+					gf.playAnim('hairFall');
+					phillyTrain.x = FlxG.width + 200;
+					trainMoving = false;
+					trainCars = 8;
+					trainFinishing = false;
+					startedMoving = false;
+				}
 		}
 	}
 
-	function trainReset():Void
-	{
-		gf.playAnim('hairFall');
-		phillyTrain.x = FlxG.width + 200;
-		trainMoving = false;
-		trainCars = 8;
-		trainFinishing = false;
-		startedMoving = false;
-	}
+	
 
 	function lightningStrikeShit():Void
 	{
@@ -2276,12 +2273,13 @@ class PlayState extends MusicBeatState
 	override function stepHit()
 	{
 		super.stepHit();
+	
 		if (music.time > Conductor.songPosition + 20 || music.time < Conductor.songPosition - 20)
 			resyncVocals();
 	}
 
-	var lightningStrikeBeat:Int = 0;
-	var lightningOffset:Int = 8;
+	
+
 	override function beatHit()
 	{
 		super.beatHit();
@@ -2313,8 +2311,10 @@ class PlayState extends MusicBeatState
 			FlxG.camera.zoom += 0.025;
 			camHUD.zoom += 0.035;
 		}
-		iconCurSize += 0.35;
-
+		if (iconP1.scale.x <= 1.35)
+			iconP1.scale.set(1.35,1.35);
+		if (iconP2.scale.x <= 1.35)
+			iconP2.scale.set(1.35,1.35);
 
 		if (curBeat % gfSpeed == 0)
 			gf.dance();
@@ -2374,5 +2374,4 @@ class PlayState extends MusicBeatState
 			lightningStrikeShit();
 	}
 
-	var curLight:Int = 0;
 }

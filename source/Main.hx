@@ -1,21 +1,9 @@
 package;
 
-import Discord.DiscordClient;
-import haxe.CallStack.StackItem;
-import haxe.CallStack;
-import openfl.events.UncaughtErrorEvent;
 import flixel.FlxGame;
 import flixel.FlxState;
-import openfl.Assets;
 import openfl.Lib;
-import lime.app.Application;
-import openfl.events.UncaughtErrorEvent;
-import haxe.CallStack;
-import haxe.io.Path;
-import Discord.DiscordClient;
-import sys.FileSystem;
-import sys.io.File;
-import sys.io.Process;
+
 import openfl.display.FPS;
 import openfl.display.Sprite;
 import openfl.events.Event;
@@ -69,7 +57,7 @@ class Main extends Sprite
 	private function setupGame():Void
 	{
 	
-		
+		/** I CHANGE THIS FROM THE AWFUL AND ROMPEHUEVOS FOR THE RESIZE MODE**/
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
 
 		#if !mobile

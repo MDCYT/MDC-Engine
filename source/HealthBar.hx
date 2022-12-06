@@ -17,7 +17,7 @@ class HealthBar extends FlxSpriteGroup
     {
         super();
         healthBarBG = new FlxSprite().makeGraphic(1,1,FlxColor.BLACK);
-		healthBarBG.setGraphicSize((Math.floor((!areUP ? FlxG.width :  FlxG.height) * 0.75) ),Std.int(19 * 1.15));
+		healthBarBG.setGraphicSize((Math.floor((!areUP ? FlxG.width :  FlxG.height) * 0.5) ), 22);
 		healthBarBG.updateHitbox();
 		healthBarBG.screenCenter(X);
 		add(healthBarBG);    
@@ -25,7 +25,7 @@ class HealthBar extends FlxSpriteGroup
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), instance,
         'health', 0, 2);
         healthBar.scrollFactor.set();
-        healthBar.createFilledBar(0xFFBB00FF, 0xFF2391FF);
+        healthBar.createFilledBar(0xFFFF0000, 0xFF00FF00);
         add(healthBar);
       
     }
