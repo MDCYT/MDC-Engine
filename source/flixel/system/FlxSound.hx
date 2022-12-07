@@ -24,7 +24,6 @@ import openfl.utils.AssetType;
 /**
  * This is the universal flixel sound object, used for streaming, music, and sound effects.
  */
-
 class FlxSound extends FlxBasic
 {
 	/**
@@ -178,7 +177,7 @@ class FlxSound extends FlxBasic
 	var _length:Float = 0;
 
 	/**
-	 * Internal pitch, it's the real pitch
+	 * Internal pitch, it's the internal pitch, yea it's all.
 	 */
 	var _pitch:Float = 1.0;
 
@@ -645,7 +644,7 @@ class FlxSound extends FlxBasic
 		if (looped)
 		{
 			cleanup(false);
-			play(false, loopTime, endTime);
+			play(true, loopTime, endTime);
 		}
 		else
 			cleanup(autoDestroy);

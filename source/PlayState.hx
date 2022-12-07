@@ -205,6 +205,7 @@ class PlayState extends MusicBeatState
 	private var trainFrameTiming:Float = 0;
 
 	private var trainCars:Int = 8;
+	private var pausedAtTime:Float = 0; // For dumb errors.
 	private var trainFinishing:Bool = false;
 	private var trainCooldown:Int = 0;
 	private var startedMoving:Bool = false;
@@ -455,17 +456,18 @@ class PlayState extends MusicBeatState
 		eventID ++;
 	}
 	
-	private function onEvent(event:String,argA:String,argB:String)
+	private function onEvent(event:Array<Dynamic>)
 	{
-		if (event == null)
-			return;
-		switch(event.toLowerCase())
+		if (event == null) return;
+		events.remove(event);
+		var eventName:String = event[0];
+		var argA:String = event[1];
+		var argB:String = event[2];
+		switch(eventName.toLowerCase())
 		{
 			case "setcamangle":
 				var camera:FlxCamera = FlxG.camera; 
 			if (argB.toLowerCase().contains("hud") || argB == "0") camera = camHUD;
-			// FlxTween.tween(camera,{alpha: Std.parseInt(argA.split(',')[0])},argA.split(',')[1]);
-			// FlxTween.twee(camera,camera.angle,Std.parseInt(argA.split(',')[0],Std.parseInt(argA.split(',')[1])));
 			FlxTween.tween(camera,{angle: Std.parseInt(argA.split(',')[0])},Std.parseInt(argA.split(',')[1]));
 
 
@@ -1180,6 +1182,8 @@ class PlayState extends MusicBeatState
 
 	private function generateSong():Void
 	{
+		FlxG.camera.follow(camFollow,LOCKON,(0.6));
+
 		var songData = SONG;
 		Conductor.changeBPM(songData.bpm);
 		events = [];
@@ -1296,7 +1300,6 @@ class PlayState extends MusicBeatState
 	{
 		if (generatedStaticArrows)
 			return;
-		trace("asd");
 		
 		playerStrums.generate();
 		opponentStrums.generate();
@@ -1347,6 +1350,7 @@ class PlayState extends MusicBeatState
 		{
 			if (music != null && !startingSong)
 			{
+				music.time = pausedAtTime;
 				resyncVocals();
 			}
 
@@ -1484,6 +1488,9 @@ class PlayState extends MusicBeatState
 		{
 			persistentUpdate = false;
 			persistentDraw = true;
+			pausedAtTime = music.time;
+			Conductor.songPosition = music.time;
+
 			paused = true;
 
 			// 1 / 1000 chance for Gitaroo Man easter egg
@@ -1619,67 +1626,61 @@ class PlayState extends MusicBeatState
 			case 1: strumP1 = opponentStrums;
 			case 2: strumP1 = gfStrums;
 		}
+	
 		if (generatedMusic)
-		{
-			if (events.length > 0)
 			{
-				for (event in events)
-					{
-						if (event[0] <= Conductor.songPosition)
-						{
-							/// EVENTS!!!
-							onEvent(event[1],event[2],event[3]);
-							events.remove(event);
-						}
-						else
-						{
-							break;
-						}
-					}
-			}
-		
-			notes.getNoteAlive(function(daNote:Note)
-			{
-				var daStrum:FlxSprite  = strumLineNotes.members[daNote.noteFor].get(daNote.noteData);
-				if (daStrum == null)
-					daStrum = strumLine;
-
-				var strumY = daStrum.y;
-				var strumX = daStrum.x;
-
-				if (strumY >= FlxG.height / 2)
-					daNote.y = (strumY + 0.45 * ((Conductor.songPosition + PlayerSettings.offset)- daNote.strumTime) * FlxMath.roundDecimal(SONG.speed, 2));
-				else 
-					daNote.y = (strumY - 0.45 * ((Conductor.songPosition + PlayerSettings.offset)- - daNote.strumTime) * FlxMath.roundDecimal(SONG.speed, 2));
-			
-				daNote.x = strumX;
-				daNote.alpha = daStrum.alpha * (daNote.isSustainNote ? 0.5 : 1 );
-			
-				if (daNote.isSustainNote)
-					daNote.x += daNote.width / (daNote.isPix ? 2 : 1);
-				
-
-				if (daNote.noteFor != player && daNote.strumTime <= (Conductor.songPosition + PlayerSettings.offset))
-					botNoteHit(daNote,daNote.noteFor);
-			
-				strumP1.isBot = PlayerSettings.botplay;
-				boyfriend.isPlayer = PlayerSettings.botplay;
-
-				if (daNote.noteFor == player && daNote.strumTime <= (Conductor.songPosition + PlayerSettings.offset) && PlayerSettings.botplay)
-						goodNoteHit(daNote);
-
-				if (daNote.strumTime + noteOffset < (Conductor.songPosition + PlayerSettings.offset))
+				if (events.length > 0)
 				{
-					
-					if ((daNote.tooLate || !daNote.wasGoodHit) && daNote.noteFor == player)
-						noteMiss(daNote.noteData,daNote);
-
-					daNote.active = false;
-					daNote.visible = false;
-					destroyNote(daNote);
+					for (event in events)
+						{
+							if (event[0] <= Conductor.songPosition)
+								onEvent(event);
+							else
+								break;
+						}
 				}
-			});
-		}
+			
+				notes.getNoteAlive(function(daNote:Note)
+				{
+					var daStrum:FlxSprite  = strumLineNotes.members[daNote.noteFor].get(daNote.noteData);
+					if (daStrum == null)
+						daStrum = strumLine;
+	
+					var strumY = daStrum.y;
+					var strumX = daStrum.x;
+	
+					if (strumY >= FlxG.height / 2)
+						daNote.y = (strumY + 0.45 * ((Conductor.songPosition + PlayerSettings.offset)- daNote.strumTime) * FlxMath.roundDecimal(SONG.speed, 2));
+					else 
+						daNote.y = (strumY - 0.45 * ((Conductor.songPosition + PlayerSettings.offset)- - daNote.strumTime) * FlxMath.roundDecimal(SONG.speed, 2));
+				
+					daNote.x = strumX;
+					daNote.alpha = daStrum.alpha * (daNote.isSustainNote ? 0.5 : 1 );
+				
+					if (daNote.isSustainNote)
+						daNote.x += daNote.width / (daNote.isPix ? 2 : 1);
+					
+	
+					if (daNote.noteFor != player && daNote.strumTime <= (Conductor.songPosition + PlayerSettings.offset))
+						botNoteHit(daNote,daNote.noteFor);
+				
+					strumP1.isBot = PlayerSettings.botplay;
+					boyfriend.isPlayer = PlayerSettings.botplay;
+	
+					if (daNote.noteFor == player && daNote.strumTime <= (Conductor.songPosition + PlayerSettings.offset) && PlayerSettings.botplay)
+							goodNoteHit(daNote);
+	
+					if (daNote.strumTime + noteOffset < (Conductor.songPosition - Conductor.safeZoneOffset))
+					{
+						if ((daNote.tooLate && !daNote.wasGoodHit) && daNote.noteFor == player)
+							noteMiss(daNote.noteData,daNote);
+	
+						daNote.active = false;
+						daNote.visible = false;
+						destroyNote(daNote);
+					}
+				});
+			}
 
 		if (!inCutscene && (!PlayerSettings.botplay && !isReplay))
 			keyShit();
@@ -1694,7 +1695,7 @@ class PlayState extends MusicBeatState
 								switch (replay.data.toLowerCase())
 								{
 									case "good-press":
-										replayHit(notes.searchAtTime(replay.hitData.strumTime,replay.hitData.noteData,player),replay.hitData.diff);
+										goodNoteHit(notes.searchAtTime(replay.hitData.strumTime,replay.hitData.noteData,player),replay.hitData.diff);
 									case "bad-press":
 										noteMiss(replay.hitData.noteData);
 									case "pressedstrum-static","pressedstrum-pressed","pressedstrum-confirm":
@@ -1870,36 +1871,15 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-	var endingSong:Bool = false;
 	private function destroyNote(note:Note)
-		{
-		
-			notes.delete(note);
-			allNotes.remove(note);
-			note.kill();
-			note.destroy();
-		}
-	private function tryStartAnotherSong(song:String)
 	{
-		FlxG.sound.music.stop();
-		canPause = false;
-		endingSong = false;
-		combo = 0;
-		songScore = 0;
-
-
-		generatedMusic = false;
-
-		for (note in allNotes)
-			destroyNote(note);
-
-		unspawnNotes = [];
-
 	
-		// start
-		tryStart();
-
+		notes.delete(note);
+		allNotes.remove(note);
+		note.kill();
+		note.destroy();
 	}
+
 	private function tryAddNotes(name:String,toAdd:Float)
 	{
 		if (!notesPressed.exists(name))
@@ -2121,6 +2101,7 @@ class PlayState extends MusicBeatState
 
 	function botNoteHit(daNote:Note,charID:Int = 0):Void
 	{
+		if (daNote.wasGoodHit) return;
 		if (SONG.song != 'Tutorial')
 			camZooming = true;
 
@@ -2141,22 +2122,23 @@ class PlayState extends MusicBeatState
 				
 		}
 		strumP2 = strum;
-		
-		char.playAnim('sing${animArray[daNote.noteData]}${altAnim}');
-		strumP2.splash(daNote.noteData);
-		strumP2.play(daNote.noteData);
-		char.holdTimer = 0;
 		if (SONG.needsVoices)
 			vocals.volume = 1;
+		char.playAnim('sing${animArray[daNote.noteData]}${altAnim}');
+		char.holdTimer = 0;
+		if (curSong.toLowerCase() == "amusia") return;
+
+		strumP2.splash(daNote.noteData);
+		strumP2.play(daNote.noteData);
+
 
 		daNote.wasGoodHit = true;
-		if (curSong.toLowerCase() != "amusia")
 			destroyNote(daNote);
 
 	}
 
 
-	function goodNoteHit(note:Note):Void
+	function goodNoteHit(note:Note,?diff:Float = -999):Void
 	{
 		if (note.wasGoodHit) return;
 		var bf:Character = boyfriend;
@@ -2171,7 +2153,7 @@ class PlayState extends MusicBeatState
 				strum = gfStrums;
 		}
 		strumP1 = strum;
-		popUpScore(note, PlayerSettings.botplay ? 0 : -999);
+		popUpScore(note, PlayerSettings.botplay ? 0 : diff);
 		combo += 1;
 		combo = Math.floor(Math.abs(combo));
 

@@ -230,6 +230,9 @@ class FlxState extends FlxGroup
 		if (persistentUpdate || subState == null)
 			update(elapsed);
 
+		forceUpdate(elapsed);
+
+		
 		if (_requestSubStateReset)
 		{
 			_requestSubStateReset = false;
@@ -240,6 +243,7 @@ class FlxState extends FlxGroup
 			subState.tryUpdate(elapsed);
 		}
 	}
+	public function forceUpdate(elapsed:Float):Void {}
 
 	@:noCompletion
 	function get_bgColor():FlxColor

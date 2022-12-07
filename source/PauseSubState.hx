@@ -25,11 +25,12 @@ class PauseSubState extends MusicBeatSubstate
 	var pauseMusic:FlxSound;
 	var localTweens:Array<FlxTween> = [];
 	var soundsToReplacePause:Array<FlxSound> = [];
-
+	var pausedAt:Float = 0;
 	public function new(x:Float, y:Float,soundsToReplacePause:Array<FlxSound>)
 	{
 		super();
 		this.soundsToReplacePause = soundsToReplacePause;
+		pausedAt = soundsToReplacePause[0].time;
 		pauseMusic = new FlxSound().loadEmbedded(Paths.music('breakfast'), true, true);
 		pauseMusic.volume = 0;
 		pauseMusic.play(false, FlxG.random.int(0, Std.int(pauseMusic.length / 2)));
@@ -63,8 +64,8 @@ class PauseSubState extends MusicBeatSubstate
 	
 
 		localTweens[0] = FlxTween.tween(bg, {alpha: 0.6}, 0.4, {ease: FlxEase.quartInOut});
-		localTweens[1] =FlxTween.tween(levelInfo, {alpha: 1, y: 20}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.3});
-		localTweens[2] =FlxTween.tween(levelDifficulty, {alpha: 1, y: levelDifficulty.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.5});
+		localTweens[1] = FlxTween.tween(levelInfo, {alpha: 1, y: 20}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.3});
+		localTweens[2] = FlxTween.tween(levelDifficulty, {alpha: 1, y: levelDifficulty.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.5});
 
 		grpMenuShit = new FlxTypedGroup<Alphabet>();
 		add(grpMenuShit);
@@ -86,9 +87,13 @@ class PauseSubState extends MusicBeatSubstate
 	{
 		if (pauseMusic.volume < 0.5)
 			pauseMusic.volume += 0.01 * elapsed;
-		for (soung in soundsToReplacePause)
+		for (soung in soundsToReplacePause){
+			soung.time = pausedAt;
 			soung.pause();
+		}
+		Conductor.songPosition = pausedAt;
 		super.update(elapsed);
+	
 
 		var upP = controls.UP_P;
 		var downP = controls.DOWN_P;
