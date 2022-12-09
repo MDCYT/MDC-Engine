@@ -8,6 +8,8 @@
 | 1.1.x   | :white_check_mark: |
 | 1.2.x   | :white_check_mark: |
 
-## Roportar una vulnervilidad
+## Roportar una vulneravilidad o un bug
 
-Ni idea como se puede vulnerar un fnf, pero si lo logras, enviame un md por discord a MDC#0001
+Si encuentras algun vulneravilidad o bug, por favor, ingresa a nuestro servidor de discord y reportalo con el usuario MDC#0001.
+
+Discord: [discord.gg/dae](discord.gg/dae)
