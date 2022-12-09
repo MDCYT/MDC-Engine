@@ -7,8 +7,8 @@
     "icon": "icon.png",
     "repository": {
         "type": "git",
-        "url": "https://github.com/nizako/crack-side-MDC-ENGINE-MOD.git",
-        "urlUpdate": "https://github.com/nizako/crack-side-MDC-ENGINE-MOD/ver.ola"
+        "url": "https://github.com/MDCYT/crack-side-example-mod",
+        "urlUpdate": "https://github.com/MDCYT/crack-side-example-mod/blob/main/version.ver"
     },
     "enabled": true,
     "type": "mod",
