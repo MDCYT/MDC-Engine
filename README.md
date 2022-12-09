@@ -1,3 +1,9 @@
+## MrNiz's Note.
+# Dear player.
+Hey you idk who are you, but i love you for installing this engine,
+yeh its very, very MUCH SHIT.
+
+## Ninjamuffin99's note.
 # Friday Night Funkin
 
 This is the repository for Friday Night Funkin, a game originally made for Ludum Dare 47 "Stuck In a Loop".

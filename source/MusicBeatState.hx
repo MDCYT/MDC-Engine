@@ -33,6 +33,7 @@ class MusicBeatState extends FlxUIState
 	public function new()
 	{
 		super();
+
 		FlxG.callBacks.set("onChangeSpeed",function (value:Float)
 			{
 				Conductor.safeZoneOffset = (PlayerSettings.safeFrames / 60) * 1000 * value;

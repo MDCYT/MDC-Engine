@@ -70,6 +70,8 @@ class Character extends FlxSprite
 		{
 
 			default:
+			if (!Assets.exists(Paths.data("chars/" + character + ".json")))
+				character = "bf";
 			var _json:_Char;
 			var rawJson:String = Assets.getText(Paths.data("chars/" + character + ".json")).trim();
 			_json = Json.parse(rawJson);
