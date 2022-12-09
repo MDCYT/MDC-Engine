@@ -15,9 +15,9 @@ class PlayerSettings
 {
 
 	private static var map:Map<String,Dynamic> = [];
-    public static var downscroll:Bool = true;
-    public static var botplay:Bool = false;
-    public static var ghosttapin:Bool = false;
+    public static var downscroll:Bool = false;
+    public static var botplay:Bool = true;
+    public static var ghosttapin:Bool = true;
     public static var pressCauseMiss:Bool = false;
     public static var sustainPressDependToFather:Bool = true;
 

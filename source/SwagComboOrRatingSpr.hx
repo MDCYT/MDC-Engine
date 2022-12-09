@@ -12,11 +12,10 @@ class SwagComboOrRatingSpr extends FlxSprite
     {
         var isRating:Bool = !(num == "combo");
         if (tween != null) tween.cancel();
-
         
 		loadGraphic(Paths.image(Note.isPixel ? 'pixelUI/$num-pixel' : 'UI/$num' ,"shared"));
         setGraphicSize(Std.int((width *  (Note.isPixel ? 6 : 0.7))));
-        antialiasing = Note.isPixel;
+        antialiasing = !Note.isPixel;
         alpha = 1;
         acceleration.set();
         velocity.set();

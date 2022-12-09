@@ -12,6 +12,12 @@ class CoolUtil
 {
 
 	public static var difficultyArray:Array<String> = ['EASY', "NORMAL", "HARD"];
+	public static function cancelTween(twn)
+	{
+		if (twn == null) return;
+
+		twn.cancel();
+	}
 	public static function existsVar(fromData:Dynamic,str:String)
 		{
 			return fromData == null ? false : Reflect.getProperty(fromData,str) != null;

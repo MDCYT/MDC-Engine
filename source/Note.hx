@@ -142,11 +142,28 @@ class Note extends FlxSprite
 	updateHitbox();
 
 	}
+	public var isselected:Bool = false;
+	var colorSelected:Float = 255;
+	var isDown:Bool = true;
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
+		if (isselected)
+		{
+			if (isDown)
+				colorSelected -= elapsed * 250;
+			else
+				colorSelected += elapsed * 250;
+
+			if (colorSelected <= 0)
+				isDown = false;
+			else if (colorSelected >= 150)
+				isDown = true;
+			var col = Math.floor(colorSelected);
+			color = FlxColor.fromRGB(col,col,col,255);
+		}
 		pressNote = false;
-		if (strumTime <= Conductor.songPosition + 10)
+		if (strumTime <= Conductor.songPosition - 100)
 			pressNote = true;
 		if (!pressNote)
 		wasSwagNote = false;

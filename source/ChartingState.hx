@@ -601,12 +601,12 @@ class ChartingState extends MusicBeatState
 		strumLine.y = getYfromStrum((Conductor.songPosition - sectionStartTime()) % (Conductor.stepCrochet * _song.notes[curSection].lengthInSteps));
 		curRenderedNotes.forEach(function(note:Note)
 			{
-				if (note.pressNote && !note.wasSwagNote)
+
+				if (note.strumTime < FlxG.sound.music.time - 20 && !note.wasSwagNote)
 					{
 						FlxG.sound.play(Paths.sound("scrollMenu"));
 						note.wasSwagNote = true;
-
-					} else if (note.pressNote)
+					} else if (note.strumTime < FlxG.sound.music.time - 20)
 					{
 						note.alpha = 0.8;
 					} else if(!note.pressNote)
@@ -948,6 +948,8 @@ class ChartingState extends MusicBeatState
 	{
 		if (curSelectedNote != null)
 			stepperSusLength.value = curSelectedNote[2];
+
+
 	}
 	function xd(add:Int):Void{
 	
@@ -1039,10 +1041,17 @@ class ChartingState extends MusicBeatState
 					note.wasSwagNote = true;
 				note.y = Math.floor(getYfromStrum((daStrumTime - sectionStartTime()) % (Conductor.stepCrochet * _song.notes[curSection].lengthInSteps)));
 				if (id == -1)
-					note.x -= GRID_SIZE * 16;
+					note.y -= GRID_SIZE * 16;
 				if (id == 1)
 					note.y += GRID_SIZE * 16;
 				curRenderedNotes.add(note);
+				if (curSelectedNote != null)
+				{
+				if (daStrumTime == curSelectedNote[0])
+					{
+						note.isselected = true;
+					}
+				}
 	
 				if (daSus > 0)
 				{
@@ -1069,16 +1078,17 @@ class ChartingState extends MusicBeatState
 
 		_song.notes.push(sec);
 	}
-
+	var selectedNote:Note = null;
 	function selectNote(note:Note):Void
 	{
 		var swagNum:Int = 0;
 
 		for (i in _song.notes[curSection].sectionNotes)
 		{
-			if (i.strumTime == note.strumTime && i.noteData % 4 == note.noteData)
+			if (i[0] == note.strumTime && i[1] % 4 == note.noteData)
 			{
 				curSelectedNote = _song.notes[curSection].sectionNotes[swagNum];
+				selectedNote = note;
 			}
 
 			swagNum += 1;
@@ -1165,7 +1175,7 @@ class ChartingState extends MusicBeatState
 
 		updateGrid();
 		updateNoteUI();
-
+		
 		autosaveSong();
 	}
 
