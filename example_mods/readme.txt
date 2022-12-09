@@ -1,2 +1,2 @@
-THIS MOD FOLDER DOES NOT ENTIRELY WORK JUST YET!!!
-DONT EXPECT MUCH OUT OF IT RIGHT NOW!!!
+ES: This is the MDC Engine mod and plugin manager, just drag the folder of your mod or plugin and activate it from the plugins or mod folder.
+ES: Este es el gestor de mod y plugins del MDC Engine, solo arrastra la carpeta de tu mod o plugin y actívalo desde la carpeta de plugins o mod.
