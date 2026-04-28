@@ -46,9 +46,8 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
-		#if polymod
-		polymod.Polymod.init({modRoot: "mods", dirs: ['introMod']});
-		#end
+		// MDC Engine: nuevo cargador de mods múltiples (lee mods/modList.txt y manifest.json).
+		ModLoader.init();
 
 		PlayerSettings.init();
 
@@ -305,7 +304,7 @@ class TitleState extends MusicBeatState
 						OutdatedSubState.needVer = returnedData[0];
 						OutdatedSubState.currChanges = returnedData[1];
 
-						var actualizedmessage:Array<String> = CoolUtil.coolTextFile(Paths.txt('actualizedmessage'));
+						var actualizedmessage:Array<String> = ConfigLoader.loadList('actualizedmessage');
 
 						if(actualizedmessage[0] == "1"){
 							FlxG.switchState(new OutdatedSubState());
@@ -382,12 +381,12 @@ class TitleState extends MusicBeatState
 
 		FlxG.log.add(curBeat);
 
-		var asociation:Array<String> = CoolUtil.coolTextFile(Paths.txt('intro'));
+		var asociation:Array<String> = ConfigLoader.loadList('intro');
 
 		switch (curBeat)
 		{
 			case 2:
-				createCoolText(CoolUtil.coolTextFile(Paths.txt('creatorsnames')));
+				createCoolText(ConfigLoader.loadList('creatorsnames'));
 			// credTextShit.visible = true;
 			case 3:
 				addMoreText(asociation[0]);

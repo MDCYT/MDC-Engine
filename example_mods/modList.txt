@@ -1,1 +1,6 @@
+# Lista de mods que el engine cargará en orden.
+# Cada línea = nombre de la carpeta dentro de mods/.
+# Líneas vacías y las que empiezan con # se ignoran.
+
 introMod
+# exampleFullMod   <- descomenta esta línea para activarlo
