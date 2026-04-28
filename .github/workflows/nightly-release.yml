@@ -1,0 +1,198 @@
+name: Nightly Release
+
+on:
+  push:
+    branches:
+      - main
+      - feat/modding-overhaul
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag para la pre-release (ej. nightly-2026-04-28)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nightly-release
+  cancel-in-progress: false
+
+jobs:
+  build-html5:
+    name: Build HTML5
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Haxe 4.3.4
+        uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: 4.3.4
+
+      - name: Cache haxelib
+        uses: actions/cache@v4
+        with:
+          path: ~/haxelib
+          key: ${{ runner.os }}-haxelib-html5-${{ hashFiles('Project.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-haxelib-html5-
+
+      - name: Install dependencies
+        run: |
+          mkdir -p ~/haxelib && haxelib setup ~/haxelib
+          haxelib install lime --quiet
+          haxelib install openfl --quiet
+          haxelib install flixel --quiet
+          haxelib install flixel-addons --quiet
+          haxelib install flixel-ui --quiet
+          haxelib install hscript --quiet
+          haxelib install newgrounds --quiet
+          haxelib install actuate --quiet
+          haxelib git polymod https://github.com/larsiusprime/polymod.git --quiet || true
+          haxelib run lime setup flixel --alwaysOverwrite || true
+
+      - name: Build HTML5
+        run: haxelib run lime build html5 -release
+
+      - name: Package
+        run: |
+          cd export/release/html5/bin
+          zip -r ../../../../mdc-engine-html5.zip .
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mdc-engine-html5
+          path: mdc-engine-html5.zip
+          retention-days: 30
+
+  build-linux:
+    name: Build Linux
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    continue-on-error: true
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Haxe 4.3.4
+        uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: 4.3.4
+
+      - name: Install system deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y g++ libgl1-mesa-dev libglu1-mesa-dev \
+            libasound2-dev libxinerama-dev libxrandr-dev libpulse-dev \
+            libxi-dev libxcursor-dev libxext-dev libx11-dev
+
+      - name: Cache haxelib
+        uses: actions/cache@v4
+        with:
+          path: ~/haxelib
+          key: ${{ runner.os }}-haxelib-linux-${{ hashFiles('Project.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-haxelib-linux-
+
+      - name: Install Haxe deps
+        run: |
+          mkdir -p ~/haxelib && haxelib setup ~/haxelib
+          haxelib install lime --quiet
+          haxelib install openfl --quiet
+          haxelib install flixel --quiet
+          haxelib install flixel-addons --quiet
+          haxelib install flixel-ui --quiet
+          haxelib install hscript --quiet
+          haxelib install newgrounds --quiet
+          haxelib install actuate --quiet
+          haxelib git polymod https://github.com/larsiusprime/polymod.git --quiet || true
+          haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc --quiet || true
+          haxelib git extension-webm https://github.com/GrowtopiaFli/extension-webm --quiet || true
+          haxelib run lime setup flixel --alwaysOverwrite || true
+          haxelib run lime rebuild extension-webm linux || true
+
+      - name: Build Linux
+        run: haxelib run lime build linux -release
+
+      - name: Package
+        run: |
+          cd export/release/linux/bin
+          tar -czf ../../../../mdc-engine-linux.tar.gz .
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mdc-engine-linux
+          path: mdc-engine-linux.tar.gz
+          retention-days: 30
+
+  release:
+    name: Publish nightly pre-release
+    needs: [build-html5]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Compute tag
+        id: tag
+        run: |
+          if [ -n "${{ github.event.inputs.tag }}" ]; then
+            TAG="${{ github.event.inputs.tag }}"
+          else
+            TAG="nightly-$(date -u +'%Y%m%d-%H%M%S')-${GITHUB_SHA::7}"
+          fi
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
+      - name: Move-or-create nightly tag
+        run: |
+          git tag -f nightly
+          git push -f origin nightly || true
+
+      - name: Publish nightly (rolling)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: nightly
+          name: "🌙 Nightly build"
+          prerelease: true
+          draft: false
+          body: |
+            Build automático generado por GitHub Actions.
+
+            - Commit: `${{ github.sha }}`
+            - Branch: `${{ github.ref_name }}`
+            - Mensaje: ${{ github.event.head_commit.message }}
+
+            **Artifacts:**
+            - `mdc-engine-html5.zip` — listo para subir a itch.io / GitHub Pages.
+            - `mdc-engine-linux.tar.gz` — binario para Linux (best-effort).
+
+            Esta release se sobreescribe en cada push a `main`. Para builds estables, mira los [releases etiquetados](../../releases).
+          files: |
+            artifacts/**/*
+
+      - name: Publish dated pre-release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag.outputs.tag }}
+          name: "Pre-release ${{ steps.tag.outputs.tag }}"
+          prerelease: true
+          draft: false
+          body: |
+            Build automático del commit `${{ github.sha }}` en `${{ github.ref_name }}`.
+          files: |
+            artifacts/**/*
