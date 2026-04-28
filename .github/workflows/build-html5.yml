@@ -1,0 +1,59 @@
+name: Build HTML5
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Haxe 4.3.4
+        uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: 4.3.4
+
+      - name: Cache haxelib
+        uses: actions/cache@v4
+        with:
+          path: ~/haxelib
+          key: ${{ runner.os }}-haxelib-${{ hashFiles('Project.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-haxelib-
+
+      - name: Install dependencies
+        run: |
+          haxelib setup ~/haxelib
+          haxelib install lime --quiet
+          haxelib install openfl --quiet
+          haxelib install flixel --quiet
+          haxelib install flixel-addons --quiet
+          haxelib install flixel-ui --quiet
+          haxelib install hscript --quiet
+          haxelib install newgrounds --quiet
+          haxelib install actuate --quiet
+          haxelib git polymod https://github.com/larsiusprime/polymod.git --quiet || true
+          haxelib run lime setup flixel --alwaysOverwrite
+          haxelib run lime config -Dno_log
+
+      - name: Build HTML5
+        run: haxelib run lime build html5 -release
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mdc-engine-html5
+          path: export/release/html5/bin
+          if-no-files-found: warn
+          retention-days: 14

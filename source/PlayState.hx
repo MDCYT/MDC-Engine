@@ -830,7 +830,7 @@ class PlayState extends MusicBeatState
 
 		if (isStoryMode)
 		{
-			var dialogues:Array<String> = CoolUtil.coolTextFile(Paths.txt('dialogues'));
+			var dialogues:Array<String> = ConfigLoader.loadList('dialogues');
 
 			switch (curSong.toLowerCase())
 			{
@@ -1856,7 +1856,7 @@ class PlayState extends MusicBeatState
 				FlxTransitionableState.skipNextTransOut = true;
 				prevCamFollow = camFollow;
 
-				var isCinematic:Array<String> = CoolUtil.coolTextFile(Paths.txt('cinematics'));
+				var isCinematic:Array<String> = ConfigLoader.loadList('cinematics');
 
 				PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + difficulty, PlayState.storyPlaylist[0]);
 				FlxG.sound.music.stop();

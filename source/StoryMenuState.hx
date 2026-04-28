@@ -49,7 +49,7 @@ class StoryMenuState extends MusicBeatState
 		['ejemplo', 'bf', 'gf']
 	];
 
-	var weekNames:Array<String> = CoolUtil.coolTextFile(Paths.txt('weeknames'));
+	var weekNames:Array<String> = ConfigLoader.loadList('weeknames');
 
 	// [
 	// 	"",
@@ -330,7 +330,7 @@ class StoryMenuState extends MusicBeatState
 			PlayState.storyWeek = curWeek;
 			PlayState.campaignScore = 0;
 
-			var isCinematic:Array<String> = CoolUtil.coolTextFile(Paths.txt('cinematics'));
+			var isCinematic:Array<String> = ConfigLoader.loadList('cinematics');
 
 			new FlxTimer().start(1, function(tmr:FlxTimer)
 			{

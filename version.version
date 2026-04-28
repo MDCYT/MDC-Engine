@@ -1,2 +1,5 @@
-1.2.1;
-- Error de los dialogos solucionado
+2.0.0;
+- Sistema de mods múltiples con manifest.json
+- ConfigLoader unificado (JSON + TXT)
+- GitHub Actions CI
+- Documentación de modding completa

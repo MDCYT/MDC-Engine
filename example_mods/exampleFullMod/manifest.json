@@ -1,0 +1,9 @@
+{
+  "name": "Example Full Mod",
+  "author": "MDC",
+  "version": "1.0.0",
+  "description": "Demuestra cómo personalizar semanas, créditos y mensajes del intro sin tocar código.",
+  "homepage": "https://github.com/MDCYT/MDC-Engine",
+  "api_version": "2.0.0",
+  "dependencies": []
+}

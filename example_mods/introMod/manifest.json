@@ -1,0 +1,9 @@
+{
+  "name": "Intro Mod",
+  "author": "MDC",
+  "version": "1.0.0",
+  "description": "Mod de ejemplo que cambia el texto del intro del juego.",
+  "homepage": "https://github.com/MDCYT/MDC-Engine",
+  "api_version": "2.0.0",
+  "dependencies": []
+}
